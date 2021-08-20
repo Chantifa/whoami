@@ -8,7 +8,7 @@ build:
   image: node
   script:
     - echo "Start building App"
-    - watchman watch-del-all && npm run start -- --reset-cache
+    - npm run start -- --reset-cache
     - npm install react
     - npm install react-dom
     - npm install
