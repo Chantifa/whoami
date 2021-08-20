@@ -10,6 +10,7 @@
 3. [Projektziele](#Projektziele) \
    3.1 [Definition of Done](#Definition of Done)
 4. [Anforderungen](#Anforderungen)
+5. [Protokoll Client / Server](#Protokoll Client Server)
 
 ***
 ## Einführung
@@ -44,10 +45,13 @@ Das Spiel «Who am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine
 - Entsprechende Userdokumentation erstellt
 - Testbare Funktionalität getestet
 - Peer reviewed
-
-# Anforderungen
+***
+## Anforderungen
 Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label [user-story](https://git.ffhs.ch/ramona.koksa/whoami/-/issues?label_name%5B%5D=user-stroy) versehen.
 Einen ersten Überblich verschaffen die nachfolgenden Wireframes.
 
 ![img.png](client/src/img/login-wireframe.png)
 ![img.png](client/src/img/game.png)
+
+## Protokoll Client Server
+TBD
