@@ -8,11 +8,14 @@ build:
   image: node
   script:
     - echo "Start building App"
-    - npm install package.json
-    - npm audit fix --force
-    - npm install web-vitals
-    - npm run build
+    - npm install
+    - npm build
     - echo "Build successfully!"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+      - node_modules/
 
 test:
   stage: test
