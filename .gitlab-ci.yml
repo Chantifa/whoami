@@ -7,6 +7,9 @@ stages:
 
 test:
   stage: test
+  image: node
   script:
-    - yarn
-    - CI=true yarn test
+    - echo "Testing App"
+    - npm install
+    - CI=true npm test
+    - echo "Test successfully!"
