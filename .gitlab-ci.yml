@@ -7,9 +7,8 @@ build:
   stage: build
   image: node
   script:
-    - rm -rf node_modules
     - echo "Start building App"
-    - npm install
+    - npm install -g react-scripts
     - npm run build
     - echo "Build successfully!"
 
