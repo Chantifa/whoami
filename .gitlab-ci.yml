@@ -8,9 +8,7 @@ build:
   image: node
   script:
     - echo "Start building App"
-    - npm install react
-    - npm install react-dom
-    - npm install -g react-scripts
+    - npm install package.json
     - npm run build
     - echo "Build successfully!"
 
