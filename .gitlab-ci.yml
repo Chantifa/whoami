@@ -8,6 +8,7 @@ build:
   image: node
   script:
     - echo "Start building App"
+    - npm install react
     - npm install -g react-scripts
     - npm run build
     - echo "Build successfully!"
