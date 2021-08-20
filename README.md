@@ -1,13 +1,9 @@
-# Who am I
+![img_1.png](client/src/img/logo.png)
 ### WebE, Web Engineering 
 #### INF-P-WT002, BE-Sa-1, HS21/22, FFHS Bern
 *unter der Leitung von Dr. Heinrich Zimmermann* \
 *eingereicht von Ramona Koksa | Yves Bastian Pellaton*
 ***
-
-![img_1.png](client/src/img/logo.png)
-
-
 ## Inhalt
 1. [Einführung](#Einführung)
 2. [Spielregeln](#Spielregeln)
@@ -16,7 +12,6 @@
 4. [Anforderungen](#Anforderungen)
 
 ***
-
 ## Einführung
 *«A game is a series of interesting choices.» – Sid Meier*
 
@@ -51,4 +46,8 @@ Das Spiel «Who am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine
 - Peer reviewed
 
 # Anforderungen
-Sämtliche Anforderungen werden im vorliegenden Repository unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label [user-story](https://git.ffhs.ch/ramona.koksa/whoami/-/issues?label_name%5B%5D=user-stroy) versehen.
+Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label [user-story](https://git.ffhs.ch/ramona.koksa/whoami/-/issues?label_name%5B%5D=user-stroy) versehen.
+Einen ersten Überblich verschaffen die nachfolgenden Wireframes.
+
+![img.png](client/src/img/login-wireframe.png)
+![img.png](client/src/img/game.png)
