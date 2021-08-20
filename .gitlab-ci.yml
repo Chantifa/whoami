@@ -9,7 +9,7 @@ build:
   script:
     - echo "Start building App"
     - npm install
-    - npm run build .
+    - npm run build
     - echo "Build successfully!"
 
 test:
