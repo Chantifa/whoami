@@ -1,27 +1,12 @@
-stages:
-  - docker-build
-  - test
+image: node:12.14.0
 
-docker-build:
-  stage: docker:18-dind
-  image: docker:stable
-  variables:
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: "/certs"
-  services:
-    - docker:18.06-dind
-  before_script:
-    - docker info
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-    - docker push "$CI_REGISTRY_IMAGE"
+stages:
+  - test
+  #- build
+  #- deploy
 
 test:
   stage: test
-  image: node
   script:
-    - echo "Testing App"
-    - CI=true npm test
-    - echo "Test successfully!"
+    - yarn
+    - CI=true yarn test
