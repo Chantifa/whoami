@@ -6,10 +6,10 @@ stages:
 build:
   stage: build
   image: node
-  script: 
+  script:
     - echo "Start building App"
     - npm install
-    - npm run build ./whoami
+    - npm run build .
     - echo "Build successfully!"
   artifacts:
     expire_in: 1 hour
