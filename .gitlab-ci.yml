@@ -9,6 +9,7 @@ build:
   script:
     - echo "Start building App"
     - npm install react
+    - npm install react-dom
     - npm install -g react-scripts
     - npm run build
     - echo "Build successfully!"
