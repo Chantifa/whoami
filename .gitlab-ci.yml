@@ -9,6 +9,8 @@ build:
   script:
     - echo "Start building App"
     - npm install package.json
+    - npm audit fix --force
+    - npm install web-vitals
     - npm run build
     - echo "Build successfully!"
 
