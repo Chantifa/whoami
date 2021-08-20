@@ -4,8 +4,8 @@
 FROM node:12-alpine
 
 # copy the application to folder /app
-WORKDIR /app
-COPY . /app/
+WORKDIR /whoami
+COPY . /whoami/
 
 # Prepare the container for building React
 RUN npm install

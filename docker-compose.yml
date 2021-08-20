@@ -1,0 +1,17 @@
+version: '1'
+services:
+  react-app:
+    image: ./whoami:1.0
+    stdin_open: true
+    ports:
+      - '2000:2000'
+  backend:
+    image: ./whoami:1.0
+    depends_on:
+      - mongo
+    ports:
+      - '3000:3000'
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
