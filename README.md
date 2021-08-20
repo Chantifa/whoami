@@ -36,7 +36,7 @@ Das Spiel «Who am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine
 |----|------------------------------------------------------------------------------|:-------------:|
 | 1  | Die Entwicklung des Projektes soll iterativ erfolgen                         | M           |
 | 2  | Termine und Deadlines sind einzuhalten.                                      | M           |
-| 3  | Es müssen mind. drei Levels mit unterschiedlichen Schwierigkeitsstufen sein. | K           |
+| 3  | CI / CD soll angewendet werden | K           |
 
 ### Definition of Done
 - Die verwendeten Bibliotheken (Libraries) werden dokumentiert
@@ -48,7 +48,7 @@ Das Spiel «Who am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine
 ***
 ## Anforderungen
 Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label [user-story](https://git.ffhs.ch/ramona.koksa/whoami/-/issues?label_name%5B%5D=user-stroy) versehen.
-Einen ersten Überblich verschaffen die nachfolgenden Wireframes.
+Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
 ![img.png](client/src/img/login-wireframe.png)
 ![img.png](client/src/img/game.png)
