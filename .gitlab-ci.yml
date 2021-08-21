@@ -1,9 +1,18 @@
 image: node:12.14.0
 
 stages:
+  - build
   - test
-  #- build
   #- deploy
+
+cache:
+  paths:
+    - node_modules/
+
+build:
+  script:
+    - npm install
+    - npm start
 
 test:
   stage: test
