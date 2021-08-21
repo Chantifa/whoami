@@ -10,6 +10,7 @@ cache:
     - node_modules/
 
 build:
+  stage: build
   script:
     - npm install
     - npm start
