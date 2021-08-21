@@ -3,7 +3,7 @@ image: node:12.14.0
 stages:
   - build
   - test
-  #- deploy
+  - docker-build
 
 cache:
   paths:
