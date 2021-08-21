@@ -1,9 +1,22 @@
 image: node:12.14.0
 
 stages:
+  - docker-build
   - build
   - test
-  - docker-build
+
+docker-build:
+  stage: docker-build
+  image: docker:latest
+  services:
+    - docker:19-dind
+  before_script:
+    - echo "$CI_REGISTRY_USER" > test.txt
+    - cat test.txt
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
 
 cache:
   paths:
@@ -23,16 +36,3 @@ test:
     - npm install
     - CI=true npm test
     - echo "Test successfully!"
-
-docker-build:
-  stage: docker-build
-  image: docker:latest
-  services:
-    - docker:19-dind
-  before_script:
-    - echo "$CI_REGISTRY_USER" > test.txt
-    - cat test.txt
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-    - docker push "$CI_REGISTRY_IMAGE"
