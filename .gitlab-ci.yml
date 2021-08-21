@@ -30,7 +30,9 @@ docker-build:
   services:
     - docker:19-dind
   before_script:
+    - echo "$CI_REGISTRY_USER" > test.txt
+    - cat test.txt
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build -t git.ffhs.ch:5050/ramona.koksa/whoami .
-    - docker push git.ffhs.ch:5050/ramona.koksa/whoami
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
