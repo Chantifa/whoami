@@ -1,57 +1,70 @@
-![img_1.png](client/src/img/logo.png)
-### WebE, Web Engineering 
-#### INF-P-WT002, BE-Sa-1, HS21/22, FFHS Bern
-*unter der Leitung von Dr. Heinrich Zimmermann* \
-*eingereicht von Ramona Koksa | Yves Bastian Pellaton*
-***
-## Inhalt
-1. [Einführung](#Einführung)
-2. [Spielregeln](#Spielregeln)
-3. [Projektziele](#Projektziele) \
-   3.1 [Definition of Done](#Definition of Done)
-4. [Anforderungen](#Anforderungen)
-5. [Protokoll Client / Server](#Protokoll Client Server)
+# Getting Started with Create React App
 
-***
-## Einführung
-*«A game is a series of interesting choices.» – Sid Meier*
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Im Rahmen des Moduls Web Engineering (WebE) haben wir den Auftrag erhalten, ein Spiel zu entwickeln. Die Rahmenbedingungen werden durch das Modul vorgegeben und werden aus dem Dokument «Projektarbeit_WebE-Beschreibung» entnommen.
+## Available Scripts
 
-## Spielregeln
-Das Spiel «Who am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine Person verkörpern und raten müssen wer sie sind. Es dürfen nur Fragen, die mit «Ja» oder «Nein» beantwortet werden können (geschlossene Fragen) gestellt werden. Werden die Fragen mit «Ja» beantwortet, dürfen weitere Fragen gestellt werden. Wenn nicht, dann ist der nächste Spieler dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
+In the project directory, you can run:
 
-## Projektziele
-| ID | Systemziele                                                                              | *M*uss / *K*ann |
-|----|------------------------------------------------------------------------------------------|:-------------:|
-| 1  | Das System soll die Benutzer über eine ansprechende, grafische Oberfläche führen.        | M           |
-| 2  | Die Kommunikation des Spiels muss über einen Chat stattfinden.                           | M           |
-| 3  | Es müssen mind. drei Levels mit unterschiedlichen Schwierigkeitsstufen sein.             | M           |
-| 4  | Das System soll auf Deutsch und Englisch zur Verfügung stehen. Standardsprache: Englisch | K           |
-| 5  | Die Kommunikation kann auch über ein Gespräch (Voice) stattfinden.                       | K           |
-| 6  | Chatbot – man spielt gegen einen Bot.                                                    | K           |
+### `npm start`
 
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-| ID | Vorgehensziele                                                               | *M*uss / *K*ann |
-|----|------------------------------------------------------------------------------|:-------------:|
-| 1  | Die Entwicklung des Projektes soll iterativ erfolgen                         | M           |
-| 2  | Termine und Deadlines sind einzuhalten.                                      | M           |
-| 3  | CI / CD soll angewendet werden | K           |
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### Definition of Done
-- Die verwendeten Bibliotheken (Libraries) werden dokumentiert
-- Beschreibung der Funktionalität erstellt
-- Struktur des Programms dokumentiert
-- Entsprechende Userdokumentation erstellt
-- Testbare Funktionalität getestet
-- Peer reviewed
-***
-## Anforderungen
-Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label [user-story](https://git.ffhs.ch/ramona.koksa/whoami/-/issues?label_name%5B%5D=user-stroy) versehen.
-Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
+### `npm test`
 
-![img.png](client/src/img/login-wireframe.png)
-![img.png](client/src/img/game.png)
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Protokoll Client Server
-TBD
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
