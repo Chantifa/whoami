@@ -32,6 +32,15 @@ Das Spiel «Who Am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine
 | 2  | Termine und Deadlines sind einzuhalten.                                      | M           |
 | 3  | CI / CD soll angewendet werden | K           |
 
+### Arbeitsablauf
+1. Ein Issue wird erstellt. Er bekommt entsprechende Tags und verwendet wo vorhanden die Vorlage.
+1. (Bei Grossem Aufwand oder Impact) Der Issue wird diskutiert und mit ~"status::todo" als beriet für die Entwicklung markiert
+1. Der Issue wird assigend und wenn begonnen wird mit ~"status::progress" markiert. Es wird aus [dev](https://git.ffhs.ch/ramona.koksa/whoami/-/tree/dev) ein neuer branch erstellt. Es kann bereits ein merge-request erstellt werden, dieser sollte aber als `DRAFT:` makiert sein.
+1. Mit `/spend` kann die verwendete Zeit getrackt werden.
+1. Ist der Code ready, wird ein merge-request erstellt oder beim bestehenden die `DRAFT:` markierung entfernt. Der merge-request ist mit dem issue zu verknüpfen: `Resolves #9` sollte reichen. Es ist sicherzustellen, dass der branch auf dev rebased ist und die History sauber ist.
+1. Die andere Person assignen und das label ~"status::review" setzen.
+1. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie Glücklich merget sie nach dev.
+
 ### Definition of Done
 - Die verwendeten Bibliotheken (Libraries) werden dokumentiert
 - Beschreibung der Funktionalität erstellt
