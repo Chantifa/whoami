@@ -58,4 +58,33 @@ Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 ![img.png](client/src/img/game.png)
 
 ## Protokoll Client Server
-TBD #5
+
+Folgende Diagramme beschreiben die Kommunikation zwischen Clients und Server. Client X ist jeweils ein spezifischer Client, Other Clients beschreibt eine beliebige Anzahl anderer Cleints.
+
+Der Server Broadcastet jeweilige Aktionen an alle Clients, diese Messages wurden zu gunsten der Übersichtlichkeit weggelassen.
+
+### Join & Leave
+
+```mermaid
+    sequenceDiagram
+        participant s as Server
+        participant c1 as Client X
+        participant c2 as Other Clients
+        activate c1
+        c1->>+s: CREATE
+        s->>+c1: {id}
+        c1->>c2: "The ID is {id}"
+        activate c2
+        c2->>s: JOIN {id}
+        c1->>s: START
+        loop Game
+            s -> c2: game
+        end
+
+        c2 ->> s : LEAVE
+        deactivate c2
+        c1 ->>s : LEAVE
+
+        deactivate c1
+        deactivate s
+```
