@@ -1,25 +1,19 @@
-![img_1.png](client/src/img/logo.png)
-### WebE, Web Engineering 
-#### INF-P-WT002, BE-Sa-1, HS21/22, FFHS Bern
+# ![Who Am I](client/src/img/logo.png) <br/> WebE, Web Engineering 
+**INF-P-WT002, BE-Sa-1, HS21/22, FFHS Bern** \
 *unter der Leitung von Dr. Heinrich Zimmermann* \
 *eingereicht von Ramona Koksa | Yves Bastian Pellaton*
 ***
 ## Inhalt
-1. [Einführung](#Einführung)
-2. [Spielregeln](#Spielregeln)
-3. [Projektziele](#Projektziele) \
-   3.1 [Definition of Done](#Definition of Done)
-4. [Anforderungen](#Anforderungen)
-5. [Protokoll Client / Server](#Protokoll Client Server)
 
-***
+[[_TOC_]]
+
 ## Einführung
-*«A game is a series of interesting choices.» – Sid Meier*
+> «A game is a series of interesting choices.» – Sid Meier
 
 Im Rahmen des Moduls Web Engineering (WebE) haben wir den Auftrag erhalten, ein Spiel zu entwickeln. Die Rahmenbedingungen werden durch das Modul vorgegeben und werden aus dem Dokument «Projektarbeit_WebE-Beschreibung» entnommen.
 
 ## Spielregeln
-Das Spiel «Who am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine Person verkörpern und raten müssen wer sie sind. Es dürfen nur Fragen, die mit «Ja» oder «Nein» beantwortet werden können (geschlossene Fragen) gestellt werden. Werden die Fragen mit «Ja» beantwortet, dürfen weitere Fragen gestellt werden. Wenn nicht, dann ist der nächste Spieler dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
+Das Spiel «Who Am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine Person verkörpern und raten müssen wer sie sind. Es dürfen nur Fragen, die mit «Ja» oder «Nein» beantwortet werden können (geschlossene Fragen) gestellt werden. Werden die Fragen mit «Ja» beantwortet, dürfen weitere Fragen gestellt werden. Wenn nicht, dann ist der nächste Spieler dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
 
 ## Projektziele
 | ID | Systemziele                                                                              | *M*uss / *K*ann |
@@ -46,12 +40,13 @@ Das Spiel «Who am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine
 - Testbare Funktionalität getestet
 - Peer reviewed
 ***
+
 ## Anforderungen
-Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label [user-story](https://git.ffhs.ch/ramona.koksa/whoami/-/issues?label_name%5B%5D=user-stroy) versehen.
+Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label ~user-story versehen.
 Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
 ![img.png](client/src/img/login-wireframe.png)
 ![img.png](client/src/img/game.png)
 
 ## Protokoll Client Server
-TBD
+TBD #5
