@@ -13,7 +13,7 @@
 Im Rahmen des Moduls Web Engineering (WebE) haben wir den Auftrag erhalten, ein Spiel zu entwickeln. Die Rahmenbedingungen werden durch das Modul vorgegeben und werden aus dem Dokument «Projektarbeit_WebE-Beschreibung» entnommen.
 
 ## Spielregeln
-Das Spiel «Who Am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine Person verkörpern und raten müssen wer sie sind. Es dürfen nur Fragen, die mit «Ja» oder «Nein» beantwortet werden können (geschlossene Fragen) gestellt werden. Werden die Fragen mit «Ja» beantwortet, dürfen weitere Fragen gestellt werden. Wenn nicht, dann ist der nächste Spieler dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
+Das Spiel «Who Am I» ist ein Ratespiel, bei dem zwei oder mehr Spieler eine Person verkörpern und raten müssen wer sie sind. Es dürfen nur Fragen, die mit «Ja» oder «Nein» beantwortet werden können (geschlossene Fragen) gestellt werden. Werden die Fragen mit «Ja» beantwortet, dürfen weitere Fragen gestellt werden. Wenn nicht, dann ist der nächste Spieler dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
 
 ## Projektziele
 | ID | Systemziele                                                                              | *M*uss / *K*ann |
@@ -39,7 +39,7 @@ Das Spiel «Who Am I» ist ein Ratespiel, bei dem zwei oder mehrere Spieler eine
 1. Mit `/spend` kann die verwendete Zeit getrackt werden.
 1. Ist der Code ready, wird ein merge-request erstellt oder beim bestehenden die `DRAFT:` markierung entfernt. Der merge-request ist mit dem issue zu verknüpfen: `Resolves #9` sollte reichen. Es ist sicherzustellen, dass der branch auf dev rebased ist und die History sauber ist.
 1. Die andere Person assignen und das label ~"status::review" setzen.
-1. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie Glücklich merget sie nach dev.
+1. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie glücklich merget sie nach dev.
 
 ### Definition of Done
 - Die verwendeten Bibliotheken (Libraries) werden dokumentiert
