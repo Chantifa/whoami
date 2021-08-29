@@ -95,16 +95,16 @@ Der Server wertet die Interaktionen gemäss dem Spielablauf aus, Chat-Nachrichte
         deactivate s
 ```
 
-### Game
+### Game loop, Serverseitig
 
 ```mermaid
 graph TB
     1[Communicate Persona's expect own] -->
     2[Communicate Order] -->
-    3[Expect Question from the one on turn] -->8{Solution Question};
+    3[Expect Question from the one on turn] -->8{Solution Question?};
     8 -->|Yes| 9{Correct?};
     9 -->|Yes| 10[End Game];
-    9 -->|Yes| 7;
+    9 -->|No| 7;
     8 --> |No| 4[Communicate Question, Start Timer, expect Votes or timer end];
     4 --> 5{Cout votes, evaluate} ;
     5 -->|Yes| 6[Same Client again];
