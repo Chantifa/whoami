@@ -58,4 +58,58 @@ Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 ![img.png](client/src/img/game.png)
 
 ## Protokoll Client Server
-TBD #5
+
+Folgende Diagramme beschreiben die Kommunikation zwischen Clients und Server. Client X ist jeweils ein spezifischer Client, Other Clients beschreibt eine beliebige Anzahl anderer Cleints.
+
+Der Server Broadcastet jeweilige Aktionen an alle Clients, diese Messages wurden zu gunsten der Übersichtlichkeit weggelassen.
+
+### Chat
+
+Jederzeit kann ein User etwas in den Chat schreiben. Für die Spiellogik müssen die Interaktionen jedoch als solche markiert werden. Diese Logik passiert auf dem Client. Somit werden die Nachrichten entweder als entsprechende Interaktion gesendet oder als Chat.
+
+Der Server wertet die Interaktionen gemäss dem Spielablauf aus, Chat-Nachrichten werden an alle (auch den Sender) im Raum gebroadcasted. Sie beinhalten eine Senderkennung und die Nachricht.
+
+### Join & Leave
+
+```mermaid
+    sequenceDiagram
+        participant s as Server
+        participant c1 as Client X
+        participant c2 as Other Clients
+        activate c1
+        c1->>+s: CREATE
+        s->>+c1: {id}
+        c1->>c2: "The ID is {id}"
+        activate c2
+        c2->>s: JOIN {id}
+        c1->>s: START
+        loop Game
+            s -> c2: game
+        end
+
+        c2 ->> s : LEAVE
+        deactivate c2
+        c1 ->>s : LEAVE
+
+        deactivate c1
+        deactivate s
+```
+
+### Game loop, Serverseitig
+
+```mermaid
+graph TB
+    1[Communicate Persona's expect own] -->
+    2[Communicate Order] -->
+    3[Expect Question from the one on turn] -->8{Solution Question?};
+    8 -->|Yes| 9{Correct?};
+    9 -->|Yes| 10[End Game];
+    9 -->|No| 7;
+    8 --> |No| 4[Communicate Question, Start Timer, expect Votes or timer end];
+    4 --> 5{Cout votes, evaluate} ;
+    5 -->|Yes| 6[Same Client again];
+    5 -->|No| 7[Next Client]; 
+    6 --> 3; 7 --> 3;
+
+
+```
