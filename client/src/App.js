@@ -1,7 +1,19 @@
-import logo from './logo.svg';
+import logo from './img/logo.png';
 import './App.css';
+import React, { useEffect, useState } from 'react';
 
 function App() {
+  useEffect(() => {
+    const fetchData = async () => {
+      
+      const json = await fetch("/express_backend").then(r =>r.json()).catch(e => console.error(e))
+      console.log(json)
+    }
+
+    fetchData()
+  }, [])
+
+
   return (
     <div className="App">
       <header className="App-header">
