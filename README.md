@@ -1,17 +1,115 @@
-### Node Express template project
+# ![Who Am I](client/src/img/logo.png) <br/> WebE, Web Engineering 
+**INF-P-WT002, BE-Sa-1, HS21/22, FFHS Bern** \
+*unter der Leitung von Dr. Heinrich Zimmermann* \
+*eingereicht von Ramona Koksa | Yves Bastian Pellaton*
+***
+## Inhalt
 
-This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
+[[_TOC_]]
 
-Improvements can be proposed in the [original project](https://gitlab.com/gitlab-org/project-templates/express).
+## Einführung
+> «A game is a series of interesting choices.» – Sid Meier
 
-### CI/CD with Auto DevOps
+Im Rahmen des Moduls Web Engineering (WebE) haben wir den Auftrag erhalten, ein Spiel zu entwickeln. Die Rahmenbedingungen werden durch das Modul vorgegeben und werden aus dem Dokument «Projektarbeit_WebE-Beschreibung» entnommen.
 
-This template is compatible with [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/).
+## Spielregeln
+Das Spiel «Who Am I» ist ein Ratespiel, bei dem zwei oder mehr Spieler eine Person verkörpern und raten müssen wer sie sind. Es dürfen nur Fragen, die mit «Ja» oder «Nein» beantwortet werden können (geschlossene Fragen) gestellt werden. Werden die Fragen mit «Ja» beantwortet, dürfen weitere Fragen gestellt werden. Wenn nicht, dann ist der nächste Spieler dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
 
-If Auto DevOps is not already enabled for this project, you can [turn it on](https://docs.gitlab.com/ee/topics/autodevops/#enabling-auto-devops) in the project settings.
+## Projektziele
+| ID | Systemziele                                                                              | *M*uss / *K*ann |
+|----|------------------------------------------------------------------------------------------|:-------------:|
+| 1  | Das System soll die Benutzer über eine ansprechende, grafische Oberfläche führen.        | M           |
+| 2  | Die Kommunikation des Spiels muss über einen Chat stattfinden.                           | M           |
+| 3  | Es müssen mind. drei Levels mit unterschiedlichen Schwierigkeitsstufen sein.             | M           |
+| 4  | Das System soll auf Deutsch und Englisch zur Verfügung stehen. Standardsprache: Englisch | K           |
+| 5  | Die Kommunikation kann auch über ein Gespräch (Voice) stattfinden.                       | K           |
+| 6  | Chatbot – man spielt gegen einen Bot.                                                    | K           |
 
-### Developing with Gitpod
 
-This template has a fully-automated dev setup for [Gitpod](https://docs.gitlab.com/ee/integration/gitpod.html).
+| ID | Vorgehensziele                                                               | *M*uss / *K*ann |
+|----|------------------------------------------------------------------------------|:-------------:|
+| 1  | Die Entwicklung des Projektes soll iterativ erfolgen                         | M           |
+| 2  | Termine und Deadlines sind einzuhalten.                                      | M           |
+| 3  | CI / CD soll angewendet werden | K           |
 
-If you open this project in Gitpod, you'll get all Node dependencies pre-installed and Express will open a web preview.
+### Arbeitsablauf
+1. Ein Issue wird erstellt. Er bekommt entsprechende Tags und verwendet wo vorhanden die Vorlage.
+1. (Bei Grossem Aufwand oder Impact) Der Issue wird diskutiert und mit ~"status::todo" als beriet für die Entwicklung markiert
+1. Der Issue wird assigend und wenn begonnen wird mit ~"status::progress" markiert. Es wird aus [dev](https://git.ffhs.ch/ramona.koksa/whoami/-/tree/dev) ein neuer branch erstellt. Es kann bereits ein merge-request erstellt werden, dieser sollte aber als `DRAFT:` makiert sein.
+1. Mit `/spend` kann die verwendete Zeit getrackt werden.
+1. Ist der Code ready, wird ein merge-request erstellt oder beim bestehenden die `DRAFT:` markierung entfernt. Der merge-request ist mit dem issue zu verknüpfen: `Resolves #9` sollte reichen. Es ist sicherzustellen, dass der branch auf dev rebased ist und die History sauber ist.
+1. Die andere Person assignen und das label ~"status::review" setzen.
+1. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie glücklich merget sie nach dev.
+
+### Definition of Done
+- Die verwendeten Bibliotheken (Libraries) werden dokumentiert
+- Beschreibung der Funktionalität erstellt
+- Struktur des Programms dokumentiert
+- Entsprechende Userdokumentation erstellt
+- Testbare Funktionalität getestet
+- Peer reviewed
+***
+
+## Anforderungen
+Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label ~user-story versehen.
+Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
+
+![img.png](client/src/img/login-wireframe.png)
+![img.png](client/src/img/game.png)
+
+## Protokoll Client Server
+
+Folgende Diagramme beschreiben die Kommunikation zwischen Clients und Server. Client X ist jeweils ein spezifischer Client, Other Clients beschreibt eine beliebige Anzahl anderer Cleints.
+
+Der Server Broadcastet jeweilige Aktionen an alle Clients, diese Messages wurden zu gunsten der Übersichtlichkeit weggelassen.
+
+### Chat
+
+Jederzeit kann ein User etwas in den Chat schreiben. Für die Spiellogik müssen die Interaktionen jedoch als solche markiert werden. Diese Logik passiert auf dem Client. Somit werden die Nachrichten entweder als entsprechende Interaktion gesendet oder als Chat.
+
+Der Server wertet die Interaktionen gemäss dem Spielablauf aus, Chat-Nachrichten werden an alle (auch den Sender) im Raum gebroadcasted. Sie beinhalten eine Senderkennung und die Nachricht.
+
+### Join & Leave
+
+```mermaid
+    sequenceDiagram
+        participant s as Server
+        participant c1 as Client X
+        participant c2 as Other Clients
+        activate c1
+        c1->>+s: CREATE
+        s->>+c1: {id}
+        c1->>c2: "The ID is {id}"
+        activate c2
+        c2->>s: JOIN {id}
+        c1->>s: START
+        loop Game
+            s -> c2: game
+        end
+
+        c2 ->> s : LEAVE
+        deactivate c2
+        c1 ->>s : LEAVE
+
+        deactivate c1
+        deactivate s
+```
+
+### Game loop, Serverseitig
+
+```mermaid
+graph TB
+    1[Communicate Persona's expect own] -->
+    2[Communicate Order] -->
+    3[Expect Question from the one on turn] -->8{Solution Question?};
+    8 -->|Yes| 9{Correct?};
+    9 -->|Yes| 10[End Game];
+    9 -->|No| 7;
+    8 --> |No| 4[Communicate Question, Start Timer, expect Votes or timer end];
+    4 --> 5{Cout votes, evaluate} ;
+    5 -->|Yes| 6[Same Client again];
+    5 -->|No| 7[Next Client]; 
+    6 --> 3; 7 --> 3;
+
+
+```
