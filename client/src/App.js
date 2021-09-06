@@ -2,6 +2,9 @@ import logo from './img/logo.png';
 import './App.css';
 import React, {useEffect, useState} from 'react';
 
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {Container, Nav, Navbar} from "react-bootstrap";
+
 function App() {
 
     const [state, setState] = useState("noene")
@@ -21,15 +24,40 @@ function App() {
 
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                {show ? <h2> Loook {state}</h2> : <p>None yet</p>}
-            </header>
-        </div>
+        <Router>
+            <Navbar expand="lg">
+                <Container>
+                    <Navbar.Brand as={Link} to="/"> React-Bootstrap</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link as={Link} to="/" >Home</Nav.Link>
+                            <Nav.Link as={Link} to="/no">Link</Nav.Link>
+
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+
+
+            <Container>
+                <Switch>
+                    <Route path="/no">
+                        <p> nothin ghere</p>
+                    </Route>
+                    <Route path="/">
+                        <header className="App-header">
+                            <img src={logo} className="App-logo" alt="logo"/>
+                            <p>
+                                Edit <code>src/App.js</code> and save to reload.
+                            </p>
+                            {show ? <h2> Loook {state}</h2> : <p>None yet</p>}
+                        </header>
+                    </Route>
+                </Switch>
+            </Container>
+        </Router>
+
     );
 }
 
