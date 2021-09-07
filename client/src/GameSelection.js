@@ -2,10 +2,19 @@ import {Route} from "react-router-dom";
 import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import { io } from "socket.io-client";
 import {Button} from "react-bootstrap";
-function Game() {
+import {useEffect} from "react";
+function Game(props) {
 
     const {id} = useParams();
-    const socket = io.connect("/");
+    let socket
+
+    useEffect(() => {
+        socket = io.connect("/");
+        return () => {
+            socket.disconnect()
+        }
+    })
+
 
     function post(){
         socket.emit("joinRoom", {username: "usernameplaceholder", roomname: "roomnameplaceholder"})
