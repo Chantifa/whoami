@@ -4,7 +4,7 @@ const app = express();
 const socket = require("socket.io");
 
 
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 
 const port = process.env.PORT || 5000;
 
@@ -28,7 +28,7 @@ const c_users = [];
 
 // joins the user to the specific chatroom
 function join_User(id, username, room) {
-    const p_user = { id, username, room };
+    const p_user = {id, username, room};
 
     c_users.push(p_user);
     console.log(c_users, "users");
@@ -54,7 +54,7 @@ function user_Disconnect(id) {
 io.on("connection", (socket) => {
     console.log(`user ${socket.id} connected`)
     //for a new user joining the room
-    socket.on("joinRoom", ({ username, roomname }) => {
+    socket.on("joinRoom", ({username, roomname}) => {
         //* create user
         const p_user = join_User(socket.id, username, roomname);
         console.log(socket.id, "=id");
@@ -77,6 +77,7 @@ io.on("connection", (socket) => {
 
     //user sending message
     socket.on("chat", (text) => {
+        console.log(`user ${socket.id} messaged ${JSON.stringify(text)}`)
         //gets the room user and the message sent
         const p_user = get_Current_User(socket.id);
 
