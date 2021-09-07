@@ -138,3 +138,22 @@ graph TB
 
 
 ```
+
+## Frameworks
+Exact packages and versions can be found in the [server package.json](./package.json) and the [client package.json](client/package.json).
+
+### Server dependencies
+
+ 1. `express`:   this is the node web server
+ 2. `socket.io`: this framework wraps websockets for us, here the socket.io server
+ 3. `nodemon`:   the node demon is used for automatic rebuilds on changes during development
+
+### Client dependencies
+ 
+ 1. `react`: the framework the client is written in
+ 2. `bootstrap`: css framework for low effort good behaviour
+ 3. `react-bootstarp`: bootstrap styled html as react components
+ 4. `react-dom`, `react-scripts`, `web-vitals`:  react boilerplate from `create-react-app`
+ 5. `react-router-dom`:  utility for routing and navigation inside the app
+ 6. `socket.io-client`: client implementation to connect to the socket.io server
+
