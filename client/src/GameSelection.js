@@ -7,10 +7,10 @@ import {useEffect, useRef, useState} from "react";
 function Game(props) {
 
     const {id} = useParams();
-    const socketRef = useRef(null)
+    const socketRef = useRef(null) //todo: extract to socketEffects
     const [text, setText] = useState("");
 
-    useEffect(() => {
+    useEffect(() => { //todo: extract to socketEffects
         if (socketRef.current === null) {
             console.log("connect")
             socketRef.current = io.connect("/")
@@ -25,6 +25,15 @@ function Game(props) {
             socket.disconnect()
         }
     }, [id, props.username])
+
+    useEffect(() => {//todo: extract to socketEffects
+            const {current: socket} = socketRef;
+            socket.on("message", (data) => {
+                console.log("got a message:")
+                console.log(data)
+            })
+        }
+    , [])
 
 
     function handleSubmit(event) {
