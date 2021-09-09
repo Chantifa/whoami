@@ -74,10 +74,31 @@ Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegend
 unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label ~
 user-story versehen. Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
-![img.png](client/src/img/login-wireframe.png)
-![img.png](client/src/img/game.png)
+![wireframe of the login](client/src/img/login-wireframe.png)
+![wireframe of the game](client/src/img/game.png)
 
-## Protokoll Client Server
+## Getting started
+
+```bash
+git clone
+npm ci
+cd /client
+npm ci
+cd ..
+npm run start-all
+```
+
+## Architektur
+Die Applikation besteht aus zwei Teilen: dem Frontend und dem Backend. Diese werden in den folgenden Abschnitten beschrieben
+
+### Backend
+Das Backend ist ein simples `express` mit einem server.js, welches sowohl websockets als auch http requests entgegennimmt.
+
+### Frontend
+Das Frontend ist React basiert und befindet sich under [client/](client/). Bei der Entwicklung existiert hierzu ein development server, welcher jeweils einen build
+erstellt und diesen an den Client sendet. Für den Kunden kann dann ein produktiv build erstellt und deployed werden.
+
+### Protokoll Client Server
 
 Folgende Diagramme beschreiben die Kommunikation zwischen Clients und Server. Client X ist jeweils ein spezifischer
 Client, Other Clients beschreibt eine beliebige Anzahl anderer Cleints.
@@ -85,7 +106,7 @@ Client, Other Clients beschreibt eine beliebige Anzahl anderer Cleints.
 Der Server Broadcastet jeweilige Aktionen an alle Clients, diese Messages wurden zu gunsten der Übersichtlichkeit
 weggelassen.
 
-### Chat
+#### Chat
 
 Jederzeit kann ein User etwas in den Chat schreiben. Für die Spiellogik müssen die Interaktionen jedoch als solche
 markiert werden. Diese Logik passiert auf dem Client. Somit werden die Nachrichten entweder als entsprechende
@@ -94,7 +115,7 @@ Interaktion gesendet oder als Chat.
 Der Server wertet die Interaktionen gemäss dem Spielablauf aus, Chat-Nachrichten werden an alle (auch den Sender) im
 Raum gebroadcasted. Sie beinhalten eine Senderkennung und die Nachricht.
 
-### Join & Leave
+#### Join & Leave
 
 ```mermaid
     sequenceDiagram
@@ -120,7 +141,7 @@ Raum gebroadcasted. Sie beinhalten eine Senderkennung und die Nachricht.
         deactivate s
 ```
 
-### Game loop, Serverseitig
+#### Game loop, Serverseitig
 
 ```mermaid
 graph TB
@@ -139,16 +160,16 @@ graph TB
 
 ```
 
-## Frameworks
+### Frameworks
 Exact packages and versions can be found in the [server package.json](./package.json) and the [client package.json](client/package.json).
 
-### Server dependencies
+#### Server dependencies
 
  1. `express`:   this is the node web server
  2. `socket.io`: this framework wraps websockets for us, here the socket.io server
  3. `nodemon`:   the node demon is used for automatic rebuilds on changes during development
 
-### Client dependencies
+#### Client dependencies
  
  1. `react`: the framework the client is written in
  2. `bootstrap`: css framework for low effort good behaviour

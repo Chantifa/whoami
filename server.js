@@ -14,14 +14,6 @@ const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 const io = new Server(server);
 
 
-// //listen to socket connections
-// io.on('connection', (socket) => {
-//     console.log('a user connected');
-//     socket.on('disconnect', () => {
-//         console.log('user disconnected');
-//     });
-// });
-
 // FIXME START COPY PASTA https://www.section.io/engineering-education/creating-a-real-time-chat-app-with-react-socket-io-with-e2e-encryption/
 
 const c_users = [];
