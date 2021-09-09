@@ -10,7 +10,7 @@
   "scripts": {
     "start": "nodemon --ignore client/ server.js",
     "start-client": "npm --prefix ./client start",
-    "start-all": "npm start & npm run start-client"
+    "start-all": "npm start & npm run start-client && fg"
   },
   "repository": {
     "type": "git",
