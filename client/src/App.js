@@ -14,7 +14,7 @@ function App() {
 
 
     useEffect(() => {
-        fetch("/express_backend")
+        fetch("/express_get_test")
             .then(r => r.json())
             .then(data => {
                 setState(data.express)
