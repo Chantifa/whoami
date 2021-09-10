@@ -14,8 +14,8 @@ As a ‹role›, I'd like to ‹feature short description› [ , in order to ‹
 
 ### Roles
 
-* _User_ 
-* _Developper_ 
+* _User_
+* _Developper_
 
 ### A good user story should be (I-N-V-E-S-T principle)
 

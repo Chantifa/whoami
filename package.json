@@ -4,11 +4,14 @@
   "description": "This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "socket.io": "^4.2.0"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --ignore client/ server.js",
+    "start-client": "npm --prefix ./client start",
+    "start-all": "npm start & npm run start-client && fg",
+    "test": "echo 'no tests for server yet' && exit 0"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
