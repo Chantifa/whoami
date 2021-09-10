@@ -9,10 +9,8 @@
 image: node:latest
 
 stages:
-  - build-server
-  - build-client
-  - test-server
-  - test-client
+  - build
+  - test
 
 
 
@@ -24,23 +22,24 @@ cache:
     - client/node_modules
 
 build-server:
+    stage: build
     script:
         - npm ci
 build-client:
+    stage: build
     script:
         - cd client/
         - npm ci
         - cd ..
 
 test_server:
+  stage: test
   script:
       - npm run test 
 test_client:
+    stage: test
     script:
         - cd client/
         - npm test
         - cd ..
-
-include:
-  - template: Code-Quality.gitlab-ci.yml
 
