@@ -71,8 +71,8 @@ dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
 ## Anforderungen
 
 Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository
-unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label ~
-user-story versehen. Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
+unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label ~user-story versehen. 
+Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
 ![wireframe of the login](client/src/img/login-wireframe.png)
 ![wireframe of the game](client/src/img/game.png)
