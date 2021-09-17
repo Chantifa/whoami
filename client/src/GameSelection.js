@@ -3,6 +3,7 @@ import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {io} from "socket.io-client";
 import {Button, Form} from "react-bootstrap";
 import {useEffect, useRef, useState} from "react";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE_RECEIVER, CHAT_MESSAGE_SENDER, JOIN_ROOM} from "./common/Types";
 
 function Game(props) {
 
@@ -19,18 +20,26 @@ function Game(props) {
 
         const {current: socket} = socketRef;
 
-        socket.emit("joinRoom", {username: props.username, roomname: id})
+        let data = {userName: props.userName, roomName: id};
+        data = {...JOIN_ROOM.getDto(), ...data}
+
+        socket.emit(JOIN_ROOM.id, data)
+
         return () => {
             console.log("disconnect")
             socket.disconnect()
         }
-    }, [id, props.username])
+    }, [id, props.userName])
 
     useEffect(() => {//todo: extract to socketEffects
             const {current: socket} = socketRef;
-            socket.on("message", (data) => {
+            socket.on(CHAT_ANNOUNCEMENT, (data) => {
                 console.log("got a message:")
-                console.log(data)
+                console.info(data)
+            })
+            socket.on(CHAT_MESSAGE_RECEIVER.id, (data) => {
+                console.log(`${data.user.userName}: ${data.message}`)
+                console.info(data)
             })
         }
     , [])
@@ -38,7 +47,8 @@ function Game(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        socketRef.current.emit("chat", {text})
+        const payload = CHAT_MESSAGE_SENDER.getDto()
+        socketRef.current.emit(CHAT_MESSAGE_SENDER.id, {...payload, message: text})
         setText("")
     }
 
@@ -68,7 +78,7 @@ function GameSelection() {
 
     return <>
         <Route path={`${path}/:id`}>
-            <Game username="usernameplaceholder"/>
+            <Game userName="usernameplaceholder"/>
         </Route>
         <Route exact path={path}>
             Start a new game

@@ -8,7 +8,7 @@
     "socket.io": "^4.2.0"
   },
   "scripts": {
-    "start": "nodemon --ignore client/ server.js",
+    "start": "nodemon server.js",
     "start-client": "npm --prefix ./client start",
     "start-all": "npm start & npm run start-client && fg",
     "test": "echo 'no tests for server yet' && exit 0"
@@ -22,5 +22,8 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.12"
+  },
+  "nodemonConfig": {
+    "ignore": ["client/src/*.js"]
   }
 }
