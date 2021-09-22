@@ -54,7 +54,7 @@ dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
    merge-request ist mit dem issue zu verknüpfen: `Resolves #9` sollte reichen. Es ist sicherzustellen, dass der branch
    auf dev rebased ist und die History sauber ist.
 1. Die andere Person assignen und das label ~"status::review" setzen.
-1. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie glücklich merget
+1. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie glücklich, merget
    sie nach dev.
 
 ### Definition of Done
@@ -90,6 +90,7 @@ npm run start-all
 
 ## Architektur
 Die Applikation besteht aus zwei Teilen: dem Frontend und dem Backend. Diese werden in den folgenden Abschnitten beschrieben
+Gemeinsam existiert [der common Ordner](client/src/common), auf welchen auch das Backend zugreift.
 
 ### Backend
 Das Backend ist ein simples `express` mit einem server.js, welches sowohl websockets als auch http requests entgegennimmt.
@@ -101,10 +102,10 @@ erstellt und diesen an den Client sendet. Für den Kunden kann dann ein produkti
 ### Protokoll Client Server
 
 Folgende Diagramme beschreiben die Kommunikation zwischen Clients und Server. Client X ist jeweils ein spezifischer
-Client, Other Clients beschreibt eine beliebige Anzahl anderer Cleints.
+Client, Other Clients beschreibt eine beliebige Anzahl anderer Clients.
 
-Der Server Broadcastet jeweilige Aktionen an alle Clients, diese Messages wurden zu gunsten der Übersichtlichkeit
-weggelassen.
+Nachrichten und deren Aufbau können [im common Ordner](client/src/common) gefunden werden.
+
 
 #### Chat
 
@@ -113,29 +114,38 @@ markiert werden. Diese Logik passiert auf dem Client. Somit werden die Nachricht
 Interaktion gesendet oder als Chat.
 
 Der Server wertet die Interaktionen gemäss dem Spielablauf aus, Chat-Nachrichten werden an alle (auch den Sender) im
-Raum gebroadcasted. Sie beinhalten eine Senderkennung und die Nachricht.
+Raum gebroadcasted. 
 
 #### Join & Leave
 
 ```mermaid
     sequenceDiagram
+        autonumber
         participant s as Server
         participant c1 as Client X
         participant c2 as Other Clients
         activate c1
-        c1->>+s: CREATE
-        s->>+c1: {id}
-        c1->>c2: "The ID is {id}"
+        c1->>+s: JOIN_ROOM {id}
+        s->>+c1: CHAT_ANNOUNCEMENT {Welcome}
+        c1-->>c2: "The ID is {id}"
         activate c2
-        c2->>s: JOIN {id}
-        c1->>s: START
+        c2->>s: JOIN_ROOM {id}
+        s->>+c1: CHAT_ANNOUNCEMENT {Welcome}
+        
+        s -> c2: GAME_SETUP
         loop Game
-            s -> c2: game
+            c1 ->> s : GAME_QUESTION
+            s ->> c2 : GAME_STATE
+            loop Expect all answers
+               c2 ->> s: GAME_VOTE
+               s ->> c2: GAME_STATE
+            end
+            s ->> c2: CHAT_ANNOUNCEMENT {Results}
         end
 
-        c2 ->> s : LEAVE
+        c2 ->> s : LEAVE_ROOM {id}
         deactivate c2
-        c1 ->>s : LEAVE
+        c1 ->>s : LEAVE_ROOM {id}
 
         deactivate c1
         deactivate s
@@ -145,17 +155,14 @@ Raum gebroadcasted. Sie beinhalten eine Senderkennung und die Nachricht.
 
 ```mermaid
 graph TB
-    1[Communicate Persona's expect own] -->
-    2[Communicate Order] -->
-    3[Expect Question from the one on turn] -->8{Solution Question?};
-    8 -->|Yes| 9{Correct?};
-    9 -->|Yes| 10[End Game];
-    9 -->|No| 7;
-    8 --> |No| 4[Communicate Question, Start Timer, expect Votes or timer end];
-    4 --> 5{Cout votes, evaluate} ;
-    5 -->|Yes| 6[Same Client again];
-    5 -->|No| 7[Next Client]; 
-    6 --> 3; 7 --> 3;
+    1[Communicate persona's expect own] -->
+    2[Communicate 0rder] -->
+    3[Expect question from the one on turn] --> 4[Communicate question, start timer, expect all votes or timer end];
+    5 -->|Yes| 6{Solution question?};
+    6 -->|Yes| 8[End game];
+    6 & 5-->|No| 7[Next player] --> 3;
+    4 --> 5{The majority voted for} ;    
+
 
 
 ```

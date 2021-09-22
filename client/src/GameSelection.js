@@ -3,6 +3,8 @@ import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {io} from "socket.io-client";
 import {Button, Form} from "react-bootstrap";
 import {useEffect, useRef, useState} from "react";
+import {CHAT_REQUEST, JOIN_ROOM} from "./common/Requests";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} from "./common/Responses";
 
 function Game(props) {
 
@@ -19,18 +21,26 @@ function Game(props) {
 
         const {current: socket} = socketRef;
 
-        socket.emit("joinRoom", {username: props.username, roomname: id})
+        let data = {userName: props.userName, roomName: id};
+        data = {...JOIN_ROOM.getDto(), ...data}
+
+        socket.emit(JOIN_ROOM.id, data)
+
         return () => {
             console.log("disconnect")
             socket.disconnect()
         }
-    }, [id, props.username])
+    }, [id, props.userName])
 
     useEffect(() => {//todo: extract to socketEffects
             const {current: socket} = socketRef;
-            socket.on("message", (data) => {
+            socket.on(CHAT_ANNOUNCEMENT.id, (data) => {
                 console.log("got a message:")
-                console.log(data)
+                console.info(data)
+            })
+            socket.on(CHAT_MESSAGE.id, (data) => {
+                console.log(`${data.user.userName}: ${data.message}`)
+                console.info(data)
             })
         }
     , [])
@@ -38,7 +48,7 @@ function Game(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        socketRef.current.emit("chat", {text})
+        socketRef.current.emit(CHAT_REQUEST.id, CHAT_REQUEST.getDto(text))
         setText("")
     }
 
@@ -68,12 +78,12 @@ function GameSelection() {
 
     return <>
         <Route path={`${path}/:id`}>
-            <Game username="usernameplaceholder"/>
+            <Game userName="usernameplaceholder"/>
         </Route>
         <Route exact path={path}>
             Start a new game
         </Route>
-
+        <div dangerouslySetInnerHTML={{ __html: `<!-- ${url} -->` }}/>
     </>
 
 }
