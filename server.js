@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 
 const {Server} = require("socket.io");
-require("./client/src/common/Types");
+require("./client/src/common/Requests");
 
-const {JOIN_ROOM, CHAT_ANNOUNCEMENT, CHAT_MESSAGE_RECEIVER, CHAT_MESSAGE_SENDER, LEAVE_ROOM} = require("./client/src/common/Types");
 const {addRoomMembership, removeRoomMembership, getCurrentRoomMembership} = require("./RoomMembershipRepo");
+const {JOIN_ROOM, CHAT_REQUEST} = require("./client/src/common/Requests");
+const {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} = require("./client/src/common/Responses");
 const EXPECTED_TYPES_VERSION = "0.1.0"
 
 const port = process.env.PORT || 5000;
@@ -15,15 +16,19 @@ const port = process.env.PORT || 5000;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 const io = new Server(server);
 
-// FIXME START COPY PASTA https://www.section.io/engineering-education/creating-a-real-time-chat-app-with-react-socket-io-with-e2e-encryption/
-
-
 
 //initializing the socket io connection
 io.on("connection", (socket) => {
     console.info(`user ${socket.id} connected`)
+    //now define callbacks for different events:
+
     //new user joining the room
-    socket.on(JOIN_ROOM.id, ({userName, roomName}) => {
+    socket.on(JOIN_ROOM.id, ({userName, roomName, version}) => {
+        if (EXPECTED_TYPES_VERSION !== version){
+            console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
+            return
+        }
+
 
         addRoomMembership({userId: socket.id, userName}, roomName);
         socket.join(roomName);
@@ -40,16 +45,16 @@ io.on("connection", (socket) => {
     });
 
     //user sending message
-    socket.on(CHAT_MESSAGE_SENDER.id, (dto) => {
+    socket.on(CHAT_REQUEST.id, (dto) => {
         console.log(`user ${socket.id} messaged ${JSON.stringify(dto)}`)
         //gets the room user and the message sent
         const roomMembership = getCurrentRoomMembership(socket.id)
 
-        let payload = CHAT_MESSAGE_RECEIVER.getDto();
+        let payload = CHAT_MESSAGE.getDto();
         payload.user = roomMembership.user
         payload.message = dto.message
 
-        io.to(roomMembership.room).emit(CHAT_MESSAGE_RECEIVER.id, payload);
+        io.to(roomMembership.room).emit(CHAT_MESSAGE.id, payload);
     });
 
     //when the user disconnects from the room

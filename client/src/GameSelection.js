@@ -3,7 +3,8 @@ import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {io} from "socket.io-client";
 import {Button, Form} from "react-bootstrap";
 import {useEffect, useRef, useState} from "react";
-import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE_RECEIVER, CHAT_MESSAGE_SENDER, JOIN_ROOM} from "./common/Types";
+import {CHAT_REQUEST, JOIN_ROOM} from "./common/Requests";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} from "./common/Responses";
 
 function Game(props) {
 
@@ -33,11 +34,11 @@ function Game(props) {
 
     useEffect(() => {//todo: extract to socketEffects
             const {current: socket} = socketRef;
-            socket.on(CHAT_ANNOUNCEMENT, (data) => {
+            socket.on(CHAT_ANNOUNCEMENT.id, (data) => {
                 console.log("got a message:")
                 console.info(data)
             })
-            socket.on(CHAT_MESSAGE_RECEIVER.id, (data) => {
+            socket.on(CHAT_MESSAGE.id, (data) => {
                 console.log(`${data.user.userName}: ${data.message}`)
                 console.info(data)
             })
@@ -47,8 +48,7 @@ function Game(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        const payload = CHAT_MESSAGE_SENDER.getDto()
-        socketRef.current.emit(CHAT_MESSAGE_SENDER.id, {...payload, message: text})
+        socketRef.current.emit(CHAT_REQUEST.id, CHAT_REQUEST.getDto(text))
         setText("")
     }
 
@@ -83,7 +83,7 @@ function GameSelection() {
         <Route exact path={path}>
             Start a new game
         </Route>
-
+        <div dangerouslySetInnerHTML={{ __html: `<!-- ${url} -->` }}/>
     </>
 
 }
