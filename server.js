@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
 
         if (roomMembership) {
             io.to(roomMembership.room).emit(CHAT_ANNOUNCEMENT.id, {
-                message: `${roomMembership.username} has left the room`
+                message: `${roomMembership.user.userName} has left the room`
             });
         }
     });
