@@ -1,10 +1,8 @@
 import {addRoomMembership, getCurrentRoomMembership, removeRoomMembership} from "./RoomMembershipRepo.js";
-import * as req from "./client/src/common/Requests.mjs";
+import {CHAT_REQUEST, JOIN_ROOM} from "./client/src/common/Requests.mjs";
 import {Server} from "socket.io";
-import * as res from "./client/src/common/Responses.mjs";
 import express from "express";
-
-const {CHAT_REQUEST, JOIN_ROOM} = req
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} from "./client/src/common/Responses.mjs";
 
 
 const app = express();
@@ -26,7 +24,7 @@ io.on("connection", (socket) => {
 
     //new user joining the room
     socket.on(JOIN_ROOM.id, ({userName, roomName, version}) => {
-        if (EXPECTED_TYPES_VERSION !== version){
+        if (EXPECTED_TYPES_VERSION !== version) {
             console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
             return
         }
@@ -38,10 +36,10 @@ io.on("connection", (socket) => {
         //display a welcome message to the user who have joined a room
         const message = `Welcome ${userName}`
 
-        socket.emit(res.CHAT_ANNOUNCEMENT.id, {message});
+        socket.emit(CHAT_ANNOUNCEMENT.id, {message});
 
         //displays a joined room message to all room users
-        socket.broadcast.to(roomName).emit(res.CHAT_ANNOUNCEMENT.id, {
+        socket.broadcast.to(roomName).emit(CHAT_ANNOUNCEMENT.id, {
             message: `${userName} has joined the chat`,
         });
     });
@@ -52,11 +50,11 @@ io.on("connection", (socket) => {
         //gets the room user and the message sent
         const roomMembership = getCurrentRoomMembership(socket.id)
 
-        let payload = res.CHAT_MESSAGE.getDto();
+        let payload = CHAT_MESSAGE.getDto();
         payload.user = roomMembership.user
         payload.message = dto.message
 
-        io.to(roomMembership.room).emit(res.CHAT_MESSAGE.id, payload);
+        io.to(roomMembership.room).emit(CHAT_MESSAGE.id, payload);
     });
 
     //when the user disconnects from the room
@@ -66,7 +64,7 @@ io.on("connection", (socket) => {
         const roomMembership = removeRoomMembership(socket.id);
 
         if (roomMembership) {
-            io.to(roomMembership.room).emit(res.CHAT_ANNOUNCEMENT.id, {
+            io.to(roomMembership.room).emit(CHAT_ANNOUNCEMENT.id, {
                 message: `${roomMembership.username} has left the room`
             });
         }
