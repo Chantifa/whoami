@@ -4,7 +4,7 @@
  * server -> client
  * @type {{getDto(message: string, user: {userName: string, userId: string}): {message: string, user: {userName: string, userId: string}}, id: string}}
  */
-const CHAT_MESSAGE = {
+export const CHAT_MESSAGE = {
     id: "CHAT_MESSAGE",
     getDto(message, user) {
         return {
@@ -19,7 +19,7 @@ const CHAT_MESSAGE = {
  * server -> client
  * @type {{getDto(string): {message: string}, id: string}}
  */
-const CHAT_ANNOUNCEMENT = {
+export const CHAT_ANNOUNCEMENT = {
     id: "CHAT_ANNOUNCEMENT",
     getDto(message) {
         return {
@@ -34,7 +34,7 @@ const CHAT_ANNOUNCEMENT = {
  * server -> client
  * @type {{getDto(*, *): {personaMapInPlayOrder: *, deadline: *}, id: string}}
  */
-const GAME_SETUP = {
+export const GAME_SETUP = {
     id: "GAME_SETUP",
     getDto(map, minutes) {
         return {
@@ -54,7 +54,7 @@ let _stateNumber = 0
  * The message to receive updates on the state
  * @type {{getDto(*, *, *, *): {currentUser: User, stateTime: Date, stateNumber: number, votes: [[]], currentQuestion: String, deadline: Date}, id: string}}
  */
-const GAME_STATE = {
+export const GAME_STATE = {
     id: "GAME_STATE",
     getDto(user, question, deadline, voteMap) {
         return {
@@ -66,11 +66,4 @@ const GAME_STATE = {
             stateTime: new Date()
         }
     }
-}
-
-module.exports = {
-    CHAT_ANNOUNCEMENT,
-    CHAT_MESSAGE,
-    GAME_SETUP,
-    GAME_STATE,
 }

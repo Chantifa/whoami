@@ -3,8 +3,8 @@ import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {io} from "socket.io-client";
 import {Button, Form} from "react-bootstrap";
 import {useEffect, useRef, useState} from "react";
-import {CHAT_REQUEST, JOIN_ROOM} from "./common/Requests";
-import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} from "./common/Responses";
+import {CHAT_REQUEST, JOIN_ROOM} from "./common/Requests.mjs";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} from "./common/Responses.mjs";
 
 function Game(props) {
 

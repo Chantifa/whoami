@@ -2,7 +2,7 @@
  * The chat message event to send
  * @type {{getDto(message: string): {message: string}, id: string}}
  */
-const CHAT_REQUEST = {
+export const CHAT_REQUEST = {
     id: "CHAT_REQUEST",
     getDto(message) {
         return {
@@ -11,11 +11,12 @@ const CHAT_REQUEST = {
     }
 }
 
+
 /**
  * The Message to join a room
  * @type {{getDto(userName: string, roomName: string): {userName: string, roomName: string, version: string}, id: string}}
  */
-const JOIN_ROOM = {
+export const JOIN_ROOM = {
     id: "JOIN_ROOM",
     getDto(userName, roomName) {
         return {
@@ -30,7 +31,7 @@ const JOIN_ROOM = {
  * The message to leave a room
  * @type {{getDto(string): {roomName: string}, id: string}}
  */
-const LEAVE_ROOM = {
+export const LEAVE_ROOM = {
     id: "LEAVE_ROOM",
     getDto(roomName) {
         return {
@@ -43,7 +44,7 @@ const LEAVE_ROOM = {
  * The message to submit your question
  * @type {{getDto(): {question: string}, id: string}}
  */
-const GAME_QUESTION = {
+export const GAME_QUESTION = {
     id: "GAME_QUESTION",
     getDto() {
         return {
@@ -57,7 +58,7 @@ const GAME_QUESTION = {
  * true means yes, false means no
  * @type {{getDto(question: string, vote: boolean): {question: string, vote: boolean}, id: string}}
  */
-const GAME_VOTE = {
+export const GAME_VOTE = {
     id: "GAME_VOTE",
     getDto(question, vote) {
         return {
@@ -65,12 +66,4 @@ const GAME_VOTE = {
             vote
         }
     }
-}
-
-module.exports = {
-    CHAT_REQUEST,
-    JOIN_ROOM,
-    LEAVE_ROOM,
-    GAME_QUESTION,
-    GAME_VOTE
 }
