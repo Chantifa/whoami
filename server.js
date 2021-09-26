@@ -1,12 +1,12 @@
-const express = require('express');
+import {addRoomMembership, getCurrentRoomMembership, removeRoomMembership} from "./RoomMembershipRepo.js";
+import {CHAT_REQUEST, JOIN_ROOM} from "./client/src/common/Requests.mjs";
+import {Server} from "socket.io";
+import express from "express";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} from "./client/src/common/Responses.mjs";
+
+
 const app = express();
 
-const {Server} = require("socket.io");
-require("./client/src/common/Requests");
-
-const {addRoomMembership, removeRoomMembership, getCurrentRoomMembership} = require("./RoomMembershipRepo");
-const {JOIN_ROOM, CHAT_REQUEST} = require("./client/src/common/Requests");
-const {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} = require("./client/src/common/Responses");
 const EXPECTED_TYPES_VERSION = "0.1.0"
 
 const port = process.env.PORT || 5000;
@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
 
     //new user joining the room
     socket.on(JOIN_ROOM.id, ({userName, roomName, version}) => {
-        if (EXPECTED_TYPES_VERSION !== version){
+        if (EXPECTED_TYPES_VERSION !== version) {
             console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
             return
         }

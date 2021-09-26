@@ -2,7 +2,7 @@
  * The user object used in different messages
  * @type {{getDto(): {userName: string, userId: string}, id: string}}
  */
-const USER = {
+export const USER = {
     id: "USER",
     getDto() {
         return {
@@ -12,4 +12,3 @@ const USER = {
     }
 
 }
-module.exports = {USER}
