@@ -1,4 +1,3 @@
-
 /**
  * The chat message event to receive client messages
  * server -> client
@@ -48,7 +47,7 @@ export const GAME_SETUP = {
  * @type {number}
  * @private
  */
-let _stateNumber = 0
+let _stateNumber = 0 //todo this shold be per room not global probably
 
 /**
  * The message to receive updates on the state

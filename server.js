@@ -1,8 +1,8 @@
 import {addRoomMembership, getCurrentRoomMembership, removeRoomMembership} from "./RoomMembershipRepo.js";
-import {CHAT_REQUEST, JOIN_ROOM} from "./client/src/common/Requests.mjs";
+import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./client/src/common/Requests.mjs";
 import {Server} from "socket.io";
 import express from "express";
-import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} from "./client/src/common/Responses.mjs";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, GAME_SETUP, GAME_STATE} from "./client/src/common/Responses.mjs";
 
 
 const app = express();
@@ -69,6 +69,23 @@ io.on("connection", (socket) => {
             });
         }
     });
+
+    socket.on(GAME_START.id,()=> {
+        const roomMembership = getCurrentRoomMembership(socket.id);
+        io.to(roomMembership.room).emit(GAME_SETUP.id, GAME_SETUP.getDto(new Map(), 2)); //TODO
+    });
+
+    const todo = [GAME_VOTE.id, GAME_QUESTION.id]
+    todo.forEach(e => {
+        socket.on(e, (...data) => {
+            console.log(e)
+            const roomMembership = getCurrentRoomMembership(socket.id)
+            io.to(roomMembership.room).emit(GAME_STATE.id,
+                GAME_STATE.getDto(null, "no question, just TODO's", new Date(), new Map())
+            )
+
+        })
+    })
 });
 
 ////END COPY PASTA

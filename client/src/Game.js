@@ -1,8 +1,7 @@
 import {useParams} from "react-router-dom/cjs/react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import useServer from "./serverConnection";
 import {Button, Form} from "react-bootstrap";
-import * as PropTypes from "prop-types";
 
 function Message(props) {
     return <li> {JSON.stringify(props.data)}</li>
@@ -10,7 +9,7 @@ function Message(props) {
 
 function Chat(props) {
     return <ol>
-    {props.messages.map((data, key) => <Message key={key} data={data}/>)}
+        {props.messages.map((data, key) => <Message key={key} data={data}/>)}
     </ol>
 }
 
@@ -21,7 +20,7 @@ export default function Game(props) {
     const [text, setText] = useState("Hello");
     const handleChange = (event) => setText(event.target.value);
 
-    const {sendMessage, messageList, gameInfo, gameState} = useServer(props.userName, id)
+    const {sendMessage, messageList, gameInfo, gameState, sendVote, sendQuestion, startGame } = useServer(props.userName, id)
 
 
     function handleSubmit(event) {
@@ -31,11 +30,28 @@ export default function Game(props) {
         setText("")
     }
 
+    function test1() {
+        sendVote(true)
+    }
+
+    function test2() {
+        sendQuestion("who am I")
+    }
+    function test3() {
+        startGame()
+    }
 
 
     return <>
         <h1> Game {id} </h1>
-        <Chat messages={messageList} />
+        {/*Left side*/}
+        <p>{JSON.stringify(gameInfo)}</p>
+        <p>{JSON.stringify(gameState)}</p>
+        <Button onClick={test1}> vote </Button>
+        <Button onClick={test2}> question </Button>
+        <Button onClick={test3}> start </Button>
+        {/*Right side*/}
+        <Chat messages={messageList}/>
         <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label>Label</Form.Label>

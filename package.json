@@ -25,6 +25,8 @@
     "nodemon": "^2.0.12"
   },
   "nodemonConfig": {
-    "ignore": ["client/src/*.js"]
+    "ignore": [
+      "client/src/*.js"
+    ]
   }
 }
