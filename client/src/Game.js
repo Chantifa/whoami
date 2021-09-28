@@ -5,7 +5,7 @@ import {Button, Form} from "react-bootstrap";
 import * as PropTypes from "prop-types";
 
 function Message(props) {
-    return <li key={props.key}> {JSON.stringify(props.data)}</li>
+    return <li> {JSON.stringify(props.data)}</li>
 }
 
 function Chat(props) {
