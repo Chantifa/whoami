@@ -1,7 +1,7 @@
 import {Route} from "react-router-dom";
 import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {Button, Form} from "react-bootstrap";
-import { useState} from "react";
+import React, { useState} from "react";
 import useServer from "./serverConnection";
 
 function Game(props) {
@@ -12,11 +12,8 @@ function Game(props) {
 
     const {sendMessage, messageList} = useServer(props.userName, id)
 
-
     function handleSubmit(event) {
         event.preventDefault()
-
-
         sendMessage(text)
         setText("")
     }
@@ -60,4 +57,4 @@ function GameSelection() {
 
 }
 
-export default GameSelection
+export default GameSelection;
