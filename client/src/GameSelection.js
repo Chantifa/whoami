@@ -1,20 +1,54 @@
 import {Route} from "react-router-dom";
 import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
+import {io} from "socket.io-client";
 import {Button, Form} from "react-bootstrap";
-import React, { useState} from "react";
-import useServer from "./serverConnection";
+import {useEffect, useRef, useState} from "react";
+import {CHAT_REQUEST, JOIN_ROOM} from "./common/Requests.mjs";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE} from "./common/Responses.mjs";
 
 function Game(props) {
 
     const {id} = useParams();
+    const socketRef = useRef(null) //todo: extract to socketEffects
+    const [text, setText] = useState("");
 
-    const [text, setText] = useState("Hello");
+    useEffect(() => { //todo: extract to socketEffects
+        if (socketRef.current === null) {
+            console.log("connect")
+            socketRef.current = io.connect("/")
+        }
+        setText("Hallo")
 
-    const {sendMessage, messageList} = useServer(props.userName, id)
+        const {current: socket} = socketRef;
+
+        let data = {userName: props.userName, roomName: id};
+        data = {...JOIN_ROOM.getDto(), ...data}
+
+        socket.emit(JOIN_ROOM.id, data)
+
+        return () => {
+            console.log("disconnect")
+            socket.disconnect()
+        }
+    }, [id, props.userName])
+
+    useEffect(() => {//todo: extract to socketEffects
+            const {current: socket} = socketRef;
+            socket.on(CHAT_ANNOUNCEMENT.id, (data) => {
+                console.log("got a message:")
+                console.info(data)
+            })
+            socket.on(CHAT_MESSAGE.id, (data) => {
+                console.log(`${data.user.userName}: ${data.message}`)
+                console.info(data)
+            })
+        }
+        , [])
+
 
     function handleSubmit(event) {
         event.preventDefault()
-        sendMessage(text)
+        socketRef.current.emit(CHAT_REQUEST.id, CHAT_REQUEST.getDto(text))
         setText("")
     }
 
@@ -24,9 +58,6 @@ function Game(props) {
     return <>
         <h1> Game {id} </h1>
         <Form onSubmit={handleSubmit}>
-            <ol>
-                {messageList.map((data, index) => <li key={index}>{JSON.stringify(data)}</li>)}
-            </ol>
 
             <Form.Group>
                 <Form.Label>Label</Form.Label>
@@ -57,4 +88,4 @@ function GameSelection() {
 
 }
 
-export default GameSelection;
+export default GameSelection

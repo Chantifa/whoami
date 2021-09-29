@@ -5,6 +5,7 @@ import React, {useEffect, useState, useContext, createContext} from 'react';
 import Header from './common/Header'
 import Home from "./common/Home";
 import Rules from "./common/Rules";
+import GameSelection from "./GameSelection";
 
 import {BrowserRouter as Router, Route} from "react-router-dom";
 
@@ -46,6 +47,8 @@ function App() {
                     <Header/>
                     <Route path='/' component={Home} />
                     <Route path='/rules' component={Rules}/>
+                    <Route path='/game' component={GameSelection}/>
+                    <Route path='/game/7' component={GameSelection}/>
                 </AppContext.Provider>
             </div>
         </Router>
