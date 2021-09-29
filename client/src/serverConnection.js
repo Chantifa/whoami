@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {io} from "socket.io-client";
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./common/Requests.mjs";
-import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, GAME_SETUP, GAME_STATE} from "./common/Responses.mjs";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR, GAME_SETUP, GAME_STATE} from "./common/Responses.mjs";
 
 export default function useServer(userName, roomName) {
     const socketRef = useRef(null)
@@ -22,6 +22,11 @@ export default function useServer(userName, roomName) {
             socket.emit(JOIN_ROOM.id, {...JOIN_ROOM.getDto(), userName, roomName})
 
             //event handlers
+
+            socket.on(ERROR.id, (message) => {
+                console.error(message)
+            })
+
             socket.on(CHAT_ANNOUNCEMENT.id, (data) => {
                 setMessageList((old) => {
                     return [...old, data]
@@ -57,6 +62,7 @@ export default function useServer(userName, roomName) {
             //Cleanup of the hook
             return () => {
                 console.log("disconnect")
+                socket.removeAllListeners([CHAT_ANNOUNCEMENT.id, CHAT_MESSAGE.id, GAME_SETUP.id, GAME_STATE.id], ERROR.id)
                 socket.disconnect()
             }
         }

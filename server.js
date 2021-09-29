@@ -1,9 +1,17 @@
-import {addRoomMembership, getCurrentRoomMembership, removeRoomMembership} from "./RoomMembershipRepo.js";
+import {
+    addRoomMembership,
+    getCurrentRoomMembership,
+    getRoomMembers,
+    removeRoomMembership
+} from "./RoomMembershipRepo.js";
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./client/src/common/Requests.mjs";
 import {Server} from "socket.io";
 import express from "express";
-import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, GAME_SETUP, GAME_STATE} from "./client/src/common/Responses.mjs";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR, GAME_SETUP, GAME_STATE} from "./client/src/common/Responses.mjs";
+import * as fs from "fs";
 
+
+const {characters} = JSON.parse(fs.readFileSync('characters.json'))
 
 const app = express();
 
@@ -17,6 +25,27 @@ const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 const io = new Server(server);
 
 
+function randomChoice(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+function getRandomCharacterName(){
+    return randomChoice(characters).name
+}
+/**
+ * Shuffles array in place. ES6 version
+ * https://stackoverflow.com/a/6274381
+ * @param {Array} a items An array containing the items.
+ */
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const games = {}
+
 //initializing the socket io connection
 io.on("connection", (socket) => {
     console.info(`user ${socket.id} connected`)
@@ -28,7 +57,6 @@ io.on("connection", (socket) => {
             console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
             return
         }
-
 
         addRoomMembership({userId: socket.id, userName}, roomName);
         socket.join(roomName);
@@ -72,7 +100,33 @@ io.on("connection", (socket) => {
 
     socket.on(GAME_START.id,()=> {
         const roomMembership = getCurrentRoomMembership(socket.id);
-        io.to(roomMembership.room).emit(GAME_SETUP.id, GAME_SETUP.getDto(new Map(), 2)); //TODO
+
+        if(games[roomMembership.room] != null){
+            socket.emit(ERROR.id, ERROR.getDto("Game already started"))
+            return
+        }
+
+        const roomMembers = getRoomMembers(roomMembership.room)
+        console.log(roomMembers)
+        const personaMapInPlayOrder = new Map()
+        shuffle(roomMembers)
+        roomMembers.forEach(m => {
+            personaMapInPlayOrder.set(m.user.userId, getRandomCharacterName())
+        })
+
+        const state = GAME_STATE.getDto(roomMembers[0].user.userId, null, new Date(Date.now() + 5 * 60000), new Map())
+        games[roomMembership.room] = {
+            ...state
+            , personaMapInPlayOrder
+        }
+
+
+
+        console.log(personaMapInPlayOrder)
+        io.to(roomMembership.room).emit(GAME_SETUP.id,
+            GAME_SETUP.getDto(personaMapInPlayOrder, 2)); //TODO
+
+        io.to(roomMembership.room).emit(GAME_STATE.id, state)
     });
 
     const todo = [GAME_VOTE.id, GAME_QUESTION.id]
@@ -87,8 +141,6 @@ io.on("connection", (socket) => {
         })
     })
 });
-
-////END COPY PASTA
 
 
 // create a GET route

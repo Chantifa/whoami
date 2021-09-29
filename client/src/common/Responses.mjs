@@ -27,6 +27,19 @@ export const CHAT_ANNOUNCEMENT = {
     }
 }
 
+/**
+ * Error messages
+ * @type {{getDto(string): {message: string}, id: string}}
+ */
+export const ERROR = {
+    id: "ERROR",
+    getDto(message) {
+        return {
+            message
+        }
+    }
+}
+
 
 /**
  * The message sent on starting a game
@@ -37,7 +50,7 @@ export const GAME_SETUP = {
     id: "GAME_SETUP",
     getDto(map, minutes) {
         return {
-            personaMapInPlayOrder: {...map},
+            personaMapInPlayOrder: [...map],
             deadline: new Date(Date.now() + minutes * 60000)
         }
     }
@@ -60,7 +73,7 @@ export const GAME_STATE = {
             currentUser: user,
             currentQuestion: question,
             deadline,
-            votes: {...voteMap},
+            votes: [...voteMap],
             stateNumber: _stateNumber++,
             stateTime: new Date()
         }
