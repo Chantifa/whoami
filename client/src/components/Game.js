@@ -1,17 +1,8 @@
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import {useState} from "react";
-import useServer from "./serverConnection";
+import useServer from "../serverConnection";
 import {Button, Form} from "react-bootstrap";
-
-function Message(props) {
-    return <li> {JSON.stringify(props.data)}</li>
-}
-
-function Chat(props) {
-    return <ol>
-        {props.messages.map((data, key) => <Message key={key} data={data}/>)}
-    </ol>
-}
+import Chat from "./Chat";
 
 export default function Game(props) {
 

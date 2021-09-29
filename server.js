@@ -8,10 +8,7 @@ import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./c
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR, GAME_SETUP, GAME_STATE} from "./client/src/common/Responses.mjs";
-import * as fs from "fs";
-
-
-const {characters} = JSON.parse(fs.readFileSync('characters.json'))
+import {getRandomCharacterName, shuffle} from "./Game.js";
 
 const app = express();
 
@@ -23,26 +20,6 @@ const port = process.env.PORT || 5000;
 // This displays message that the server running and listening to specified port
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 const io = new Server(server);
-
-
-function randomChoice(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-}
-function getRandomCharacterName(){
-    return randomChoice(characters).name
-}
-/**
- * Shuffles array in place. ES6 version
- * https://stackoverflow.com/a/6274381
- * @param {Array} a items An array containing the items.
- */
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-}
 
 const games = {}
 
