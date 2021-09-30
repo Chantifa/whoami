@@ -8,7 +8,7 @@ import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./c
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR, GAME_SETUP, GAME_STATE} from "./client/src/common/Responses.mjs";
-import {getRandomCharacterName, shuffle} from "./Game.js";
+import {getRandomCharacterName, shuffle} from "./utils.js";
 
 const app = express();
 
