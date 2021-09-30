@@ -1,13 +1,16 @@
-import { AppContext } from './common/Context';
+import { AppContext } from './components/Context';
 import './App.css';
-import React, {useEffect, useState, useContext, createContext} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import Header from './common/Header'
-import Home from "./common/Home";
-import Rules from "./common/Rules";
+import Header from './components/Header'
+import Home from "./components/Home";
+import Rules from "./components/Rules";
 import GameSelection from "./GameSelection";
+import Footer from "./components/Footer";
+import Login from "./components/Login"
 
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Container} from "react-bootstrap";
 
 function App() {
 
@@ -45,14 +48,19 @@ function App() {
             <div>
                 <AppContext.Provider value={information}>
                     <Header/>
-                    <Route path='/' component={Home} />
-                    <Route path='/rules' component={Rules}/>
-                    <Route path='/game' component={GameSelection}/>
-                    <Route path='/game/7' component={GameSelection}/>
+                    <Container>
+                        <Switch>
+                            <Route path="/rules"><Rules/></Route>
+                            <Route path="/register"><Login/></Route>
+                            <Route path="/game"><GameSelection/></Route>
+                            <Route path="/"><Home/></Route>
+                        </Switch>
+                        <Footer/>
+                    </Container>
                 </AppContext.Provider>
             </div>
         </Router>
-    )
+    );
 
 }
 export default App;
