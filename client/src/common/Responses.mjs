@@ -73,7 +73,7 @@ export const GAME_STATE = {
             currentUser: user,
             currentQuestion: question,
             deadline,
-            votes: [...voteMap],
+            votes: voteMap ? [...voteMap] : new Map(),
             stateNumber: _stateNumber++,
             stateTime: new Date()
         }
