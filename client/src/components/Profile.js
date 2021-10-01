@@ -8,6 +8,8 @@ export default function Profile() {
     const [profile, setProfile] = useState({name: ''});
     const [error, setError] = useState('');
 
+
+
     const myData = () => {
         fetch('http://localhost:5000/', {
             method: 'GET',
@@ -54,7 +56,6 @@ export default function Profile() {
 
     return (
         <Container>
-            <Switch>
                 <Form>
                     <Form.Group className="form" controlId="formBasicText">
                         <Form.Label>Username</Form.Label>
@@ -72,7 +73,6 @@ export default function Profile() {
                         ))}
                     </ul>
                 </Form>
-            </Switch>
         </Container>
     );
 }
