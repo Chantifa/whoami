@@ -6,15 +6,13 @@ import React from "react";
 import {Button} from "react-bootstrap";
 
 
-export default function Home(){
+export default function Home() {
     return (
         <Container>
-            <Switch>
-                    <header className="App-header">
-                        <img src={logowhite} className="fade-in-image" alt="logo"/>
-                        <Button className="btn-register" type="submit">Register here</Button>
-                    </header>
-            </Switch>
+            <header className="App-header">
+                <img src={logowhite} className="fade-in-image" alt="logo"/>
+                <Button className="btn-register" type="submit">Register here</Button>
+            </header>
         </Container>
     )
 }
