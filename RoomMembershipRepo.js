@@ -19,3 +19,7 @@ export function removeRoomMembership(userId) {
         return roomMemberships.splice(index, 1)[0];
     }
 }
+
+export function getRoomMembers(room){
+    return roomMemberships.filter(roomMembership => roomMembership.room === room)
+}

@@ -6,6 +6,7 @@
   "type": "module",
   "dependencies": {
     "express": "^4.17.1",
+    "fs": "^0.0.1-security",
     "socket.io": "^4.2.0"
   },
   "scripts": {
@@ -25,6 +26,8 @@
     "nodemon": "^2.0.12"
   },
   "nodemonConfig": {
-    "ignore": ["client/src/*.js"]
+    "ignore": [
+      "client/src/*.js"
+    ]
   }
 }

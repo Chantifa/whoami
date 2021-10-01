@@ -42,13 +42,13 @@ export const LEAVE_ROOM = {
 
 /**
  * The message to submit your question
- * @type {{getDto(): {question: string}, id: string}}
+ * @type {{getDto(question:string): {question: string}, id: string}}
  */
 export const GAME_QUESTION = {
     id: "GAME_QUESTION",
-    getDto() {
+    getDto(question) {
         return {
-            question: ""
+            question
         }
     }
 }
@@ -66,4 +66,9 @@ export const GAME_VOTE = {
             vote
         }
     }
+}
+
+export const GAME_START = {
+    id: "GAME_START",
+    getDto(){}
 }

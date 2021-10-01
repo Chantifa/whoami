@@ -71,7 +71,8 @@ dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
 ## Anforderungen
 
 Sämtliche Anforderungen (funktional- und nicht-funktional) werden im vorliegenden Repository
-unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label ~user-story versehen. 
+unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Die User Stories werden mit dem Label 
+~user-story versehen. 
 Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
 ![wireframe of the login](client/src/img/login-wireframe.png)
@@ -89,15 +90,20 @@ npm run start-all
 ```
 
 ## Architektur
-Die Applikation besteht aus zwei Teilen: dem Frontend und dem Backend. Diese werden in den folgenden Abschnitten beschrieben
-Gemeinsam existiert [der common Ordner](client/src/common), auf welchen auch das Backend zugreift.
+
+Die Applikation besteht aus zwei Teilen: dem Frontend und dem Backend. Diese werden in den folgenden Abschnitten
+beschrieben gemeinsam existiert [der common Ordner](client/src/common), auf welchen auch das Backend zugreift.
 
 ### Backend
-Das Backend ist ein simples `express` mit einem server.js, welches sowohl websockets als auch http requests entgegennimmt.
+
+Das Backend ist ein simples `express` mit einem server.js, welches sowohl websockets als auch http requests
+entgegennimmt.
 
 ### Frontend
-Das Frontend ist React basiert und befindet sich under [client/](client/). Bei der Entwicklung existiert hierzu ein development server, welcher jeweils einen build
-erstellt und diesen an den Client sendet. Für den Kunden kann dann ein produktiv build erstellt und deployed werden.
+
+Das Frontend ist React basiert und befindet sich under [client/](client/). Bei der Entwicklung existiert hierzu ein
+development server, welcher jeweils einen build erstellt und diesen an den Client sendet. Für den Kunden kann dann ein
+produktiv build erstellt und deployed werden.
 
 ### Protokoll Client Server
 
@@ -106,7 +112,6 @@ Client, Other Clients beschreibt eine beliebige Anzahl anderer Clients.
 
 Nachrichten und deren Aufbau können [im common Ordner](client/src/common) gefunden werden.
 
-
 #### Chat
 
 Jederzeit kann ein User etwas in den Chat schreiben. Für die Spiellogik müssen die Interaktionen jedoch als solche
@@ -114,7 +119,7 @@ markiert werden. Diese Logik passiert auf dem Client. Somit werden die Nachricht
 Interaktion gesendet oder als Chat.
 
 Der Server wertet die Interaktionen gemäss dem Spielablauf aus, Chat-Nachrichten werden an alle (auch den Sender) im
-Raum gebroadcasted. 
+Raum gebroadcasted.
 
 #### Join & Leave
 
@@ -168,20 +173,23 @@ graph TB
 ```
 
 ### Frameworks
-Exact packages and versions can be found in the [server package.json](./package.json) and the [client package.json](client/package.json).
+
+Exact packages and versions can be found in the [server package.json](./package.json) and
+the [client package.json](client/package.json).
 
 #### Server dependencies
 
- 1. `express`:   this is the node web server
- 2. `socket.io`: this framework wraps websockets for us, here the socket.io server
- 3. `nodemon`:   the node demon is used for automatic rebuilds on changes during development
+1. `express`:   this is the node web server
+2. `socket.io`: this framework wraps websockets for us, here the socket.io server
+3. `nodemon`:   the node demon is used for automatic rebuilds on changes during development
+4. `fs`:        this util is used to read data from a json file
 
 #### Client dependencies
- 
- 1. `react`: the framework the client is written in
- 2. `bootstrap`: css framework for low effort good behaviour
- 3. `react-bootstarp`: bootstrap styled html as react components
- 4. `react-dom`, `react-scripts`, `web-vitals`:  react boilerplate from `create-react-app`
- 5. `react-router-dom`:  utility for routing and navigation inside the app
- 6. `socket.io-client`: client implementation to connect to the socket.io server
 
+1. `react`: the framework the client is written in
+2. `bootstrap`: css framework for low effort good behaviour
+3. `react-bootstarp`: bootstrap styled html as react components
+4. `react-dom`, `react-scripts`, `web-vitals`:  react boilerplate from `create-react-app`
+5. `react-router-dom`:  utility for routing and navigation inside the app
+6. `socket.io-client`: client implementation to connect to the socket.io server
+7. `react-router-bootstrap`: components to easily combine `react-bootstrap` and `react-router-dom`
