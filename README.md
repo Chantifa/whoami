@@ -92,7 +92,7 @@ npm run start-all
 ## Architektur
 
 Die Applikation besteht aus zwei Teilen: dem Frontend und dem Backend. Diese werden in den folgenden Abschnitten
-beschrieben Gemeinsam existiert [der common Ordner](client/src/common), auf welchen auch das Backend zugreift.
+beschrieben gemeinsam existiert [der common Ordner](client/src/common), auf welchen auch das Backend zugreift.
 
 ### Backend
 
@@ -182,6 +182,7 @@ the [client package.json](client/package.json).
 1. `express`:   this is the node web server
 2. `socket.io`: this framework wraps websockets for us, here the socket.io server
 3. `nodemon`:   the node demon is used for automatic rebuilds on changes during development
+4. `fs`:        this util is used to read data from a json file
 
 #### Client dependencies
 
@@ -191,3 +192,4 @@ the [client package.json](client/package.json).
 4. `react-dom`, `react-scripts`, `web-vitals`:  react boilerplate from `create-react-app`
 5. `react-router-dom`:  utility for routing and navigation inside the app
 6. `socket.io-client`: client implementation to connect to the socket.io server
+7. `react-router-bootstrap`: components to easily combine `react-bootstrap` and `react-router-dom`
