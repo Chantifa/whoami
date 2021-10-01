@@ -2,7 +2,7 @@ import {Container, Form} from "react-bootstrap";
 import React, {useState, useEffect} from 'react';
 import {Switch} from "react-router-dom";
 
-function Profile() {
+export default function Profile() {
 
     const [history, setHistory] = useState();
     const [profile, setProfile] = useState({name: ''});
@@ -77,4 +77,3 @@ function Profile() {
     );
 }
 
-export default Profile;

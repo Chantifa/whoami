@@ -4,13 +4,13 @@ import {Route, Switch} from "react-router-dom";
 import { AppContext } from "./Context";
 import Profile from "./Profile";
 
-function Login(){
+export default function Login(){
 
     const myContext = useContext(AppContext);
     const [error, setError] = useState("");
 
-    const Login = (data) => {
-        fetch('http://localhost:5000/api/user/login', { // TODO: evtl. in ein env File schreiben
+    const LoginPost = (data) => {
+        fetch('http://localhost:5000/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +32,6 @@ function Login(){
     return (
         <Container>
             <Switch>
-                <Route path="/register">
                     <header className="App-header">
                         <div className="App">
                             {myContext.loggedIn === true}
@@ -41,9 +40,7 @@ function Login(){
                             </div>
                         </div>
                     </header>
-                </Route>
             </Switch>
         </Container>
     )
 }
-export default Login;

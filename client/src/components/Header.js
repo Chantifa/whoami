@@ -3,7 +3,7 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import logo from "../img/logo.png";
 import React from "react";
 
-function Header() {
+export default function Header() {
 
     return (
         <Navbar expand="lg">
@@ -22,5 +22,3 @@ function Header() {
         </Navbar>
     );
 }
-
-export default Header;
