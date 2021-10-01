@@ -1,4 +1,3 @@
-
 /**
  * The chat message event to receive client messages
  * server -> client
@@ -28,6 +27,19 @@ export const CHAT_ANNOUNCEMENT = {
     }
 }
 
+/**
+ * Error messages
+ * @type {{getDto(string): {message: string}, id: string}}
+ */
+export const ERROR = {
+    id: "ERROR",
+    getDto(message) {
+        return {
+            message
+        }
+    }
+}
+
 
 /**
  * The message sent on starting a game
@@ -38,7 +50,7 @@ export const GAME_SETUP = {
     id: "GAME_SETUP",
     getDto(map, minutes) {
         return {
-            personaMapInPlayOrder: {...map},
+            personaMapInPlayOrder: [...map],
             deadline: new Date(Date.now() + minutes * 60000)
         }
     }
@@ -48,7 +60,7 @@ export const GAME_SETUP = {
  * @type {number}
  * @private
  */
-let _stateNumber = 0
+let _stateNumber = 0 //todo this shold be per room not global probably
 
 /**
  * The message to receive updates on the state
@@ -61,7 +73,7 @@ export const GAME_STATE = {
             currentUser: user,
             currentQuestion: question,
             deadline,
-            votes: {...voteMap},
+            votes: voteMap ? [...voteMap] : new Map(),
             stateNumber: _stateNumber++,
             stateTime: new Date()
         }

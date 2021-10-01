@@ -5,11 +5,10 @@ import React, {useEffect, useState} from 'react';
 import Header from './components/Header'
 import Home from "./components/Home";
 import Rules from "./components/Rules";
-import GameSelection from "./GameSelection";
 import Footer from "./components/Footer";
 import Login from "./components/Login"
-
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import GameSelection from "./components/GameSelection";
 import {Container} from "react-bootstrap";
 
 function App() {
