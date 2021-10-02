@@ -1,22 +1,17 @@
-import React, {useState, useContext} from 'react' // import hooks from React
-import {AppContext} from "./Context"; // import Context component
+import React, {useState, useContext} from 'react'
+import {AppContext} from "./Context";
 import '../App.css';
 import {Button, Container, Form} from "react-bootstrap";
 import userimg from "../img/user.svg";
 import {useHistory} from "react-router-dom";
 
 
-// create hook, import Register and error props
-function RegisterForm({Register, error}) {
-    // access "global" state object by useContext
+export default function RegisterForm({Register, error}) {
     const myContext = useContext(AppContext);
-
-    // create state for details
     const [details, setDetails] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
 
-    // create function for handling submits
     const submitHandler = e => {
         e.preventDefault();
 
@@ -48,5 +43,3 @@ function RegisterForm({Register, error}) {
 
     )
 }
-
-export default RegisterForm

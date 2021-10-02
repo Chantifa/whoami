@@ -1,16 +1,12 @@
-import React, {useState, useContext} from 'react'; // import hooks from React
+import React, {useState, useContext} from 'react';
 import '../App.css';
-import { AppContext } from "./Context"; // import Context component
-import LoginForm from './LoginForm'; // import component
-import Profile from './Profile'; // import component
+import { AppContext } from "./Context";
+import LoginForm from './LoginForm';
+import Profile from './Profile';
 
-// create hook
 const LoginBody = () => {
 
-    // access "global" state object by useContext
     const myContext = useContext(AppContext);
-
-    // local state
     const [error, setError] = useState("");
 
     // create Login request, setStates with received data
@@ -37,7 +33,6 @@ const LoginBody = () => {
 
     // if user.email state is not empty show text and logout, else show login form
     return (
-        <React.Fragment>
             <div className="App">
                 {(myContext.loggedin === true) ? (
                     <div className = "loginsuccess">
@@ -49,7 +44,6 @@ const LoginBody = () => {
                     </>
                 )}
             </div>
-        </React.Fragment>
     );
 };
 

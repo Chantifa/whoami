@@ -1,9 +1,9 @@
-import React, {useState, useContext} from 'react'; // import hooks from React
-import { AppContext } from "./Context"; // import Context component
+import React, {useState, useContext} from 'react';
+import { AppContext } from "./Context";
 import '../App.css';
-import RegisterForm from './RegisterForm'; // import component
+import RegisterForm from './RegisterForm';
 
-import Login from './Login'; // import component
+import Login from './Login';
 
 // create hook
 const RegisterBody = () => {
@@ -33,7 +33,6 @@ const RegisterBody = () => {
 
     // if user.email state is not empty show text and logout, else show login form
     return (
-        <React.Fragment>
             <div className="App">
                 {(myContext.registered !== null) ? (
                     <>
@@ -46,8 +45,5 @@ const RegisterBody = () => {
                     <RegisterForm Register={Register} error={error} />
                 )}
             </div>
-        </React.Fragment>
     );
 };
-
-export default RegisterBody;
