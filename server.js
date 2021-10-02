@@ -8,7 +8,7 @@ import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./c
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR, GAME_SETUP, GAME_STATE} from "./client/src/common/Responses.mjs";
-import {getRandomCharacterName, shuffle} from "./utils.js";
+import {apply, getRandomCharacterName, shuffle} from "./utils.js";
 
 const app = express();
 
@@ -91,7 +91,7 @@ io.on("connection", (socket) => {
             personaMapInPlayOrder.set(m.user.userId, getRandomCharacterName())
         })
 
-        const state = GAME_STATE.getDto(roomMembers[0].user.userId, null, new Date(Date.now() + 5 * 60000), new Map())
+        const state = GAME_STATE.getDto(roomMembers[0].user.userId, null, new Date(Date.now() + 5 * 60000))
         games[roomMembership.room] = {
             ...state
             , personaMapInPlayOrder
@@ -106,17 +106,33 @@ io.on("connection", (socket) => {
         io.to(roomMembership.room).emit(GAME_STATE.id, state)
     });
 
-    const todo = [GAME_VOTE.id, GAME_QUESTION.id]
-    todo.forEach(e => {
-        socket.on(e, (...data) => {
-            console.log(e)
-            const roomMembership = getCurrentRoomMembership(socket.id)
-            io.to(roomMembership.room).emit(GAME_STATE.id,
-                GAME_STATE.getDto(null, "no question, just TODO's", new Date(), new Map())
-            )
+    socket.on(GAME_VOTE.id, (data) => {
+        console.log(GAME_VOTE.id)
+        const roomMembership = getCurrentRoomMembership(socket.id)
+        const gameState = games[roomMembership.room]
+        console.log(gameState)
+        gameState.votes.set(socket.id, data)
+        gameState.stateNumber++
 
-        })
+        const resp = apply(GAME_STATE.getDto(), gameState) //fixme #30
+        resp.votes = [...resp.votes]
+
+        io.to(roomMembership.room).emit(GAME_STATE.id,  resp
+        )
+
     })
+
+    socket.on(GAME_QUESTION.id, (data) => {
+        console.log(GAME_QUESTION.id)
+        const roomMembership = getCurrentRoomMembership(socket.id)
+
+        io.to(roomMembership.room).emit(GAME_STATE.id,
+            apply(GAME_STATE.getDto(), games[roomMembership.room])
+        )
+
+    })
+
+
 });
 
 

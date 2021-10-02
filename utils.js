@@ -20,3 +20,21 @@ export function shuffle(a) {
     }
     return a;
 }
+
+export function apply(schema, data) { //todo make obsolete with classes as dtos #30
+
+    if(!data){
+        return schema
+    }
+
+    const obj = schema;
+    for (const [key, value] of Object.entries(data)) {
+        if(schema.hasOwnProperty(key)){
+            obj[key] = value
+        }
+    }
+    console.log("applied")
+    console.log(obj)
+    return obj;
+
+}
