@@ -1,6 +1,5 @@
-
 import React, {useState, useContext} from 'react' // import hooks from React
-import { AppContext } from "./Context"; // import Context component
+import {AppContext} from "./Context"; // import Context component
 import '../App.css';
 import {Button, Container, Form} from "react-bootstrap";
 import userimg from "../img/user.svg";
@@ -8,7 +7,7 @@ import {useHistory} from "react-router-dom";
 
 
 // create hook, import Register and error props
-function RegisterForm({ Register, error}) {
+function RegisterForm({Register, error}) {
     // access "global" state object by useContext
     const myContext = useContext(AppContext);
 

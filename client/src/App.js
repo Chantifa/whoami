@@ -10,7 +10,6 @@ import LoginForm from "./components/LoginForm";
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import GameSelection from "./components/GameSelection";
 import {Container} from "react-bootstrap";
-import Register from "./components/Register";
 import RegisterForm from "./components/RegisterForm";
 
 function App() {
