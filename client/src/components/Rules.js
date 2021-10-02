@@ -7,12 +7,10 @@ export default function Rules() {
 
     return (
         <Container>
-            <Switch>
-                    <header className="App-header">
-                        <h1>Rules</h1>
-                        <p>Lorem ipsum ...</p>
-                    </header>
-            </Switch>
+            <header className="App-header">
+            <h1>Rules</h1>
+                <p>Lorem ipsum ...</p>
+            </header>
         </Container>
     )
 }

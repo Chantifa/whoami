@@ -1,21 +1,21 @@
 import React, {useState, useContext} from 'react';
-import { AppContext } from "./Context";
+import { appContext } from "../appContext";
 import '../App.css';
 import RegisterForm from './RegisterForm';
 
-import Login from './Login';
+import Login from './LoginBody';
 
-// create hook
-const RegisterBody = () => {
+
+export function RegisterBody(){
     // access "global" state object by useContext
-    const myContext = useContext(AppContext);
+    const myContext = useContext(appContext);
 
     // create states (email not necessary probably)
     const [error, setError] = useState("");
 
     // create Register request, setStates with received data
-    const Register = (data) => {
-        fetch('http://localhost:3000/api/user/register', {
+    const register = (data) => {
+        fetch('/api/user/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,8 +42,8 @@ const RegisterBody = () => {
                         <Login />
                     </>
                 ) : (
-                    <RegisterForm Register={Register} error={error} />
+                    <RegisterForm Register={register} error={error} />
                 )}
             </div>
-    );
-};
+    )
+}

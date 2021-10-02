@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react'
-import {AppContext} from "./Context";
+import {appContext} from "../appContext";
 import '../App.css';
 import {Button, Container, Form} from "react-bootstrap";
 import userimg from "../img/user.svg";
@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom";
 
 
 export default function RegisterForm({Register, error}) {
-    const myContext = useContext(AppContext);
+    const myContext = useContext(appContext);
     const [details, setDetails] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();

@@ -1,4 +1,4 @@
-import { AppContext } from './components/Context';
+import { appContext } from './appContext';
 import './App.css';
 import React, {useEffect, useState} from 'react';
 
@@ -46,7 +46,7 @@ function App() {
     return (
         <Router>
             <div>
-                <AppContext.Provider value={information}>
+                <appContext.Provider value={information}>
                     <Header/>
                     <Container>
                         <Switch>
@@ -58,7 +58,7 @@ function App() {
                         </Switch>
                         <Footer/>
                     </Container>
-                </AppContext.Provider>
+                </appContext.Provider>
             </div>
         </Router>
     );

@@ -1,15 +1,14 @@
 import React, {useState, useContext} from 'react' // import hooks from React
-import {AppContext} from "./Context"; // import Context component
+import {appContext} from "../appContext"; // import Context component
 import '../App.css';
 import {Link, useHistory} from 'react-router-dom';
 import {Container, Form} from "react-bootstrap";
 import {Button} from "react-bootstrap";
-import userimg from "../img/user.svg";
-import logowhite from "../img/logo_white.svg";
+import userImg from "../img/user.svg";
 
 function LoginForm({Login, error}) {
     // access "global" state object by useContext
-    const myContext = useContext(AppContext);
+    const myContext = useContext(appContext);
 
     // create state for details
     const [details, setDetails] = useState("");
@@ -27,14 +26,9 @@ function LoginForm({Login, error}) {
         history.push(path);
     }
 
-    const routeChangeRegister = () => {
-        let path = '/register';
-        history.push(path);
-    }
-
     return (
         <Container className="App-container" onSubmit={submitHandler}>
-            <img src={userimg} className="fade-in-image" alt="logo"/>
+            <img src={userImg} className="fade-in-image" alt="logo"/>
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicText">
                     <Form.Label>Username</Form.Label>
@@ -50,7 +44,7 @@ function LoginForm({Login, error}) {
                 <Form.Label>Not registered yet? Don't worry..</Form.Label>
                 </Form.Group>
                 <Form.Group className="mb-3">
-                    <Button className="btn-register" onClick={routeChangeRegister}>Register here</Button>
+                    <Link className="btn-register button" to="/register">Register here</Link>
                 </Form.Group>
 
             </Form>

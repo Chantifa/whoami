@@ -1,17 +1,17 @@
 import React, {useState, useContext} from 'react';
 import '../App.css';
-import { AppContext } from "./Context";
+import { appContext } from "../appContext";
 import LoginForm from './LoginForm';
 import Profile from './Profile';
 
 const LoginBody = () => {
 
-    const myContext = useContext(AppContext);
+    const myContext = useContext(appContext);
     const [error, setError] = useState("");
 
     // create Login request, setStates with received data
-    const Login = (data) => {
-        fetch('http://localhost:3000/api/user/login', {
+    const login = (data) => {
+        fetch('/api/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const LoginBody = () => {
                     </div>
                 ) : (
                     <>
-                        <LoginForm Login={Login} error={error} />
+                        <LoginForm Login={login} error={error} />
                     </>
                 )}
             </div>
