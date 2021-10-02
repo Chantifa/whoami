@@ -1,21 +1,26 @@
-import React, {useState, useContext} from 'react';
-import {Container} from "react-bootstrap";
-import {Route, Switch} from "react-router-dom";
-import { AppContext } from "./Context";
-import Profile from "./Profile";
+import React, {useState, useContext} from 'react'; // import hooks from React
+import '../App.css';
+import { AppContext } from "./Context"; // import Context component
+import LoginForm from './LoginForm'; // import component
+import Profile from './Profile'; // import component
 
-export default function Login(){
+// create hook
+const LoginBody = () => {
 
+    // access "global" state object by useContext
     const myContext = useContext(AppContext);
+
+    // local state
     const [error, setError] = useState("");
 
-    const LoginPost = (data) => {
-        fetch('http://localhost:5000/', {
+    // create Login request, setStates with received data
+    const Login = (data) => {
+        fetch('http://localhost:3000/api/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            credentials: 'include',
+            credentials: 'include', // send a request with credentials included on same-origin and cross-origin calls
             body: JSON.stringify(data),
         })
             .then(response => response.json())
@@ -23,24 +28,29 @@ export default function Login(){
                 setError(json.error)
                 if(json.error === null) {
                     myContext.setLoggedin(true);
-                    //myContext.setRegistered(null);
+                    // myContext.setRegistered(null);
                 }
             })
             .catch(err => console.log(err));
     }
 
+
+    // if user.email state is not empty show text and logout, else show login form
     return (
-        <Container>
-            <Switch>
-                    <header className="App-header">
-                        <div className="App">
-                            {myContext.loggedIn === true}
-                            <div className="loginsuccess">
-                            <Profile/>
-                            </div>
-                        </div>
-                    </header>
-            </Switch>
-        </Container>
-    )
-}
+        <React.Fragment>
+            <div className="App">
+                {(myContext.loggedin === true) ? (
+                    <div className = "loginsuccess">
+                        <Profile />
+                    </div>
+                ) : (
+                    <>
+                        <LoginForm Login={Login} error={error} />
+                    </>
+                )}
+            </div>
+        </React.Fragment>
+    );
+};
+
+export default LoginBody;

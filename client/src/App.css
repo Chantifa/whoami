@@ -13,6 +13,16 @@
     }
 }
 
+.App-container{
+    background-color: #282c34;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
 .App-header {
     background-color: #282c34;
     min-height: 100vh;
@@ -64,6 +74,12 @@
     background-color: #f9cc11;
     color: black;
     border-color: #f9cc11;
+}
+
+.btn-register:hover {
+    background-color: #f9cc11;
+    color: black;
+    border-color: black;
 }
 
 .footer {

@@ -12,7 +12,6 @@ export default function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/register">Register</Nav.Link>
                         <Nav.Link as={Link} to="/rules">Rules</Nav.Link>
                         <Nav.Link as={Link} to="/game">GameSelection</Nav.Link>
                         <Nav.Link as={Link} to="/game/7">specific Game</Nav.Link>
