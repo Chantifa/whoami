@@ -1,5 +1,5 @@
-import {useParams} from "react-router-dom/cjs/react-router-dom";
 import {useState} from "react";
+import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
 import {Button, Form} from "react-bootstrap";
 import Chat from "./Chat";
@@ -7,8 +7,8 @@ import Chat from "./Chat";
 export default function Game(props) {
 
     const {id} = useParams();
-
     const [text, setText] = useState("Hello");
+
     const handleChange = (event) => setText(event.target.value);
 
     const {sendMessage, messageList, gameInfo, gameState, sendVote, sendQuestion, startGame } = useServer(props.userName, id)
@@ -16,7 +16,6 @@ export default function Game(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-
         sendMessage(text)
         setText("")
     }

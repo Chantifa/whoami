@@ -1,8 +1,8 @@
-import {render, screen} from '@testing-library/react';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 
-test('renders save and reload', () => {
-    render(<App/>);
-    const linkElement = screen.getByText(/save to reload/i);
-    expect(linkElement).toBeInTheDocument();
+it("renders without crashing", () => {
+    const div = document.createElement("div");
+    ReactDOM.render(<App />, div);
 });
