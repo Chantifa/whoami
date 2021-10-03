@@ -15,7 +15,6 @@ export default function Header() {
                         <Nav.Link as={Link} to="/rules">Rules</Nav.Link>
                         <Nav.Link as={Link} to="/game">GameSelection</Nav.Link>
                         <Nav.Link as={Link} to="/game/7">specific Game</Nav.Link>
-                        <Nav.Link className="ml-auto" as={Link} to="/login">login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

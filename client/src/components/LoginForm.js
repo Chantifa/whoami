@@ -26,6 +26,11 @@ function LoginForm({Login, error}) {
         history.push(path);
     }
 
+    const routeChangeRegister = () => {
+        let path = '/register';
+        history.push(path);
+    }
+
     return (
         <Container className="App-container" onSubmit={submitHandler}>
             <img src={userImg} className="fade-in-image" alt="logo"/>
@@ -44,11 +49,9 @@ function LoginForm({Login, error}) {
                 <Form.Label>Not registered yet? Don't worry..</Form.Label>
                 </Form.Group>
                 <Form.Group className="mb-3">
-                    <Link className="btn-register button" to="/register">Register here</Link>
+                    <Button className="btn-register" onClick={routeChangeRegister}>Register here</Button>
                 </Form.Group>
-
             </Form>
-
         </Container>
 
     )
