@@ -1,7 +1,9 @@
 import {useEffect, useRef, useState} from "react";
 import {io} from "socket.io-client";
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./common/Requests.mjs";
-import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR, GAME_SETUP, GAME_STATE} from "./common/Responses.mjs";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./common/Responses.mjs";
+import GameStateMessage from "./common/GameStateMessage.mjs";
+import GameSetupMessage from "./common/GameSetupMessage.mjs";
 
 export default function useServer(userName, roomName) {
     const socketRef = useRef(null)
@@ -24,6 +26,7 @@ export default function useServer(userName, roomName) {
             //event handlers
 
             socket.on(ERROR.id, (message) => {
+                console.error("Server Error:")
                 console.error(message)
             })
 
@@ -42,27 +45,27 @@ export default function useServer(userName, roomName) {
             })
 
 
-            socket.on(GAME_SETUP.id, (data) => {
-                setGameInfo(old => {
-                    return {...old, data}
+            socket.on(GameSetupMessage.id, (data) => {
+                setGameInfo(() => {
+                    return data
                 })
-                console.log(GAME_SETUP.id)
+                console.log(GameSetupMessage.id)
             })
 
-            socket.on(GAME_STATE.id, (data) => {
+            socket.on(GameStateMessage.id, (data) => {
                 setGameState(old => {
                     if (!old || data.stateNumber > old.stateNumber) {
                         return {...old, ...data}
                     }
                     return data
                 })
-                console.log(GAME_STATE.id)
+                console.log(GameStateMessage.id)
             })
 
             //Cleanup of the hook
             return () => {
                 console.log("disconnect")
-                socket.removeAllListeners([CHAT_ANNOUNCEMENT.id, CHAT_MESSAGE.id, GAME_SETUP.id, GAME_STATE.id], ERROR.id)
+                socket.removeAllListeners([CHAT_ANNOUNCEMENT.id, CHAT_MESSAGE.id, GameSetupMessage.id, GameStateMessage.id], ERROR.id)
                 socket.disconnect()
             }
         }

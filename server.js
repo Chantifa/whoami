@@ -7,8 +7,10 @@ import {
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./client/src/common/Requests.mjs";
 import {Server} from "socket.io";
 import express from "express";
-import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR, GAME_SETUP, GAME_STATE} from "./client/src/common/Responses.mjs";
-import {apply, getRandomCharacterName, shuffle} from "./utils.js";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Responses.mjs";
+import {getGame} from "./GameManager.mjs";
+import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
+import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
 
 const app = express();
 
@@ -21,7 +23,7 @@ const port = process.env.PORT || 5000;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 const io = new Server(server);
 
-const games = {}
+
 
 //initializing the socket io connection
 io.on("connection", (socket) => {
@@ -75,62 +77,53 @@ io.on("connection", (socket) => {
         }
     });
 
+
     socket.on(GAME_START.id,()=> {
-        const roomMembership = getCurrentRoomMembership(socket.id);
+        try {
+            const roomMembership = getCurrentRoomMembership(socket.id);
+            const game = getGame(roomMembership.room);
+            const roomMembers = getRoomMembers(roomMembership.room)
+            game.start(roomMembers)
 
-        if(games[roomMembership.room] != null){
-            socket.emit(ERROR.id, ERROR.getDto("Game already started"))
-            return
+            const setupMessage = game.getSetupMessage()
+
+            io.to(roomMembership.room).emit(GameSetupMessage.id,
+                setupMessage.getDto());
+
+            const stateMessage = game.getStateMessage()
+
+            io.to(roomMembership.room).emit(GameStateMessage.id, stateMessage)
+
+        } catch (e) {
+            socket.emit(ERROR.id, ERROR.getDto(e.message))
         }
+    })
 
-        const roomMembers = getRoomMembers(roomMembership.room)
-        console.log(roomMembers)
-        const personaMapInPlayOrder = new Map()
-        shuffle(roomMembers)
-        roomMembers.forEach(m => {
-            personaMapInPlayOrder.set(m.user.userId, getRandomCharacterName())
+
+        socket.on(GAME_VOTE.id, (data) => {
+            console.log(GAME_VOTE.id)
+            const roomMembership = getCurrentRoomMembership(socket.id);
+            const game = getGame(roomMembership.room);
+
+            game.handleVote(data)
+            const gameState = game.getStateMessage()
+
+            io.to(roomMembership.room).emit(GameStateMessage.id, gameState.getDto())
+
         })
 
-        const state = GAME_STATE.getDto(roomMembers[0].user.userId, null, new Date(Date.now() + 5 * 60000))
-        games[roomMembership.room] = {
-            ...state
-            , personaMapInPlayOrder
-        }
+        socket.on(GAME_QUESTION.id, (data) => {
+            console.log(GAME_QUESTION.id)
+            const roomMembership = getCurrentRoomMembership(socket.id)
+            const game = getGame(roomMembership.room);
 
+            game.handleQuestion(data)
 
+            const gameState = game.getStateMessage()
 
-        console.log(personaMapInPlayOrder)
-        io.to(roomMembership.room).emit(GAME_SETUP.id,
-            GAME_SETUP.getDto(personaMapInPlayOrder, 2)); //TODO
+            io.to(roomMembership.room).emit(GameStateMessage.id, gameState.getDto())
 
-        io.to(roomMembership.room).emit(GAME_STATE.id, state)
-    });
-
-    socket.on(GAME_VOTE.id, (data) => {
-        console.log(GAME_VOTE.id)
-        const roomMembership = getCurrentRoomMembership(socket.id)
-        const gameState = games[roomMembership.room]
-        console.log(gameState)
-        gameState.votes.set(socket.id, data)
-        gameState.stateNumber++
-
-        const resp = apply(GAME_STATE.getDto(), gameState) //fixme #30
-        resp.votes = [...resp.votes]
-
-        io.to(roomMembership.room).emit(GAME_STATE.id,  resp
-        )
-
-    })
-
-    socket.on(GAME_QUESTION.id, (data) => {
-        console.log(GAME_QUESTION.id)
-        const roomMembership = getCurrentRoomMembership(socket.id)
-
-        io.to(roomMembership.room).emit(GAME_STATE.id,
-            apply(GAME_STATE.getDto(), games[roomMembership.room])
-        )
-
-    })
+        })
 
 
 });
