@@ -10,7 +10,7 @@ export default function useServer(userName, roomName) {
 
     const [messageList, setMessageList] = useState([])
     const [gameInfo, setGameInfo] = useState({})
-    const [gameState, setGameState] = useState({})
+    const [gameState, setGameState] = useState(null)
 
     useEffect(() => {
             //setup
@@ -55,9 +55,10 @@ export default function useServer(userName, roomName) {
             socket.on(GameStateMessage.id, (data) => {
                 setGameState(old => {
                     if (!old || data.stateNumber > old.stateNumber) {
-                        return {...old, ...data}
+                        return data
                     }
-                    return data
+                    console.log("old data recieced?", old, data)
+                    return old
                 })
                 console.log(GameStateMessage.id)
             })

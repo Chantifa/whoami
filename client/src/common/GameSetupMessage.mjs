@@ -1,7 +1,7 @@
 /**
  * The message sent from server to client on starting a game
  */
-export default class GameSetupMessage {
+export default class GameSetupMessage { //TODO: add start time to enable replays and hot joining
     static id = "GAME_SETUP"
     mPersonaMapInPlayOrder = new Map()
     constructor(personaMapInPlayOrder) {

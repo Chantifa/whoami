@@ -1,7 +1,7 @@
 import {
     addRoomMembership,
     getCurrentRoomMembership,
-    getRoomMembers,
+    getRoomMemberships,
     removeRoomMembership
 } from "./RoomMembershipRepo.js";
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./client/src/common/Requests.mjs";
@@ -23,7 +23,9 @@ const port = process.env.PORT || 5000;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 const io = new Server(server);
 
-
+function error(socket, message) {
+    socket.emit(ERROR.id, ERROR.getDto(message))
+}
 
 //initializing the socket io connection
 io.on("connection", (socket) => {
@@ -53,27 +55,37 @@ io.on("connection", (socket) => {
 
     //user sending message
     socket.on(CHAT_REQUEST.id, (dto) => {
-        console.log(`user ${socket.id} messaged ${JSON.stringify(dto)}`)
-        //gets the room user and the message sent
-        const roomMembership = getCurrentRoomMembership(socket.id)
+        try {
 
-        let payload = CHAT_MESSAGE.getDto();
-        payload.user = roomMembership.user
-        payload.message = dto.message
+            console.log(`user ${socket.id} messaged ${JSON.stringify(dto)}`)
+            //gets the room user and the message sent
+            const roomMembership = getCurrentRoomMembership(socket.id)
 
-        io.to(roomMembership.room).emit(CHAT_MESSAGE.id, payload);
+            let payload = CHAT_MESSAGE.getDto();
+            payload.user = roomMembership.user
+            payload.message = dto.message
+
+            io.to(roomMembership.room).emit(CHAT_MESSAGE.id, payload);
+        } catch (e) {
+            error(socket, e.message)
+        }
     });
 
     //when the user disconnects from the room
     socket.on("disconnect", () => {
-        console.info(`user ${socket.id} disconnected`)
-        //the user is deleted from array of users and a left room message displayed
-        const roomMembership = removeRoomMembership(socket.id);
+        try {
 
-        if (roomMembership) {
-            io.to(roomMembership.room).emit(CHAT_ANNOUNCEMENT.id, {
-                message: `${roomMembership.user.userName} has left the room`
-            });
+            console.info(`user ${socket.id} disconnected`)
+            //the user is deleted from array of users and a left room message displayed
+            const roomMembership = removeRoomMembership(socket.id);
+
+            if (roomMembership) {
+                io.to(roomMembership.room).emit(CHAT_ANNOUNCEMENT.id, {
+                    message: `${roomMembership.user.userName} has left the room`
+                });
+            }
+        } catch (e) {
+            error(socket, e.message)
         }
     });
 
@@ -82,7 +94,8 @@ io.on("connection", (socket) => {
         try {
             const roomMembership = getCurrentRoomMembership(socket.id);
             const game = getGame(roomMembership.room);
-            const roomMembers = getRoomMembers(roomMembership.room)
+            const currentRoomMemberships = getRoomMemberships(roomMembership.room)
+            const roomMembers = currentRoomMemberships.map(roomMembership => roomMembership.user)
             game.start(roomMembers)
 
             const setupMessage = game.getSetupMessage()
@@ -95,33 +108,44 @@ io.on("connection", (socket) => {
             io.to(roomMembership.room).emit(GameStateMessage.id, stateMessage)
 
         } catch (e) {
-            socket.emit(ERROR.id, ERROR.getDto(e.message))
+            error(socket, e.message)
         }
     })
 
 
-        socket.on(GAME_VOTE.id, (data) => {
+        socket.on(GAME_VOTE.id, (voteDto) => {
+            try{
+
             console.log(GAME_VOTE.id)
             const roomMembership = getCurrentRoomMembership(socket.id);
             const game = getGame(roomMembership.room);
 
-            game.handleVote(data)
+            game.handleVote(roomMembership.user, voteDto)
             const gameState = game.getStateMessage()
 
             io.to(roomMembership.room).emit(GameStateMessage.id, gameState.getDto())
+            }
+            catch (e) {
+                error(socket, e.message)
+            }
 
         })
 
-        socket.on(GAME_QUESTION.id, (data) => {
-            console.log(GAME_QUESTION.id)
-            const roomMembership = getCurrentRoomMembership(socket.id)
-            const game = getGame(roomMembership.room);
+        socket.on(GAME_QUESTION.id, (question) => {
+            try {
+                console.log(GAME_QUESTION.id)
+                const roomMembership = getCurrentRoomMembership(socket.id)
+                const game = getGame(roomMembership.room);
 
-            game.handleQuestion(data)
+                game.handleQuestion(roomMembership.user, question)
 
-            const gameState = game.getStateMessage()
+                const gameState = game.getStateMessage()
 
-            io.to(roomMembership.room).emit(GameStateMessage.id, gameState.getDto())
+                io.to(roomMembership.room).emit(GameStateMessage.id, gameState.getDto())
+
+            } catch (e) {
+                error(socket, e.message)
+            }
 
         })
 

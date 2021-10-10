@@ -1,36 +1,35 @@
+
+
 export default class GamePhase {
     phaseLength;
+    phase;
 
     constructor(phase, phaseLength = 2) {
         this.phase = phase
         this.phaseLength = phaseLength;
     }
 
-    static INITIAL = new GamePhase(0);
-    static PREPARE_START = new GamePhase(1,);
-    static MAIN = new GamePhase(2);
-    static FINISHED = new GamePhase(3);
+    static INITIAL = new GamePhase("INITIAL");
+    static WAITING_QUESTION = new GamePhase("WAITING_QUESTION",);
+    static WAITING_VOTE = new GamePhase("WAITING_VOTE");
+    static FINISHED = new GamePhase("FINISHED");
 
     getLength() {
         return this.phaseLength
     }
 
-    toString(){
-        return `GamePhase Nr ${this.phase}`
+    toString() {
+        return `GamePhase ${this.phase}`
     }
 
+
     getAllowedSuccessors() {
-        switch (this) {
-            case GamePhase.INITIAL:
-                return [GamePhase.PREPARE_START]
-            case GamePhase.PREPARE_START:
-                return [GamePhase.MAIN, GamePhase.FINISHED]
-            case GamePhase.MAIN:
-                return [GamePhase.FINISHED]
-            case GamePhase.FINISHED:
-                return [GamePhase.INITIAL, GamePhase.PREPARE_START]
-            default:
-                throw new Error("Something went missing on implementation")
-        }
+        return (_successors.get(this))
     }
 }
+
+const _successors = new Map([
+    [GamePhase.INITIAL, [GamePhase.WAITING_QUESTION, GamePhase.INITIAL]],
+    [GamePhase.WAITING_QUESTION, [GamePhase.WAITING_VOTE]],
+    [GamePhase.WAITING_VOTE, [GamePhase.FINISHED, GamePhase.WAITING_QUESTION]],
+    [GamePhase.FINISHED, [GamePhase.INITIAL]]])
