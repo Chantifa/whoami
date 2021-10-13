@@ -8,7 +8,13 @@ export function addRoomMembership(user, room) {
 
 // Gets a particular user id to return the current user
 export function getCurrentRoomMembership(userId) {
-    return roomMemberships.find((roomMembership) => roomMembership.user.userId === userId)
+    const currentRoomMembership = roomMemberships.find((roomMembership) => roomMembership.user.userId === userId)
+    if (currentRoomMembership){
+        return currentRoomMembership
+    } else {
+        throw new Error("not in a room")
+    }
+
 }
 
 // called when the user leaves the chat and its user object deleted from array
@@ -20,6 +26,6 @@ export function removeRoomMembership(userId) {
     }
 }
 
-export function getRoomMembers(room){
+export function getRoomMemberships(room){
     return roomMemberships.filter(roomMembership => roomMembership.room === room)
 }
