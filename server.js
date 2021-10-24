@@ -11,13 +11,21 @@ import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Respon
 import {getGame} from "./GameManager.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import cors from "cors";
+import authRoutes from "./routes/auth.js";
+import db from "./model/User.js";
+
+
+dotenv.config();
 
 const app = express();
 
 const EXPECTED_TYPES_VERSION = "0.1.0"
 
 const port = process.env.PORT || 5000;
-
 
 // This displays message that the server running and listening to specified port
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -158,3 +166,22 @@ app.get('/express_get_test', (req, res) => {
     res.send({express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT'});
 });
 
+//const db = mongoose.connection;
+
+mongoose.connect(
+    process.env.DB_CONNECT,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    },
+    () => console.log('DB Connection successful!')
+);
+
+db.on('error', console.error.bind(console, 'connection error: '));
+
+//middlewares
+app.use(bodyParser.json())
+app.use(cors())
+
+//routes middleware
+app.use('/api', authRoutes);
