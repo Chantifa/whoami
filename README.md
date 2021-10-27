@@ -195,7 +195,6 @@ the [client package.json](client/package.json).
 6. `bcrypt`:    Hashing von Passwörtern
 7. `cors`:      CORS ist ein node.js-Paket zur Bereitstellung einer Connect / Express- Middleware, mit der CORS mit verschiedenen Optionen aktiviert werden kann.
 8. `jsonwebtoken`: Einbindung von jwt-Tokens
-9. `bodyparser` : Wird verwendet um eingehende Requests in einer Middleware zu analysieren.
 
 #### Client dependencies
 
