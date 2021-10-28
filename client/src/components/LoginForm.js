@@ -6,53 +6,52 @@ import {Container, Form} from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import userImg from "../img/user.svg";
 
-function LoginForm({Login, error}) {
+function LoginForm(props) {
+    const {login, error} = props
+
     // access "global" state object by useContext
     const myContext = useContext(appContext);
 
     // create state for details
-    const [details, setDetails] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
 
     // create function for handling submits
-    const submitHandler = e => {
+    function handleSubmit (e) {
         e.preventDefault();
-        Login(details);
+        login({email, password});
     }
 
-    const routeChange = () => {
-        let path = '/game';
-        history.push(path);
-    }
-
-    const routeChangeRegister = () => {
-        let path = '/register';
-        history.push(path);
-    }
+    const handlePassowrdChange = (event) => setPassword(event.target.value);
+    const handleEmailChange = (event) => setEmail(event.target.value);
 
     return (
-        <Container className="App-container" onSubmit={submitHandler}>
+        <>
             <img src={userImg} className="fade-in-image" alt="logo"/>
-            <Form>
-                <Form.Group className="mb-3" controlId="formBasicText">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="input" placeholder="Enter username"/>
+            <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="mail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleEmailChange}/>
                     <Form.Text className="text-muted">
-                        yo, it doesn't has to be your e-mail address!
+                        Sorry, you can not use your username
                     </Form.Text>
                 </Form.Group>
-                <Form.Group className="mb-3">
-                    <Button className="btn-register" onClick={routeChange}>Login</Button>
+                <Form.Group className="mb-3" controlId="pw">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="it's gonna be hidden" value={password} onChange={handlePassowrdChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
-                <Form.Label>Not registered yet? Don't worry..</Form.Label>
+                    <Button className="btn btn-primary" type="submit">Login</Button>
                 </Form.Group>
                 <Form.Group className="mb-3">
-                    <Button className="btn-register" onClick={routeChangeRegister}>Register here</Button>
+                    <Form.Label>Not registered yet?  </Form.Label>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Link to="/register" className="btn btn-outline-primary" > Register here </Link>
                 </Form.Group>
             </Form>
-        </Container>
+        </>
 
     )
 }

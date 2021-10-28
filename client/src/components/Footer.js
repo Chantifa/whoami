@@ -1,12 +1,11 @@
 import {Container} from "react-bootstrap";
-import React from "react";
 
 export default function Footer(){
     return (
-        <Container>
-            <footer className="footer">
+        <footer className="position-relative bottom-0">
+            <Container>
                 <p>&#169; FFHS Schweiz - Ramona Koksa | Yves Bastian Pellaton</p>
-            </footer>
-        </Container>
+            </Container>
+        </footer>
     )
 }

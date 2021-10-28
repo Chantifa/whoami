@@ -12,6 +12,7 @@ import GameSelection from "./components/GameSelection";
 import {Container} from "react-bootstrap";
 import RegisterForm from "./components/RegisterForm";
 import PrivateRoute from "./components/PrivateRoute";
+import LoginBody from "./components/LoginBody";
 
 function App() {
 
@@ -32,16 +33,16 @@ function App() {
         <Router>
             <appContext.Provider value={information}>
                 <Header/>
-                <Container>
+                <Container >
                     <Switch>
                         <Route path="/rules"><Rules/></Route>
-                        <Route path="/login"><LoginForm/></Route>
+                        <Route path="/login"><LoginBody/></Route>
                         <Route path="/register"><RegisterForm/></Route>
                         <PrivateRoute path="/game"><GameSelection/></PrivateRoute>
                         <Route path="/"><Home/></Route>
                     </Switch>
-                    <Footer/>
                 </Container>
+                <Footer/>
             </appContext.Provider>
         </Router>
     );
