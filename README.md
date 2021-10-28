@@ -269,7 +269,7 @@ Der Request-Body sieht dann wie folgt aus:
 }
 ```
 
-### Loginlogik
+## Loginlogik
 1. Zunächst wird geprüft ob der User existiert, wenn nicht, dann wird ein Fehler geworfen - `user not found`
 2. Wenn der User existiert, dann wird via `bcrypt.compare()` das Password geprüft.
 3. Der jwt-Token wird für eine Stunde aktiviert.
@@ -299,3 +299,18 @@ Response:
     }
 }
 ```
+
+## Testkonzept
+Im Rahmen des Projektes wurde entschieden, dass nur die Teststufe Unit abgedeckt wird. Die Teststufen Integration und System werden entsprechend nur bei Bedarf abgedeckt. 
+Das Frontend wird manuell getestet. Allfällige Bugs sind im Gitlab unter issues zu erfassen. Bei den Bugs wird zwischen den folgenden Kritikalitäten unterschieden:
+* Blocker: Die Applikation funktioniert als Ganzes nicht, z.B. Spiel kann nicht gestartet werden.
+* Critical: Der Bug wirkt sich auf kritische Funktionen der Applikation aus, z.B. Nutzer kann sich nicht registrieren.
+* Major: Der Fehler wirkt sich auf die Hauptfunktionalität aus, z.B. Chat funktioniert nicht richtig.
+* Minor: Der Fehler wirkt sich auf geringfügige Funktionen aus, z.B. Button wird nicht wie gewünscht angezeigt.
+* Trivial: Der Bug hat keine Auswirkung auf die Funktionalität, z.B. ein subjektives «Nice-to-have».
+
+Nach jedem Commit werden die Tests automatisch in der Gitlab CI/CD ausgeführt. Gemerged darf nur werden, sobald alle Tests durchgelaufen sind.
+Non-functional (NFR) Testfälle werden bei bedarf ebenfalls automatisiert. Dies ist aber der Entwicklung selbst überlassen. 
+Auf die statische Code Analyse wird bewusst verzichtet. Leider bietet das FFHS-Git keine Möglichkeit, Sonarqube bzw. Sonarcloud in die CI/CD-Pipeline mitaufzunehmen.
+Schlägt ein Test fehl, ist zu prüfen ob es bei der Umsetzung von neuen Features neue Bugs generiert hat oder ob der Test nicht mehr valide ist.
+
