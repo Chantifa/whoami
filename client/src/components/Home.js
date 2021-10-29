@@ -46,7 +46,7 @@ export default function Home() {
                                         <p className="description">
                                             Read the docs about the project. Everything is on readme in git.ffhs.
                                         </p>
-                                        <Button className="btn-link" color="success" href="https://git.ffhs.ch/ramona.koksa/whoami">
+                                        <Button className="btn-link" color="success" href="https://git.ffhs.ch/ramona.koksa/whoami/-/blob/dev/README.md">
                                             See more
                                         </Button>
                                     </div>

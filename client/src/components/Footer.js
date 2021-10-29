@@ -11,7 +11,7 @@ function Footer() {
                     <div className="credits ml-auto">
             <span className="copyright">
               © {new Date().getFullYear()}, made with{" "}
-                <i className="fa fa-heart heart" aria-hidden/> by FFHS - Ramona Koksa | Yves Bastian Pellaton
+                <i className="fa fa-heart heart" aria-hidden="true"/> by FFHS - Ramona Koksa | Yves Bastian Pellaton
             </span>
                     </div>
                 </Row>
