@@ -1,10 +1,10 @@
 import React, {useState, useContext} from 'react' // import hooks from React
 import {appContext} from "../appContext"; // import Context component
-import '../App.css';
+import '../styles.css';
 import {Link, useHistory} from 'react-router-dom';
 import {Container, Form} from "react-bootstrap";
 import {Button} from "react-bootstrap";
-import userImg from "../img/user.svg";
+import userImg from "../assets/img/user.svg";
 
 function LoginForm(props) {
     const {login, error} = props

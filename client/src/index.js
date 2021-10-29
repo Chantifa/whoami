@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from "./reportWebVitals";
+import "bootstrap/scss/bootstrap.scss";
+import "./assets/scss/paper-kit.scss?v=1.3.0";
+import "./assets/demo/demo.css?v=1.3.0";
 
 ReactDOM.render(
     <React.StrictMode>

@@ -1,8 +1,8 @@
 import React, {useState, useContext} from 'react'
 import {appContext} from "../appContext";
-import '../App.css';
+import '../styles.css';
 import {Button, Container, Form} from "react-bootstrap";
-import userimg from "../img/user.svg";
+import userimg from "../assets/img/user.svg";
 import {useHistory} from "react-router-dom";
 
 

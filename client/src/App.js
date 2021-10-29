@@ -1,18 +1,16 @@
 import {appContext} from './appContext';
-import './App.css';
+import './styles.css';
 import React, {useEffect, useState} from 'react';
 
-import Header from './components/Header'
 import Home from "./components/Home";
 import Rules from "./components/Rules";
 import Footer from "./components/Footer";
-import LoginForm from "./components/LoginForm";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import GameSelection from "./components/GameSelection";
-import {Container} from "react-bootstrap";
 import RegisterForm from "./components/RegisterForm";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginBody from "./components/LoginBody";
+import ExamplesNavbar from "./components/ExampleNavbar";
 
 function App() {
 
@@ -30,21 +28,19 @@ function App() {
     };
 
     return (
-        <Router>
-            <appContext.Provider value={information}>
-                <Header/>
-                <Container >
-                    <Switch>
-                        <Route path="/rules"><Rules/></Route>
-                        <Route path="/login"><LoginBody/></Route>
-                        <Route path="/register"><RegisterForm/></Route>
-                        <PrivateRoute path="/game"><GameSelection/></PrivateRoute>
-                        <Route path="/"><Home/></Route>
-                    </Switch>
-                </Container>
-                <Footer/>
-            </appContext.Provider>
-        </Router>
+                <Router>
+                    <appContext.Provider value={information}>
+                        <ExamplesNavbar/>
+                            <Switch>
+                                <Route path="/rules"><Rules/></Route>
+                                <Route path="/login"><LoginBody/></Route>
+                                <Route path="/register"><RegisterForm/></Route>
+                                <PrivateRoute path="/game"><GameSelection/></PrivateRoute>
+                                <Route path="/"><Home/></Route>
+                            </Switch>
+                        <Footer/>
+                    </appContext.Provider>
+                </Router>
     );
 
 }

@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import '../App.css';
+import '../styles.css';
 import { appContext } from "../appContext";
 import LoginForm from './LoginForm';
 import Profile from './Profile';
