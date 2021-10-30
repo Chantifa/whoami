@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import '../App.css';
+import '../styles.css';
 import { appContext } from "../appContext";
 import LoginForm from './LoginForm';
 import Profile from './Profile';
@@ -10,8 +10,8 @@ const LoginBody = () => {
     const [error, setError] = useState("");
 
     // create Login request, setStates with received data
-    const login = (data) => {
-        fetch('/api/user/login', {
+    function login(data){
+        fetch('/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const LoginBody = () => {
                     </div>
                 ) : (
                     <>
-                        <LoginForm Login={login} error={error} />
+                        <LoginForm login={login} error={error} />
                     </>
                 )}
             </div>

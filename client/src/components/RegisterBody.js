@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import { appContext } from "../appContext";
-import '../App.css';
+import '../styles.css';
 import RegisterForm from './RegisterForm';
 
 import Login from './LoginBody';

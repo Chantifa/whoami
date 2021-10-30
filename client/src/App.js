@@ -1,21 +1,19 @@
-import { appContext } from './appContext';
-import './App.css';
+import {appContext} from './appContext';
+import './styles.css';
 import React, {useEffect, useState} from 'react';
 
-import Header from './components/Header'
 import Home from "./components/Home";
 import Rules from "./components/Rules";
 import Footer from "./components/Footer";
-import LoginForm from "./components/LoginForm";
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import GameSelection from "./components/GameSelection";
-import {Container} from "react-bootstrap";
 import RegisterForm from "./components/RegisterForm";
+import PrivateRoute from "./components/PrivateRoute";
+import LoginBody from "./components/LoginBody";
+import ExamplesNavbar from "./components/ExampleNavbar";
 
 function App() {
 
-    const [state, setState] = useState("noene")
-    const [show, setShow] = useState(false)
     const [loggedin, setLoggedin] = useState(false);
     const [registered, setRegistered] = useState(null);
     const [user, setUser] = useState(null);
@@ -29,38 +27,20 @@ function App() {
         setRegistered,
     };
 
-    useEffect(() => {
-            fetch("/express_get_test")
-                .then(r => r.json())
-                .then(data => {
-                    setState(data.express)
-                    setShow(true)
-                })
-                .catch(e => console.error(e))
-
-        }
-        ,
-        []
-    )
-
     return (
-        <Router>
-            <div>
-                <appContext.Provider value={information}>
-                    <Header/>
-                    <Container>
-                        <Switch>
-                            <Route path="/rules"><Rules/></Route>
-                            <Route path="/login"><LoginForm/></Route>
-                            <Route path="/register"><RegisterForm/></Route>
-                            <Route path="/game"><GameSelection/></Route>
-                            <Route path="/"><Home/></Route>
-                        </Switch>
+                <Router>
+                    <appContext.Provider value={information}>
+                        <ExamplesNavbar/>
+                            <Switch>
+                                <Route path="/rules"><Rules/></Route>
+                                <Route path="/login"><LoginBody/></Route>
+                                <Route path="/register"><RegisterForm/></Route>
+                                <PrivateRoute path="/game"><GameSelection/></PrivateRoute>
+                                <Route path="/"><Home/></Route>
+                            </Switch>
                         <Footer/>
-                    </Container>
-                </appContext.Provider>
-            </div>
-        </Router>
+                    </appContext.Provider>
+                </Router>
     );
 
 }

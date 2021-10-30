@@ -1,12 +1,23 @@
-import {Container} from "react-bootstrap";
 import React from "react";
 
-export default function Footer(){
+// reactstrap components
+import {Container, Row} from "reactstrap";
+
+function Footer() {
     return (
-        <Container>
-            <footer className="footer">
-                <p>&#169; FFHS Schweiz - Ramona Koksa | Yves Bastian Pellaton</p>
-            </footer>
-        </Container>
-    )
+        <footer className="footer footer-black footer-white">
+            <Container>
+                <Row>
+                    <div className="credits ml-auto">
+            <span className="copyright">
+              © {new Date().getFullYear()}, made with{" "}
+                <i className="fa fa-heart heart" aria-hidden="true"/> by FFHS - Ramona Koksa | Yves Bastian Pellaton
+            </span>
+                    </div>
+                </Row>
+            </Container>
+        </footer>
+    );
 }
+
+export default Footer;

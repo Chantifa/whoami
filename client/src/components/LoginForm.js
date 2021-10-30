@@ -1,60 +1,76 @@
-import React, {useState, useContext} from 'react' // import hooks from React
+import React, {useContext, useState} from 'react' // import hooks from React
 import {appContext} from "../appContext"; // import Context component
-import '../App.css';
-import {Link, useHistory} from 'react-router-dom';
-import {Container, Form} from "react-bootstrap";
-import {Button} from "react-bootstrap";
-import userImg from "../img/user.svg";
+import '../styles.css';
+import {useHistory} from 'react-router-dom';
+import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
+import ExamplesNavbar from "./ExampleNavbar";
 
-function LoginForm({Login, error}) {
+function LoginForm(props) {
+    const {login, error} = props
+
     // access "global" state object by useContext
     const myContext = useContext(appContext);
+    document.documentElement.classList.remove("nav-open");
 
     // create state for details
-    const [details, setDetails] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
 
     // create function for handling submits
-    const submitHandler = e => {
+    function handleSubmit (e) {
         e.preventDefault();
-        Login(details);
+        login({email, password});
     }
 
-    const routeChange = () => {
-        let path = '/game';
-        history.push(path);
-    }
-
-    const routeChangeRegister = () => {
-        let path = '/register';
-        history.push(path);
-    }
+    const handlePassowrdChange = (event) => setPassword(event.target.value);
+    const handleEmailChange = (event) => setEmail(event.target.value);
 
     return (
-        <Container className="App-container" onSubmit={submitHandler}>
-            <img src={userImg} className="fade-in-image" alt="logo"/>
-            <Form>
-                <Form.Group className="mb-3" controlId="formBasicText">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="input" placeholder="Enter username"/>
-                    <Form.Text className="text-muted">
-                        yo, it doesn't has to be your e-mail address!
-                    </Form.Text>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Button className="btn-register" onClick={routeChange}>Login</Button>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                <Form.Label>Not registered yet? Don't worry..</Form.Label>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Button className="btn-register" onClick={routeChangeRegister}>Register here</Button>
-                </Form.Group>
-            </Form>
-        </Container>
+        <>
+            <ExamplesNavbar/>
+            <div
+                className="page-header"
+                style={{
+                    backgroundImage:
+                        "url(" + require("../assets/img/user.svg").default + ")",
+                }}
+            >
+                <div className="filter"/>
+                <Container>
+                    <div className="nc-align-center">
+                    <Row>
+                        <Col className="ml-auto mr-auto">
+                            <Card className="card-register ml-auto mr-auto card">
+                                <h3 className="title mx-auto">Welcome</h3>
+
+                                <Form className="register-form">
+                                    <label>Email</label>
+                                    <Input placeholder="Email" type="text"/>
+                                    <label>Password</label>
+                                    <Input placeholder="Password" type="password"/>
+                                    <Button block className="btn-round" color="danger">
+                                        Login
+                                    </Button>
+                                </Form>
+                                <div className="forgot">
+                                    <Button
+                                        className="btn-link"
+                                        color="danger"
+                                        href="/"
+                                        onClick={(e) => e.preventDefault()}>
+                                        Forgot password?
+                                    </Button>
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
+                    </div>
+                </Container>
+            </div>
+        </>
 
     )
 }
 
-export default LoginForm
+export default LoginForm;

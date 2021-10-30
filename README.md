@@ -1,4 +1,4 @@
-# ![Who Am I](client/src/img/logo.png) <br/> WebE, Web Engineering
+# ![Who Am I](client/src/assets/img/logo.png) <br/> WebE, Web Engineering
 
 **INF-P-WT002, BE-Sa-1, HS21/22, FFHS Bern** \
 *unter der Leitung von Dr. Heinrich Zimmermann* \
@@ -75,8 +75,8 @@ unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Di
 ~user-story versehen. 
 Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
-![wireframe of the login](client/src/img/login-wireframe.png)
-![wireframe of the game](client/src/img/game.png)
+![wireframe of the login](client/src/assets/img/login-wireframe.png)
+![wireframe of the game](client/src/assets/img/game.png)
 
 ## Getting started
 
@@ -90,7 +90,7 @@ npm run start-all
 ```
 
 ## Technologiestack
-# ![MERN](client/src/img/stack.jpeg) <br/>
+# ![MERN](client/src/assets/img/stack.jpeg) <br/>
 
 * MongoDB: Dokumentendatenbank
 * Express: Node.js Webframework
