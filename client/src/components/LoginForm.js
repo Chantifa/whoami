@@ -1,16 +1,16 @@
-import React, {useState, useContext} from 'react' // import hooks from React
+import React, {useContext, useState} from 'react' // import hooks from React
 import {appContext} from "../appContext"; // import Context component
 import '../styles.css';
-import {Link, useHistory} from 'react-router-dom';
-import {Container, Form} from "react-bootstrap";
-import {Button} from "react-bootstrap";
-import userImg from "../assets/img/user.svg";
+import {useHistory} from 'react-router-dom';
+import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
+import ExamplesNavbar from "./ExampleNavbar";
 
 function LoginForm(props) {
     const {login, error} = props
 
     // access "global" state object by useContext
     const myContext = useContext(appContext);
+    document.documentElement.classList.remove("nav-open");
 
     // create state for details
     const [email, setEmail] = useState("");
@@ -28,32 +28,49 @@ function LoginForm(props) {
 
     return (
         <>
-            <img src={userImg} className="fade-in-image" alt="logo"/>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="mail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleEmailChange}/>
-                    <Form.Text className="text-muted">
-                        Sorry, you can not use your username
-                    </Form.Text>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="pw">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="it's gonna be hidden" value={password} onChange={handlePassowrdChange}/>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Button className="btn btn-primary" type="submit">Login</Button>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Not registered yet?  </Form.Label>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Link to="/register" className="btn btn-outline-primary" > Register here </Link>
-                </Form.Group>
-            </Form>
+            <ExamplesNavbar/>
+            <div
+                className="page-header"
+                style={{
+                    backgroundImage:
+                        "url(" + require("../assets/img/user.svg").default + ")",
+                }}
+            >
+                <div className="filter"/>
+                <Container>
+                    <div className="nc-align-center">
+                    <Row>
+                        <Col className="ml-auto mr-auto">
+                            <Card className="card-register ml-auto mr-auto card">
+                                <h3 className="title mx-auto">Welcome</h3>
+
+                                <Form className="register-form">
+                                    <label>Email</label>
+                                    <Input placeholder="Email" type="text"/>
+                                    <label>Password</label>
+                                    <Input placeholder="Password" type="password"/>
+                                    <Button block className="btn-round" color="danger">
+                                        Login
+                                    </Button>
+                                </Form>
+                                <div className="forgot">
+                                    <Button
+                                        className="btn-link"
+                                        color="danger"
+                                        href="/"
+                                        onClick={(e) => e.preventDefault()}>
+                                        Forgot password?
+                                    </Button>
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
+                    </div>
+                </Container>
+            </div>
         </>
 
     )
 }
 
-export default LoginForm
+export default LoginForm;
