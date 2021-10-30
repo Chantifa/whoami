@@ -1,14 +1,25 @@
 import {
     addRoomMembership,
     getCurrentRoomMembership,
-    getRoomMembers,
+    getRoomMemberships,
     removeRoomMembership
 } from "./RoomMembershipRepo.js";
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./client/src/common/Requests.mjs";
 import {Server} from "socket.io";
 import express from "express";
-import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR, GAME_SETUP, GAME_STATE} from "./client/src/common/Responses.mjs";
-import {getRandomCharacterName, shuffle} from "./utils.js";
+import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Responses.mjs";
+import {getGame} from "./GameManager.mjs";
+import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
+import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import cors from "cors";
+import authRoutes from "./routes/auth.js";
+import db from "./model/User.js";
+
+
+dotenv.config();
 
 const app = express();
 
@@ -16,12 +27,13 @@ const EXPECTED_TYPES_VERSION = "0.1.0"
 
 const port = process.env.PORT || 5000;
 
-
 // This displays message that the server running and listening to specified port
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 const io = new Server(server);
 
-const games = {}
+function error(socket, message) {
+    socket.emit(ERROR.id, ERROR.getDto(message))
+}
 
 //initializing the socket io connection
 io.on("connection", (socket) => {
@@ -51,72 +63,101 @@ io.on("connection", (socket) => {
 
     //user sending message
     socket.on(CHAT_REQUEST.id, (dto) => {
-        console.log(`user ${socket.id} messaged ${JSON.stringify(dto)}`)
-        //gets the room user and the message sent
-        const roomMembership = getCurrentRoomMembership(socket.id)
+        try {
 
-        let payload = CHAT_MESSAGE.getDto();
-        payload.user = roomMembership.user
-        payload.message = dto.message
+            console.log(`user ${socket.id} messaged ${JSON.stringify(dto)}`)
+            //gets the room user and the message sent
+            const roomMembership = getCurrentRoomMembership(socket.id)
 
-        io.to(roomMembership.room).emit(CHAT_MESSAGE.id, payload);
+            let payload = CHAT_MESSAGE.getDto();
+            payload.user = roomMembership.user
+            payload.message = dto.message
+
+            io.to(roomMembership.room).emit(CHAT_MESSAGE.id, payload);
+        } catch (e) {
+            error(socket, e.message)
+        }
     });
 
     //when the user disconnects from the room
     socket.on("disconnect", () => {
-        console.info(`user ${socket.id} disconnected`)
-        //the user is deleted from array of users and a left room message displayed
-        const roomMembership = removeRoomMembership(socket.id);
+        try {
 
-        if (roomMembership) {
-            io.to(roomMembership.room).emit(CHAT_ANNOUNCEMENT.id, {
-                message: `${roomMembership.user.userName} has left the room`
-            });
+            console.info(`user ${socket.id} disconnected`)
+            //the user is deleted from array of users and a left room message displayed
+            const roomMembership = removeRoomMembership(socket.id);
+
+            if (roomMembership) {
+                io.to(roomMembership.room).emit(CHAT_ANNOUNCEMENT.id, {
+                    message: `${roomMembership.user.userName} has left the room`
+                });
+            }
+        } catch (e) {
+            error(socket, e.message)
         }
     });
+
 
     socket.on(GAME_START.id,()=> {
-        const roomMembership = getCurrentRoomMembership(socket.id);
+        try {
+            const roomMembership = getCurrentRoomMembership(socket.id);
+            const game = getGame(roomMembership.room);
+            const currentRoomMemberships = getRoomMemberships(roomMembership.room)
+            const roomMembers = currentRoomMemberships.map(roomMembership => roomMembership.user)
+            game.start(roomMembers)
 
-        if(games[roomMembership.room] != null){
-            socket.emit(ERROR.id, ERROR.getDto("Game already started"))
-            return
+            const setupMessage = game.getSetupMessage()
+
+            io.to(roomMembership.room).emit(GameSetupMessage.id,
+                setupMessage.getDto());
+
+            const stateMessage = game.getStateMessage()
+
+            io.to(roomMembership.room).emit(GameStateMessage.id, stateMessage)
+
+        } catch (e) {
+            error(socket, e.message)
         }
-
-        const roomMembers = getRoomMembers(roomMembership.room)
-        console.log(roomMembers)
-        const personaMapInPlayOrder = new Map()
-        shuffle(roomMembers)
-        roomMembers.forEach(m => {
-            personaMapInPlayOrder.set(m.user.userId, getRandomCharacterName())
-        })
-
-        const state = GAME_STATE.getDto(roomMembers[0].user.userId, null, new Date(Date.now() + 5 * 60000), new Map())
-        games[roomMembership.room] = {
-            ...state
-            , personaMapInPlayOrder
-        }
-
-
-
-        console.log(personaMapInPlayOrder)
-        io.to(roomMembership.room).emit(GAME_SETUP.id,
-            GAME_SETUP.getDto(personaMapInPlayOrder, 2)); //TODO
-
-        io.to(roomMembership.room).emit(GAME_STATE.id, state)
-    });
-
-    const todo = [GAME_VOTE.id, GAME_QUESTION.id]
-    todo.forEach(e => {
-        socket.on(e, (...data) => {
-            console.log(e)
-            const roomMembership = getCurrentRoomMembership(socket.id)
-            io.to(roomMembership.room).emit(GAME_STATE.id,
-                GAME_STATE.getDto(null, "no question, just TODO's", new Date(), new Map())
-            )
-
-        })
     })
+
+
+        socket.on(GAME_VOTE.id, (voteDto) => {
+            try{
+
+            console.log(GAME_VOTE.id)
+            const roomMembership = getCurrentRoomMembership(socket.id);
+            const game = getGame(roomMembership.room);
+
+            game.handleVote(roomMembership.user, voteDto)
+            const gameState = game.getStateMessage()
+
+            io.to(roomMembership.room).emit(GameStateMessage.id, gameState.getDto())
+            }
+            catch (e) {
+                error(socket, e.message)
+            }
+
+        })
+
+        socket.on(GAME_QUESTION.id, (question) => {
+            try {
+                console.log(GAME_QUESTION.id)
+                const roomMembership = getCurrentRoomMembership(socket.id)
+                const game = getGame(roomMembership.room);
+
+                game.handleQuestion(roomMembership.user, question)
+
+                const gameState = game.getStateMessage()
+
+                io.to(roomMembership.room).emit(GameStateMessage.id, gameState.getDto())
+
+            } catch (e) {
+                error(socket, e.message)
+            }
+
+        })
+
+
 });
 
 
@@ -124,3 +165,23 @@ io.on("connection", (socket) => {
 app.get('/express_get_test', (req, res) => {
     res.send({express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT'});
 });
+
+//const db = mongoose.connection;
+
+mongoose.connect(
+    process.env.DB_CONNECT,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    },
+    () => console.log('DB Connection successful!')
+);
+
+db.on('error', console.error.bind(console, 'connection error: '));
+
+//middlewares
+app.use(bodyParser.json())
+app.use(cors())
+
+//routes middleware
+app.use('/api', authRoutes);

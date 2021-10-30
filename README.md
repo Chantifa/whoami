@@ -1,4 +1,4 @@
-# ![Who Am I](client/src/img/logo.png) <br/> WebE, Web Engineering
+# ![Who Am I](client/src/assets/img/logo.png) <br/> WebE, Web Engineering
 
 **INF-P-WT002, BE-Sa-1, HS21/22, FFHS Bern** \
 *unter der Leitung von Dr. Heinrich Zimmermann* \
@@ -75,8 +75,8 @@ unter [issues](https://git.ffhs.ch/ramona.koksa/whoami/-/issues) beschrieben. Di
 ~user-story versehen. 
 Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
-![wireframe of the login](client/src/img/login-wireframe.png)
-![wireframe of the game](client/src/img/game.png)
+![wireframe of the login](client/src/assets/img/login-wireframe.png)
+![wireframe of the game](client/src/assets/img/game.png)
 
 ## Getting started
 
@@ -88,6 +88,14 @@ npm ci
 cd ..
 npm run start-all
 ```
+
+## Technologiestack
+# ![MERN](client/src/assets/img/stack.jpeg) <br/>
+
+* MongoDB: Dokumentendatenbank
+* Express: Node.js Webframework
+* React: Clientseitiges JS-Framework
+* Node: Führende JS-Webserver
 
 ## Architektur
 
@@ -179,17 +187,130 @@ the [client package.json](client/package.json).
 
 #### Server dependencies
 
-1. `express`:   this is the node web server
-2. `socket.io`: this framework wraps websockets for us, here the socket.io server
-3. `nodemon`:   the node demon is used for automatic rebuilds on changes during development
-4. `fs`:        this util is used to read data from a json file
+1. `express`:   Das ist der node web server
+2. `socket.io`: Dieses Framework umschliesst die Websockets für uns , hier der socket.io-Server
+3. `nodemon`:   der node demon wird für automatische rebuilds bei Änderungen während der Entwicklung verwendet
+4. `fs`:        wird verwendet um Daten auf einer JSON-Datei zu lesen
+5. `mongoose`:  Ein Objektmodellierungstool für MongoDB
+6. `bcrypt`:    Hashing von Passwörtern
+7. `cors`:      CORS ist ein node.js-Paket zur Bereitstellung einer Connect / Express- Middleware, mit der CORS mit verschiedenen Optionen aktiviert werden kann.
+8. `jsonwebtoken`: Einbindung von jwt-Tokens
+9. `bodyparser` : Wird verwendet um eingehende Requests in einer Middleware zu analysieren.
 
 #### Client dependencies
 
-1. `react`: the framework the client is written in
-2. `bootstrap`: css framework for low effort good behaviour
-3. `react-bootstarp`: bootstrap styled html as react components
-4. `react-dom`, `react-scripts`, `web-vitals`:  react boilerplate from `create-react-app`
-5. `react-router-dom`:  utility for routing and navigation inside the app
-6. `socket.io-client`: client implementation to connect to the socket.io server
-7. `react-router-bootstrap`: components to easily combine `react-bootstrap` and `react-router-dom`
+1. `react`: client-framework
+2. `bootstrap`: css framework
+3. `react-bootstarp`: bootstrap gestaltetes html als react Komponenten
+4. `react-dom`, `react-scripts`, `web-vitals`:  react boilerplate von `create-react-app`
+5. `react-router-dom`:  routing und navigation innerhalb der App
+6. `socket.io-client`: Client Verbindung zum socket.io server
+7. `react-router-bootstrap`: Verwendung von `react-bootstrap` und `react-router-dom`
+
+# API und Datenhaltung
+Für die Registrierung eines Users und das Login wurden zwei API's bereitgestellt:
+
+* http://localhost:5000/api/register
+* http://localhost:5000/api/login
+
+## Registrierungslogik
+1. Prüfe ob der User bereits existiert, wenn ja, dann wird ein Fehler geworfen - `email already exists`
+2. Wenn der User noch nicht existiert, dann wird das Passwort verschlüsselt via `bcrypt`
+3. `name`, `password` und `email` werden in der MongoDB persistiert.
+
+Der Request-Body sieht dann wie folgt aus:
+```json
+{
+    "name": "ffhs-webe",
+    "email": "YOURMAIL@TEST.ch",
+    "password": "123456",
+    "password_confirmation": "123456"
+}
+```
+
+```json
+{
+    "success": true,
+    "result": {
+        "name": "ffhs-webe",
+        "email": "YOURMAIL@TEST.ch",
+        "password": "$2b$10$PrqUYbNzFfBLDppngYIKdekVG2P2xgD3682.F7cQLfnooN6zTaBU2",
+        "_id": "6175609939ccbef4c4067693",
+        "createdAt": "2021-10-24T13:33:13.905Z",
+        "updatedAt": "2021-10-24T13:33:13.905Z",
+        "__v": 0
+    }
+}
+```
+
+### User-Schema:
+
+```json
+{
+   "_id": {
+      "$oid": "61754918f09576face1d352e"
+   },
+   "name": "ffhs-webe",
+   "email": "test@test.ch",
+   "password": "$2b$10$6p1LMZEtPNyQ50XvuJe4xOHEKBe4Td5gsqDefjZb3EHAH04ni/216",
+   "createdAt": {
+      "$date": {
+         "$numberLong": "1635076376967"
+      }
+   },
+   "updatedAt": {
+      "$date": {
+         "$numberLong": "1635076376967"
+      }
+   },
+   "__v": {
+      "$numberInt": "0"
+   }
+}
+```
+
+## Loginlogik
+1. Zunächst wird geprüft ob der User existiert, wenn nicht, dann wird ein Fehler geworfen - `user not found`
+2. Wenn der User existiert, dann wird via `bcrypt.compare()` das Password geprüft.
+3. Der jwt-Token wird für eine Stunde aktiviert.
+4. Wenn alles funktioniert hat, wird eine Response mit Status `<200 OK>` zurückgegeben.
+
+Der Request-Body sieht dann wie folgt aus:
+
+```json
+{
+    "email": "tetetest@TEST.ch",
+    "password": "123456"
+}
+```
+Response:
+```json
+{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRldGV0ZXN0QFRFU1QuY2giLCJ1c2VySWQiOiI2MTc1NTlkMWM0ZGU0YzNmZmU1MDc5YjkiLCJkdXJhdGlvbiI6MzYwMCwiaWF0IjoxNjM1MDgxODcxLCJleHAiOjE2MzUwODU0NzF9.hJd1vuMwOJFyYa2R2yNnUb535xY7F3FrkJvivgUlsU4",
+    "message": {
+        "_id": "617559d1c4de4c3ffe5079b9",
+        "name": "webe",
+        "email": "ffhs@test.ch",
+        "password": "$2b$10$nf7rTpX9853vfZDLRTHM4en3gNgJZuejqbIsFSpjnhvaRM0SsbORi",
+        "createdAt": "2021-10-24T13:04:17.232Z",
+        "updatedAt": "2021-10-24T13:04:17.232Z",
+        "__v": 0
+    }
+}
+```
+
+## Testkonzept
+Im Rahmen des Projektes wurde entschieden, dass nur die Teststufe Unit abgedeckt wird. Die Teststufen Integration und System werden entsprechend nur bei Bedarf abgedeckt. 
+Das Frontend wird manuell getestet. Allfällige Bugs sind im Gitlab unter issues zu erfassen. Bei den Bugs wird zwischen den folgenden Kritikalitäten unterschieden:
+* Blocker: Die Applikation funktioniert als Ganzes nicht, z.B. Spiel kann nicht gestartet werden.
+* Critical: Der Bug wirkt sich auf kritische Funktionen der Applikation aus, z.B. Nutzer kann sich nicht registrieren.
+* Major: Der Fehler wirkt sich auf die Hauptfunktionalität aus, z.B. Chat funktioniert nicht richtig.
+* Minor: Der Fehler wirkt sich auf geringfügige Funktionen aus, z.B. Button wird nicht wie gewünscht angezeigt.
+* Trivial: Der Bug hat keine Auswirkung auf die Funktionalität, z.B. ein subjektives «Nice-to-have».
+
+Nach jedem Commit werden die Tests automatisch in der Gitlab CI/CD ausgeführt. Gemerged darf nur werden, sobald alle Tests durchgelaufen sind.
+Non-functional (NFR) Testfälle werden bei bedarf ebenfalls automatisiert. Dies ist aber der Entwicklung selbst überlassen. 
+Auf die statische Code Analyse wird bewusst verzichtet. Leider bietet das FFHS-Git keine Möglichkeit, Sonarqube bzw. Sonarcloud in die CI/CD-Pipeline mitaufzunehmen.
+Schlägt ein Test fehl, ist zu prüfen ob es bei der Umsetzung von neuen Features neue Bugs generiert hat oder ob der Test nicht mehr valide ist.
+

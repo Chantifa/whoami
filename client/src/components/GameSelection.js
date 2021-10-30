@@ -4,7 +4,7 @@ import Game from "./Game";
 import {ListGroup, ListGroupItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap"
 
-function GameSelection() {
+export default function GameSelection() {
 
     let {path, url} = useRouteMatch();
 
@@ -23,5 +23,3 @@ function GameSelection() {
     </>
 
 }
-
-export default GameSelection

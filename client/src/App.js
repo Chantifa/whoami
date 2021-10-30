@@ -1,69 +1,47 @@
-import logo from './img/logo.png';
-import './App.css';
+import {appContext} from './appContext';
+import './styles.css';
 import React, {useEffect, useState} from 'react';
 
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
-import {Container, Nav, Navbar} from "react-bootstrap";
+import Home from "./components/Home";
+import Rules from "./components/Rules";
+import Footer from "./components/Footer";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import GameSelection from "./components/GameSelection";
-
+import RegisterForm from "./components/RegisterForm";
+import PrivateRoute from "./components/PrivateRoute";
+import LoginBody from "./components/LoginBody";
+import ExamplesNavbar from "./components/ExampleNavbar";
 
 function App() {
 
-    const [state, setState] = useState("noene")
-    const [show, setShow] = useState(false)
-
-
-    useEffect(() => {
-        fetch("/express_get_test")
-            .then(r => r.json())
-            .then(data => {
-                setState(data.express)
-                setShow(true)
-            })
-            .catch(e => console.error(e))
-
-    }, [])
-
+    const [loggedin, setLoggedin] = useState(false);
+    const [registered, setRegistered] = useState(null);
+    const [user, setUser] = useState(null);
+    const information = {
+        // create object to hold global vars and methods
+        user: user,
+        setUser,
+        loggedin: loggedin,
+        setLoggedin,
+        registered: registered,
+        setRegistered,
+    };
 
     return (
-        <Router>
-            <Navbar expand="lg">
-                <Container>
-                    <Navbar.Brand as={Link} to="/"> React-Bootstrap</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link as={Link} to="/">Home</Nav.Link>
-                            <Nav.Link as={Link} to="/no">Link</Nav.Link>
-                            <Nav.Link as={Link} to="/game">GameSelecition</Nav.Link>
-                            <Nav.Link as={Link} to="/game/7">specific Game</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-
-
-            <Container>
-                <Switch>
-                    {/*TODO: add auth like https://reactrouter.com/web/example/auth-workflow*/}
-                    <Route path="/no">
-                        <p> nothin ghere</p>
-                    </Route>
-                    <Route path="/game"><GameSelection/></Route>
-                    <Route path="/">
-                        <header className="App-header">
-                            <img src={logo} className="App-logo" alt="logo"/>
-                            <p>
-                                Edit <code>src/App.js</code> and save to reload.
-                            </p>
-                            {show ? <h2> Loook {state}</h2> : <p>None yet</p>}
-                        </header>
-                    </Route>
-                </Switch>
-            </Container>
-        </Router>
-
+                <Router>
+                    <appContext.Provider value={information}>
+                        <ExamplesNavbar/>
+                            <Switch>
+                                <Route path="/rules"><Rules/></Route>
+                                <Route path="/login"><LoginBody/></Route>
+                                <Route path="/register"><RegisterForm/></Route>
+                                <PrivateRoute path="/game"><GameSelection/></PrivateRoute>
+                                <Route path="/"><Home/></Route>
+                            </Switch>
+                        <Footer/>
+                    </appContext.Provider>
+                </Router>
     );
-}
 
+}
 export default App;

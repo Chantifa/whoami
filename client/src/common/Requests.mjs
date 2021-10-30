@@ -46,9 +46,9 @@ export const LEAVE_ROOM = {
  */
 export const GAME_QUESTION = {
     id: "GAME_QUESTION",
-    getDto(question) {
+    getDto(text) {
         return {
-            question
+            text
         }
     }
 }
