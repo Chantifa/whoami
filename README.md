@@ -206,6 +206,11 @@ the [client package.json](client/package.json).
 5. `react-router-dom`:  routing und navigation innerhalb der App
 6. `socket.io-client`: Client Verbindung zum socket.io server
 7. `react-router-bootstrap`: Verwendung von `react-bootstrap` und `react-router-dom`
+8. `axios`: HTTP-Client für Anfragen an unser Backend
+9. `redux`: Wird verwendet um den Zustand zwischen Komponenten zu verwalten
+10. `react-redux`: Verwendung von Redux mit React
+11. `redux-thunk`: Middleware für Redux, das ermöglicht einen direkten Zugriff auf die dispatch-Methode um asynchrone Aufrue tätigen zu können.
+12. `jwt-decode`: Wird zum entschlüsseln verwendet
 
 # API und Datenhaltung
 Für die Registrierung eines Users und das Login wurden zwei API's bereitgestellt:

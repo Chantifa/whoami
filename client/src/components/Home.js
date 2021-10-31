@@ -2,7 +2,7 @@ import '../styles.css';
 import React from "react";
 import {Button, Col, Container, Row,} from "reactstrap";
 import ExamplesNavbar from "./ExampleNavbar";
-import LandingPageHeader from "./LandingPageHeader";
+import LandingPage from "./LandingPage";
 
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <>
             <ExamplesNavbar />
-            <LandingPageHeader />
+            <LandingPage />
             <div className="main">
                 <div className="section text-center">
                     <Container>

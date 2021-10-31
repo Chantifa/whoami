@@ -1,7 +1,6 @@
 import React, {useContext, useState} from 'react' // import hooks from React
 import {appContext} from "../appContext"; // import Context component
 import '../styles.css';
-import {useHistory} from 'react-router-dom';
 import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
 import ExamplesNavbar from "./ExampleNavbar";
 
@@ -15,7 +14,6 @@ function LoginForm(props) {
     // create state for details
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const history = useHistory();
 
     // create function for handling submits
     function handleSubmit (e) {
@@ -37,11 +35,11 @@ function LoginForm(props) {
                 }}
             >
                 <div className="filter"/>
+                <div className="align-content-lg-center">
                 <Container>
-                    <div className="nc-align-center">
                     <Row>
-                        <Col className="ml-auto mr-auto">
-                            <Card className="card-register ml-auto mr-auto card">
+                        <Col className="ml-auto mr-auto" lg="12">
+                            <Card className="card-register ml-auto mr-auto">
                                 <h3 className="title mx-auto">Welcome</h3>
 
                                 <Form className="register-form">
@@ -65,8 +63,8 @@ function LoginForm(props) {
                             </Card>
                         </Col>
                     </Row>
-                    </div>
                 </Container>
+                </div>
             </div>
         </>
 

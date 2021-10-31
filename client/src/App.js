@@ -1,5 +1,4 @@
 import {appContext} from './appContext';
-import './styles.css';
 import React, {useEffect, useState} from 'react';
 
 import Home from "./components/Home";
