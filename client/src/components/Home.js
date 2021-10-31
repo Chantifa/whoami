@@ -1,7 +1,6 @@
-import '../styles.css';
 import React from "react";
 import {Button, Col, Container, Row,} from "reactstrap";
-import ExamplesNavbar from "./ExampleNavbar";
+import ExamplesNavbar from "./Navbar";
 import LandingPage from "./LandingPage";
 
 

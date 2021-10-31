@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
-import '../styles.css';
-import ExamplesNavbar from "./ExampleNavbar";
+import ExamplesNavbar from "./Navbar";
 import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
-import * as errors from "express";
 
-class RegisterForm extends Component {
+class Register extends Component {
 
     constructor() {
         super();
@@ -33,6 +31,7 @@ class RegisterForm extends Component {
     };
 
     render() {
+        const {errors} = this.state;
         return (
             <>
                 <ExamplesNavbar/>
@@ -81,6 +80,7 @@ class RegisterForm extends Component {
                                             />
                                             <label>Confirm Password</label>
                                             <Input
+                                                placeholder="Password"
                                                 onChange={this.onChange}
                                                 value={this.state.password2}
                                                 error={errors.password2}
@@ -113,4 +113,4 @@ class RegisterForm extends Component {
 
 }
 
-export default RegisterForm;
+export default Register;

@@ -1,46 +1,31 @@
-import {appContext} from './appContext';
-import React, {useEffect, useState} from 'react';
-
-import Home from "./components/Home";
+import React, {Component} from "react";
+import {BrowserRouter as Router, Route} from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Landing from "./components/LandingPage";
+import Register from "./components/Register";
+import Login from "./components/Login";
 import Rules from "./components/Rules";
-import Footer from "./components/Footer";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import GameSelection from "./components/GameSelection";
-import RegisterForm from "./components/RegisterForm";
 import PrivateRoute from "./components/PrivateRoute";
-import LoginBody from "./components/LoginBody";
-import ExamplesNavbar from "./components/ExampleNavbar";
+import {Provider} from "react-redux";
+import store from "./store";
 
-function App() {
-
-    const [loggedin, setLoggedin] = useState(false);
-    const [registered, setRegistered] = useState(null);
-    const [user, setUser] = useState(null);
-    const information = {
-        // create object to hold global vars and methods
-        user: user,
-        setUser,
-        loggedin: loggedin,
-        setLoggedin,
-        registered: registered,
-        setRegistered,
-    };
-
-    return (
+class App extends Component {
+    render() {
+        return (
+            <Provider store={store}>
                 <Router>
-                    <appContext.Provider value={information}>
-                        <ExamplesNavbar/>
-                            <Switch>
-                                <Route path="/rules"><Rules/></Route>
-                                <Route path="/login"><LoginBody/></Route>
-                                <Route path="/register"><RegisterForm/></Route>
-                                <PrivateRoute path="/game"><GameSelection/></PrivateRoute>
-                                <Route path="/"><Home/></Route>
-                            </Switch>
-                        <Footer/>
-                    </appContext.Provider>
+                    <div className="App">
+                        <Navbar/>
+                        <Route exact path="/" component={Landing}/>
+                        <Route exact path="/register" component={Register}/>
+                        <Route exact path="/login" component={Login}/>
+                        <Route exact path="/rules" component={Rules}/>
+                        <PrivateRoute path="/game"><GameSelection/></PrivateRoute>
+                    </div>
                 </Router>
-    );
-
+            </Provider>
+        );
+    }
 }
 export default App;

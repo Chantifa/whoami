@@ -1,9 +1,8 @@
 import React, {useState, useContext} from 'react';
 import { appContext } from "../appContext";
-import '../styles.css';
-import RegisterForm from './RegisterForm';
+import Register from './Register';
 
-import Login from './LoginBody';
+import LoginBody from './LoginBody';
 
 
 export function RegisterBody(){
@@ -39,10 +38,10 @@ export function RegisterBody(){
                         <div className = "registersuccess">
                             <p className="form-success">You have been successfully registered, <span className="form-success2">{myContext.registered}</span></p>
                         </div>
-                        <Login />
+                        <LoginBody />
                     </>
                 ) : (
-                    <RegisterForm Register={register} error={error} />
+                    <Register Register={register} error={error} />
                 )}
             </div>
     )

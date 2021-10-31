@@ -1,6 +1,6 @@
 import {Button, Container} from "reactstrap";
 import React from "react";
-import ExamplesNavbar from "./ExampleNavbar";
+import ExamplesNavbar from "./Navbar";
 import {useHistory} from "react-router-dom";
 
 export default function Rules() {

@@ -213,7 +213,7 @@ the [client package.json](client/package.json).
 12. `jwt-decode`: Wird zum entschlüsseln verwendet
 
 # API und Datenhaltung
-Für die Registrierung eines Users und das Login wurden zwei API's bereitgestellt:
+Für die Registrierung eines Users und das LoginBody wurden zwei API's bereitgestellt:
 
 * http://localhost:5000/api/register
 * http://localhost:5000/api/login
