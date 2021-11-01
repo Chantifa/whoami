@@ -179,4 +179,14 @@ export default class Game {
             throw new Error(`User ${user} is not a member of the game`)
         }
     }
+
+    getOverview(room){
+
+        const players = []
+        this._players.forEach(p => players.push(p.userName))
+
+        return {roomName: room,
+        phase: this._phase.phase,
+        players}
+    }
 }
