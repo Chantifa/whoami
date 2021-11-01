@@ -92,7 +92,7 @@ export default class Game {
             console.log(voteDto, this.getCurrentQuestion())
         }
 
-        this._nextPhaseIfAdequate() //todo maybe finish phase if all have voted?
+        this._nextPhaseIfAdequate() // finish phase if all have voted
     }
 
     handleQuestion(user, question) {
@@ -101,16 +101,15 @@ export default class Game {
         const userQuestionList = this._futureQuestions.get(user)
         if(!userQuestionList.includes(question.text)){
             userQuestionList.push(question.text)
-            this._nextPhaseIfAdequate()
         } else {
             console.log("duplicate question")
         }
-
+        this._nextPhaseIfAdequate()
 
     }
 
     _nextPhaseIfAdequate() {
-        //todo check if we can go to the next phase
+        //check if we can go to the next phase
 
         if (this._phase === GamePhase.WAITING_QUESTION) {
             if (this._futureQuestions.get(this.getCurrentUser()).length > 0) {

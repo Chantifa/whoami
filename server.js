@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
             return
         }
 
-        addRoomMembership({userId: socket.id, userName}, roomName);
+        addRoomMembership({userId: socket.id, socketId: socket.id, userName}, roomName); //todo add userId
         socket.join(roomName);
 
         //display a welcome message to the user who have joined a room
