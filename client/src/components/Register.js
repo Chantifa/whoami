@@ -15,7 +15,7 @@ class Register extends Component {
             name: "",
             email: "",
             password: "",
-            password2: "",
+            password_confirmation: "",
             errors: {}
         };
     }
@@ -46,7 +46,7 @@ class Register extends Component {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
-            password2: this.state.password2
+            password_confirmation: this.state.password_confirmation
         };
 
         this.props.registerUser(newUser, this.props.history);
@@ -118,15 +118,15 @@ class Register extends Component {
                                             <Input
                                                 placeholder="Password"
                                                 onChange={this.onChange}
-                                                value={this.state.password2}
-                                                error={errors.password2}
-                                                id="password2"
+                                                value={this.state.password_confirmation}
+                                                error={errors.password_confirmation}
+                                                id="password_confirmation"
                                                 type="password"
                                                 className={classnames("", {
-                                                    invalid: errors.password2
+                                                    invalid: errors.password_confirmation
                                                 })}
                                             />
-                                            <span className="red-text">{errors.password2}</span>
+                                            <span className="red-text">{errors.password_confirmation}</span>
                                             <Button block className="btn-round" color="danger">
                                                 Sign up
                                             </Button>
