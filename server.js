@@ -8,7 +8,7 @@ import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./c
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Responses.mjs";
-import {getGame} from "./GameManager.mjs";
+import {getGame, getOverview} from "./GameManager.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
 import mongoose from "mongoose";
@@ -161,9 +161,8 @@ io.on("connection", (socket) => {
 });
 
 
-// create a GET route
-app.get('/express_get_test', (req, res) => {
-    res.send({express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT'});
+app.get('/api/games', (req, res) => {
+    res.send(getOverview());
 });
 
 //const db = mongoose.connection;
