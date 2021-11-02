@@ -8,8 +8,6 @@ export default function GameSelection() {
 
     let {path, url} = useRouteMatch();
 
-    const {user} = this.props.auth;
-
     return (
         <>
             <Route path={`${path}/:id`}>
