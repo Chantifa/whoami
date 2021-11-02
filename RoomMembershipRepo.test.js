@@ -6,5 +6,5 @@ const room = "room1234"
 
 test('room management works', () => {
     addRoomMembership(user, room)
-    expect(getCurrentRoomMembership(user.userId)).toStrictEqual({room, user})
+    expect(getCurrentRoomMembership(user.socketId)).toStrictEqual({room, user})
 })
