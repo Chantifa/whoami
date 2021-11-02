@@ -17,6 +17,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import db from "./model/User.js";
+import jsonwebtoken from "jsonwebtoken";
 
 
 dotenv.config();
@@ -41,13 +42,14 @@ io.on("connection", (socket) => {
     //now define callbacks for different events:
 
     //new user joining the room
-    socket.on(JOIN_ROOM.id, ({userName, roomName, version}) => {
+    socket.on(JOIN_ROOM.id, ({userName, roomName, jwt, version}) => {
         if (EXPECTED_TYPES_VERSION !== version) {
             console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
             return
         }
+        const decoded = jsonwebtoken.verify(jwt, process.env.TOKEN_SECRET)
 
-        addRoomMembership({userId: socket.id, socketId: socket.id, userName}, roomName); //todo add userId
+        addRoomMembership({userId: decoded.userId, socketId: socket.id, userName}, roomName);
         socket.join(roomName);
 
         //display a welcome message to the user who have joined a room
@@ -171,7 +173,7 @@ mongoose.connect(
     process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
+        useUnifiedTopology: true, //fixme Argument type {useUnifiedTopology: boolean, useNewUrlParser: boolean} is not assignable to parameter type ConnectOptions
     },
     () => console.log('DB Connection successful!')
 );

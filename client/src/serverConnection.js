@@ -13,6 +13,15 @@ export default function useServer(userName, roomName) {
     const [gameState, setGameState] = useState(null)
 
     useEffect(() => {
+
+             //fixme
+            const jwt = localStorage.jwtToken; //fixme
+            if (!localStorage.jwtToken) { //fixme
+                alert("you are not logged in") //fixme
+                window.location.href = "/login" //fixme
+            }//fixme
+
+
             //setup
             if (socketRef.current === null) {
                 console.log("connect")
@@ -21,7 +30,7 @@ export default function useServer(userName, roomName) {
             const {current: socket} = socketRef;
 
             //join room
-            socket.emit(JOIN_ROOM.id, {...JOIN_ROOM.getDto(), userName, roomName})
+            socket.emit(JOIN_ROOM.id, {...JOIN_ROOM.getDto(), userName, roomName, jwt})
 
             //event handlers
 
