@@ -7,6 +7,7 @@ import classnames from "classnames";
 import { loginUser } from "../actions/authActions";
 
 class Login extends Component {
+
     constructor() {
         super();
         this.state = {
@@ -45,7 +46,9 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        this.props.loginUser(userData);
+
+    this.props.loginUser(userData);
+
     };
 
     render() {
