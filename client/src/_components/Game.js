@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
-import {Button, Form} from "react-bootstrap";
+import {Button, Col, Form, Row} from "react-bootstrap";
 import Chat from "./Chat";
 
 export default function Game(props) {
@@ -33,25 +33,36 @@ export default function Game(props) {
 
 
     return <>
-        <h1> Game {id} </h1>
-        {/*Left side*/}
-        <p>{JSON.stringify(gameInfo)}</p>
-        <p>{JSON.stringify(gameState)}</p>
-        <Button onClick={test1}> vote </Button>
-        <Button onClick={test2}> question </Button>
-        <Button onClick={test3}> start </Button>
+        <main className="container grid" style={{marginTop: 110 + 'px'}}>
+            <Row>
+                <h1> Game {id} </h1>
+            </Row>
+            <Row>
+
+                <Col>
+                    <p>{JSON.stringify(gameInfo)}</p>
+                    <p>{JSON.stringify(gameState)}</p>
+                    <Button onClick={test1}> vote </Button>
+                    <Button onClick={test2}> question </Button>
+                    <Button onClick={test3}> start </Button>
+                </Col>
+                <Col>
+                    <Chat messages={messageList}/>
+
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group>
+                            <Form.Label>Label</Form.Label>
+                            <Form.Control type="text" placeholder="Enter your message" onChange={handleChange}
+                                          value={text}/>
+                            <Form.Text className="text-muted">
+                                Some hint that might be important
+                            </Form.Text>
+                        </Form.Group>
+                        <Button type="submit">Post</Button>
+                    </Form>
+                </Col>
+            </Row>
+        </main>
         {/*Right side*/}
-        <Chat messages={messageList}/>
-        <Form onSubmit={handleSubmit}>
-            <Form.Group>
-                <Form.Label>Label</Form.Label>
-                <Form.Control type="text" placeholder="Enter your message" onChange={handleChange}
-                              value={text}/>
-                <Form.Text className="text-muted">
-                    Some hint that might be important
-                </Form.Text>
-            </Form.Group>
-            <Button type="submit">Post</Button>
-        </Form>
     </>;
 }
