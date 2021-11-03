@@ -1,58 +1,49 @@
-import React, {Component} from "react";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import Rules from "./components/Rules";
-import GameSelection from "./components/GameSelection";
-import {Provider} from "react-redux";
-import store from "./store";
-import Home from "./components/Home";
-import Footer from "./components/Footer";
-import PrivateRoute from "./components/PrivateRoute";
-import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
-import {logoutUser, setCurrentUser} from "./actions/authActions";
+import React, { useEffect } from 'react';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-// Check for token to keep user logged in
-if (localStorage.jwtToken) {
-    // Set auth token header auth
-    const token = localStorage.jwtToken;
-    setAuthToken(token);
-    // Decode token and get user info and exp
-    const decoded = jwt_decode(token);
-    // Set user and isAuthenticated
-    store.dispatch(setCurrentUser(decoded));
+import { history } from './_helpers';
+import { alertActions } from './_actions';
+import { PrivateRoute } from './_components';
+import { GameSelection } from './_components';
+import { Login } from './_components';
+import { Register } from './_components';
+import { Home } from './_components'
+import Navbar from './_components/Navbar'
+import Rules from './_components/Rules'
+import Footer from './_components/Footer'
 
-    // Check for expired token
-    const currentTime = Date.now() / 1000; // to get in milliseconds
-    if (decoded.exp < currentTime) {
-        // Logout user
-        store.dispatch(logoutUser());
-        // Redirect to login
-        window.location.href = "./login";
-    }
+function App() {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        history.listen((location, action) => {
+            // clear alert on location change
+            dispatch(alertActions.clear());
+        });
+    }, []);
+
+    return (
+
+        <Router history={history}>
+            <div className="App">
+                <Navbar />
+                <Switch>
+                    <PrivateRoute exact path="/game" component={GameSelection} />
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/rules" component={Rules} />
+                    <Redirect from="*" to="/" />
+                </Switch>
+            </div>
+            <Footer />
+        </Router>
+
+
+
+    );
 }
 
-class App extends Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <Router>
-                    <div className="App">
-                        <Navbar/>
-                        <Route exact path="/" component={Home}/>
-                        <Route exact path="/register" component={Register}/>
-                        <Route exact path="/login" component={Login}/>
-                        <Route exact path="/rules" component={Rules}/>
-                        <Switch>
-                            <PrivateRoute path="/game" element={<GameSelection/>}/>
-                        </Switch>
-                    </div>
-                    <Footer/>
-                </Router>
-            </Provider>
-        );
-    }
-}
-export default App;
+export { App }
