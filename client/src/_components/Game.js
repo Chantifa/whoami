@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import Chat from "./Chat";
+import GameInfo from "./GameInfo";
 
 export default function Game(props) {
 
@@ -37,10 +38,13 @@ export default function Game(props) {
             <Row>
                 <h1> Game {id} </h1>
             </Row>
+
+            <GameInfo data={gameInfo}/>
+
             <Row>
 
                 <Col>
-                    <p>{JSON.stringify(gameInfo)}</p>
+                    <p>{JSON.stringify()}</p>
                     <p>{JSON.stringify(gameState)}</p>
                     <Button onClick={test1}> vote </Button>
                     <Button onClick={test2}> question </Button>
