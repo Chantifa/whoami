@@ -3,8 +3,7 @@ import {Button, Col, Container, Row,} from "reactstrap";
 import ExamplesNavbar from "./Navbar";
 import LandingPage from "./LandingPage";
 
-
-export default function Home() {
+function Home() {
     document.documentElement.classList.remove("nav-open");
     return (
         <>
@@ -90,3 +89,5 @@ export default function Home() {
         </>
     )
 }
+
+export { Home };
