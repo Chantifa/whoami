@@ -15,10 +15,17 @@ export default function useServer(userName, roomName) {
     useEffect(() => {
 
              //fixme
-            const jwt = localStorage.jwtToken; //fixme
-            if (!localStorage.jwtToken) { //fixme
+            const parse = JSON.parse(localStorage.getItem("user")); //fixme
+            if(!parse){
+                alert("you are not logged in") //fixme
+                         window.location.href = "/login" //fixme
+                return //fixme
+            }
+            const jwt = parse.token; //fixme
+            if (!jwt) { //fixme
                 alert("you are not logged in") //fixme
                 window.location.href = "/login" //fixme
+                return // fixme
             }//fixme
 
 
