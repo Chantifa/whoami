@@ -43,14 +43,19 @@ io.on("connection", (socket) => {
 
     //new user joining the room
     socket.on(JOIN_ROOM.id, ({userName, roomName, jwt, version}) => {
-        if (EXPECTED_TYPES_VERSION !== version) {
-            console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
-            return
-        }
-        const decoded = jsonwebtoken.verify(jwt, process.env.TOKEN_SECRET)
+        try {
+            if (EXPECTED_TYPES_VERSION !== version) {
+                console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
+                return
+            }
 
-        addRoomMembership({userId: decoded.userId, socketId: socket.id, userName}, roomName);
-        socket.join(roomName);
+            const decoded = jsonwebtoken.verify(jwt, process.env.TOKEN_SECRET)
+
+            addRoomMembership({userId: decoded.userId, socketId: socket.id, userName}, roomName);
+            socket.join(roomName);
+        } catch (e) {
+            error(socket, e.message)
+        }
 
         //display a welcome message to the user who have joined a room
         const message = `Welcome ${userName}`
