@@ -34,7 +34,7 @@ function App() {
             <div className="App">
                 <Navbar />
                 <Switch>
-                    <PrivateRoute exact path="/game" component={GameSelection} />
+                    <PrivateRoute path="/game" component={GameSelection} />
                     <Route exact path="/" component={Home} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
