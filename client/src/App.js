@@ -1,47 +1,58 @@
-import {appContext} from './appContext';
-import './styles.css';
-import React, {useEffect, useState} from 'react';
-
-import Home from "./components/Home";
-import Rules from "./components/Rules";
-import Footer from "./components/Footer";
+import React, {Component} from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Rules from "./components/Rules";
 import GameSelection from "./components/GameSelection";
-import RegisterForm from "./components/RegisterForm";
+import {Provider} from "react-redux";
+import store from "./store";
+import Home from "./components/Home";
+import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-import LoginBody from "./components/LoginBody";
-import ExamplesNavbar from "./components/ExampleNavbar";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import {logoutUser, setCurrentUser} from "./actions/authActions";
 
-function App() {
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+    // Set auth token header auth
+    const token = localStorage.jwtToken;
+    setAuthToken(token);
+    // Decode token and get user info and exp
+    const decoded = jwt_decode(token);
+    // Set user and isAuthenticated
+    store.dispatch(setCurrentUser(decoded));
 
-    const [loggedin, setLoggedin] = useState(false);
-    const [registered, setRegistered] = useState(null);
-    const [user, setUser] = useState(null);
-    const information = {
-        // create object to hold global vars and methods
-        user: user,
-        setUser,
-        loggedin: loggedin,
-        setLoggedin,
-        registered: registered,
-        setRegistered,
-    };
+    // Check for expired token
+    const currentTime = Date.now() / 1000; // to get in milliseconds
+    if (decoded.exp < currentTime) {
+        // Logout user
+        store.dispatch(logoutUser());
+        // Redirect to login
+        window.location.href = "./login";
+    }
+}
 
-    return (
+class App extends Component {
+    render() {
+        return (
+            <Provider store={store}>
                 <Router>
-                    <appContext.Provider value={information}>
-                        <ExamplesNavbar/>
-                            <Switch>
-                                <Route path="/rules"><Rules/></Route>
-                                <Route path="/login"><LoginBody/></Route>
-                                <Route path="/register"><RegisterForm/></Route>
-                                <PrivateRoute path="/game"><GameSelection/></PrivateRoute>
-                                <Route path="/"><Home/></Route>
-                            </Switch>
-                        <Footer/>
-                    </appContext.Provider>
+                    <div className="App">
+                        <Navbar/>
+                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/register" component={Register}/>
+                        <Route exact path="/login" component={Login}/>
+                        <Route exact path="/rules" component={Rules}/>
+                        <Switch>
+                            <PrivateRoute path="/game" element={<GameSelection/>}/>
+                        </Switch>
+                    </div>
+                    <Footer/>
                 </Router>
-    );
-
+            </Provider>
+        );
+    }
 }
 export default App;

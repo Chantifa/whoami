@@ -1,8 +1,7 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import classnames from "classnames";
-import { useHistory } from 'react-router-dom';
-import {Navbar, Nav} from "react-bootstrap";
+import {Nav, Navbar} from "react-bootstrap";
 import {Button, Collapse, Container, NavItem, NavLink,} from "reactstrap";
 import logo from "../assets/img/logo.png";
 
@@ -57,8 +56,7 @@ function ExamplesNavbar() {
                         className={classnames("navbar-toggler navbar-toggler", {
                             toggled: navbarCollapse,
                         })}
-                        onClick={toggleNavbarCollapse}
-                    >
+                        onClick={toggleNavbarCollapse}>
                         <span className="navbar-toggler-bar bar1"/>
                         <span className="navbar-toggler-bar bar2"/>
                         <span className="navbar-toggler-bar bar3"/>
@@ -93,7 +91,7 @@ function ExamplesNavbar() {
                                 color="danger"
                                 onClick={routeChange}
                                 target="_blank">
-                                <i className="nc-icon nc-spaceship"/> Register
+                                <i className="nc-icon nc-spaceship"/> Login
                             </Button>
                         </NavItem>
                     </Nav>

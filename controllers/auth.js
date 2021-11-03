@@ -83,7 +83,7 @@ export function login(req, res) {
     }
     if (!password) {
         errors.push({
-            passowrd: "required",
+            password: "required",
         });
     }
     if (errors.length > 0) {
