@@ -8,10 +8,13 @@ import { PrivateRoute } from './_components';
 import { GameSelection } from './_components';
 import { Login } from './_components';
 import { Register } from './_components';
-import { Home } from './_components'
-import Navbar from './_components/Navbar'
-import Rules from './_components/Rules'
-import Footer from './_components/Footer'
+import { Home } from './_components';
+import Navbar from './_components/Navbar';
+import Rules from './_components/Rules';
+import Footer from './_components/Footer';
+import { Provider } from 'react-redux';
+
+import { store } from './_helpers';
 
 function App() {
 
@@ -26,6 +29,7 @@ function App() {
 
     return (
 
+        <Provider store={store}>
         <Router history={history}>
             <div className="App">
                 <Navbar />
@@ -40,6 +44,7 @@ function App() {
             </div>
             <Footer />
         </Router>
+        </Provider>
 
 
 
