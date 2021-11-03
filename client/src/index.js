@@ -1,18 +1,17 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-
-import { store } from './_helpers';
-import { App } from './App';
-import reportWebVitals from "./reportWebVitals";
-
+import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import {App} from './App';
+import reportWebVitals from "./reportWebVitals";
 import "bootstrap/scss/bootstrap.scss";
 import "./assets/scss/paper-kit.scss?v=1.3.0";
 import "./assets/demo/demo.css?v=1.3.0";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Provider } from 'react-redux';
 
-render(
+import { store } from './_helpers';
+
+ReactDOM.render(
     <Provider store={store}>
         <App />
     </Provider>,

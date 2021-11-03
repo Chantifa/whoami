@@ -79,12 +79,14 @@ function Login() {
                                         {submitted && !password &&
                                             <div className="invalid-feedback">Password is required</div>
                                         }
-                                        <Button className="btn-round">
+
+                                        <Button block className="btn-round" color="danger">
                                             {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
                                             Login
                                         </Button>
+                                        <br></br>
                                         <div className="forgot">
-                                            <Link to="/register" className="btn-link">Register</Link>
+                                            <Link to="/register" color="danger" className="btn-link">Register</Link>
                                         </div>
                                     </Form>
                                 </Card>

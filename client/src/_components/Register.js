@@ -101,10 +101,11 @@ function Register() {
                                         {submitted && !user.password_confirmation &&
                                             <div className="invalid-feedback">Password is required</div>
                                         }
-                                        <Button className="btn-round" color="danger">
+                                        <Button block className="btn-round" color="danger">
                                             {registering && <span className="spinner-border spinner-border-sm mr-1"></span>}
                                             Register
                                         </Button>
+                                        <br></br>
                                         <div className="forgot">
                                             <Link to="/login" className="btn-link">Cancel</Link>
                                         </div>
