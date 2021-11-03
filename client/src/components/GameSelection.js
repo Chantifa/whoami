@@ -8,12 +8,9 @@ export default function GameSelection() {
 
     let {path, url} = useRouteMatch();
 
-    const {user} = this.props.auth;
-
     return (
         <>
             <Route path={`${path}/:id`}>
-                <Game userName={user.name}/>
             </Route>
             <Route exact path={path}>
                 <ListGroup>
