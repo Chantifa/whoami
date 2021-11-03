@@ -11,7 +11,6 @@ export default function GameSelection() {
     return (
         <>
             <Route path={`${path}/:id`}>
-                <Game userName={user.name}/>
             </Route>
             <Route exact path={path}>
                 <ListGroup>
