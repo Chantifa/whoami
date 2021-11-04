@@ -1,19 +1,11 @@
 import {Route} from "react-router-dom";
 import {useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {useEffect, useState} from 'react';
-import {userActions} from '../_actions';
 import {ListGroup, ListGroupItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import {useDispatch} from 'react-redux';
 import Game from "./Game";
 
 export default function GameSelection() {
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(userActions.getAll());
-    }, []);
 
     const [user, setUser] = useState("")
     useEffect(() => {
@@ -26,7 +18,7 @@ export default function GameSelection() {
     return (
         <>
             <Route path={`${path}/:id`}>
-                <Game username={user}/></Route>
+                <Game userName={user}/></Route>
             <Route exact path={path}>
                 <ListGroup>
                     {/*todo get this list from fetch call*/}

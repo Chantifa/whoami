@@ -34,6 +34,7 @@ const io = new Server(server);
 
 function error(socket, message) {
     socket.emit(ERROR.id, ERROR.getDto(message))
+    console.log(`Error occured on ${socket}, message: ${message}`)
 }
 
 //initializing the socket io connection
@@ -45,7 +46,7 @@ io.on("connection", (socket) => {
     socket.on(JOIN_ROOM.id, ({userName, roomName, jwt, version}) => {
         try {
             if (EXPECTED_TYPES_VERSION !== version) {
-                console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
+                console.log("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
                 return
             }
 

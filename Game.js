@@ -41,7 +41,7 @@ export default class Game {
 
         shuffle(this._players)
         this._players.forEach(m => {
-            this._personaMap.set(m.userId, getRandomCharacterName())
+            this._personaMap.set(m, getRandomCharacterName())
             this._futureQuestions.set(m, [])
         })
 
@@ -169,7 +169,7 @@ export default class Game {
     }
 
     _currentIsResultQuestion() {
-        const persona = this._personaMap.get(this.getCurrentUser().userId)
+        const persona = this._personaMap.get(this.getCurrentUser())
         return this.getCurrentQuestion().toLowerCase().includes(persona.toLowerCase()) //fixme
     }
 

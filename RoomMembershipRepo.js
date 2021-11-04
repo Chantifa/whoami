@@ -23,6 +23,8 @@ export function removeRoomMembership(socketId) {
 
     if (index !== -1) {
         return roomMemberships.splice(index, 1)[0];
+    } else {
+        console.log(`Could not remove ${socketId}`)
     }
 }
 

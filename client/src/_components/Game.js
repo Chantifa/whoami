@@ -67,6 +67,5 @@ export default function Game(props) {
                 </Col>
             </Row>
         </main>
-        {/*Right side*/}
     </>;
 }
