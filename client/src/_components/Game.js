@@ -16,7 +16,7 @@ export default function Game(props) {
 
     const {sendMessage, messageList, gameInfo, gameState, sendVote, sendQuestion, startGame } = useServer(props.userName, id)
 
-    
+
 
     function handleChatSubmit(event) {
         event.preventDefault()
@@ -37,7 +37,7 @@ export default function Game(props) {
                 <h1> Game {id} </h1>
             </Row>
 
-            <GameInfo data={gameInfo}/>
+            <GameInfo info={gameInfo} state={gameState}/>
 
             <Row>
 
