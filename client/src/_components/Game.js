@@ -1,57 +1,81 @@
 import {useState} from "react";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
-import {Button, Form} from "react-bootstrap";
+import {Button, Col, Form, Row} from "react-bootstrap";
 import Chat from "./Chat";
+import GameInfo from "./GameInfo";
 
 export default function Game(props) {
 
     const {id} = useParams();
-    const [text, setText] = useState("Hello");
+    const [chatText, setChatChatText] = useState("Hello");
+    const [question, setQuestion] = useState("Who am I?")
 
-    const handleChange = (event) => setText(event.target.value);
+    const handleChatTextChange = (event) => setChatChatText(event.target.value);
+    const handleQuestionChange = (event) => setQuestion(event.target.value);
 
     const {sendMessage, messageList, gameInfo, gameState, sendVote, sendQuestion, startGame } = useServer(props.userName, id)
 
 
-    function handleSubmit(event) {
+
+    function handleChatSubmit(event) {
         event.preventDefault()
-        sendMessage(text)
-        setText("")
+        sendMessage(chatText)
+        setChatChatText("")
     }
 
-    function test1() {
-        sendVote(true)
-    }
-
-    function test2() {
-        sendQuestion("who am I")
-    }
-    function test3() {
-        startGame()
+    function handleQuestionSubmit(event) {
+        event.preventDefault()
+        sendQuestion(question)
+        setQuestion("")
     }
 
 
     return <>
-        <h1> Game {id} </h1>
-        {/*Left side*/}
-        <p>{JSON.stringify(gameInfo)}</p>
-        <p>{JSON.stringify(gameState)}</p>
-        <Button onClick={test1}> vote </Button>
-        <Button onClick={test2}> question </Button>
-        <Button onClick={test3}> start </Button>
-        {/*Right side*/}
-        <Chat messages={messageList}/>
-        <Form onSubmit={handleSubmit}>
-            <Form.Group>
-                <Form.Label>Label</Form.Label>
-                <Form.Control type="text" placeholder="Enter your message" onChange={handleChange}
-                              value={text}/>
-                <Form.Text className="text-muted">
-                    Some hint that might be important
-                </Form.Text>
-            </Form.Group>
-            <Button type="submit">Post</Button>
-        </Form>
+        <main className="container grid" style={{marginTop: 110 + 'px'}}>
+            <Row>
+                <h1> Game {id} </h1>
+            </Row>
+
+            <GameInfo info={gameInfo} state={gameState}/>
+
+            <Row>
+
+                <Col>
+                    <p>{JSON.stringify(gameState)}</p>
+
+
+                    <Button className="btn-outline-success" onClick={sendVote.bind(null, true)}> Yeap! </Button>
+                    <Button className="btn-outline-danger" onClick={sendVote.bind(null, false)}> Nope! </Button>
+                    <Button onClick={startGame}> start </Button>
+
+                    <Form onSubmit={handleQuestionSubmit}>
+                        <Form.Group>
+                            <Form.Control type="text" placeholder="Enter your question" onChange={handleQuestionChange}
+                                          value={question}/>
+                            <Form.Text className="text-muted">
+                                Your question will be queued until it's your turn
+                            </Form.Text>
+                        </Form.Group>
+                        <Button type="submit">Ask Question</Button>
+                    </Form>
+
+                </Col>
+                <Col>
+                    <Chat messages={messageList}/>
+
+                    <Form onSubmit={handleChatSubmit}>
+                        <Form.Group>
+                            <Form.Control type="text" placeholder="Enter your message" onChange={handleChatTextChange}
+                                          value={chatText}/>
+                            <Form.Text className="text-muted">
+                                You should not ask questions here, this is only the chat
+                            </Form.Text>
+                        </Form.Group>
+                        <Button type="submit">Send Message</Button>
+                    </Form>
+                </Col>
+            </Row>
+        </main>
     </>;
 }

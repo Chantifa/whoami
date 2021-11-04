@@ -8,7 +8,7 @@ import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./c
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Responses.mjs";
-import {getGame} from "./GameManager.mjs";
+import {getGame, getOverview} from "./GameManager.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
 import mongoose from "mongoose";
@@ -17,6 +17,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import db from "./model/User.js";
+import jsonwebtoken from "jsonwebtoken";
 
 
 dotenv.config();
@@ -33,6 +34,7 @@ const io = new Server(server);
 
 function error(socket, message) {
     socket.emit(ERROR.id, ERROR.getDto(message))
+    console.log(`Error occured on ${socket}, message: ${message}`)
 }
 
 //initializing the socket io connection
@@ -41,14 +43,20 @@ io.on("connection", (socket) => {
     //now define callbacks for different events:
 
     //new user joining the room
-    socket.on(JOIN_ROOM.id, ({userName, roomName, version}) => {
-        if (EXPECTED_TYPES_VERSION !== version) {
-            console.error("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
-            return
-        }
+    socket.on(JOIN_ROOM.id, ({userName, roomName, jwt, version}) => {
+        try {
+            if (EXPECTED_TYPES_VERSION !== version) {
+                console.log("version mismatch", [EXPECTED_TYPES_VERSION, version, socket.id])
+                return
+            }
 
-        addRoomMembership({userId: socket.id, userName}, roomName);
-        socket.join(roomName);
+            const decoded = jsonwebtoken.verify(jwt, process.env.TOKEN_SECRET)
+
+            addRoomMembership({userId: decoded.userId, socketId: socket.id, userName}, roomName);
+            socket.join(roomName);
+        } catch (e) {
+            error(socket, e.message)
+        }
 
         //display a welcome message to the user who have joined a room
         const message = `Welcome ${userName}`
@@ -161,9 +169,8 @@ io.on("connection", (socket) => {
 });
 
 
-// create a GET route
-app.get('/express_get_test', (req, res) => {
-    res.send({express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT'});
+app.get('/api/games', (req, res) => {
+    res.send(getOverview());
 });
 
 //const db = mongoose.connection;
@@ -172,7 +179,7 @@ mongoose.connect(
     process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
+        useUnifiedTopology: true, //fixme Argument type {useUnifiedTopology: boolean, useNewUrlParser: boolean} is not assignable to parameter type ConnectOptions
     },
     () => console.log('DB Connection successful!')
 );

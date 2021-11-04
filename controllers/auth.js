@@ -29,12 +29,12 @@ export function register(req, res, next) {
         errors.push({password: "mismatch"});
     }
     if (errors.length > 0) {
-        return res.status(422).json({errors: errors});
+        return res.status(422).json({errors: errors}); // 422 = Unprocessable Entity means there are errors
     }
     User.findOne({email: email})
         .then(user => {
             if (user) {
-                return res.status(422).json({errors: [{user: "email already exists"}]});
+                return res.status(409).json({errors: [{user: "email already exists"}]}); // 409 = Conflict
             } else {
                 const user = new User({
                     name: name,
@@ -47,7 +47,7 @@ export function register(req, res, next) {
                         user.password = hash;
                         user.save()
                             .then(response => {
-                                res.status(200).json({
+                                res.status(201).json({ // 201 = Created,
                                     success: true,
                                     result: response
                                 })
@@ -62,7 +62,7 @@ export function register(req, res, next) {
             }
         }).catch(err => {
         res.status(500).json({
-            errors: [{error: 'Something went wrong'}]
+            errors: [{error: err}]
         });
     })
 }
@@ -87,7 +87,7 @@ export function login(req, res) {
         });
     }
     if (errors.length > 0) {
-        return res.status(422).json({
+        return res.status(422).json({ // 422 = Unprocessable Entity means there are errors
             errors: errors,
         });
     }
@@ -108,7 +108,7 @@ export function login(req, res) {
                     .compare(password, user.password)
                     .then((isMatch) => {
                         if (!isMatch) {
-                            return res.status(400).json({
+                            return res.status(401).json({ // 401 = unauthorized, it lacks valid auth credentials
                                 errors: [
                                     {
                                         password: "incorrect",

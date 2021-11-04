@@ -14,14 +14,15 @@ export const CHAT_REQUEST = {
 
 /**
  * The Message to join a room
- * @type {{getDto(userName: string, roomName: string): {userName: string, roomName: string, version: string}, id: string}}
+ * @type {{getDto(userName: string, roomName: string, jwt: string): {userName: string, roomName: string, jwt:string, version: string}, id: string}}
  */
 export const JOIN_ROOM = {
     id: "JOIN_ROOM",
-    getDto(userName, roomName) {
+    getDto(userName, roomName, jwt) {
         return {
             userName,
             roomName,
+            jwt,
             version: process.env.REACT_APP_VERSION
         }
     }
@@ -42,7 +43,7 @@ export const LEAVE_ROOM = {
 
 /**
  * The message to submit your question
- * @type {{getDto(question:string): {question: string}, id: string}}
+ * @type {{getDto(text:string): {text: string}, id: string}}
  */
 export const GAME_QUESTION = {
     id: "GAME_QUESTION",
