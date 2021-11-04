@@ -7,7 +7,7 @@ export default function GameInfo(props) {
     }
 
     function PersonaMapTableBody(props) {
-        
+
         return <tr>
             <td>{props.value[0].userName}</td>
             <td>{props.value[1]}</td>
