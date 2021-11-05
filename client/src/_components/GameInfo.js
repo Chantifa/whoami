@@ -16,7 +16,7 @@ export default function GameInfo(props) {
         return <tr className={calculatedClassNames}>
             <td>{user.userName}</td>
             <td>{alias}</td>
-            {props.state ? <td>{voteInfo}</td> : ""}
+            {props.state ? <td>{voteInfo}</td> : null}
         < /tr>;
     }
 
@@ -29,7 +29,7 @@ export default function GameInfo(props) {
                 <tr>
                     <th>User</th>
                     <th>Persona</th>
-                    {props.state ? <th>Vote info</th> : ""}
+                    {props.state ? <th>Vote info</th> : null}
                 </tr>
                 </thead>
                 <tbody>
