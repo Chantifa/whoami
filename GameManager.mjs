@@ -13,3 +13,13 @@ export function getGame(room) {
     }
     return games[room]
 }
+
+export function getOverview(){
+    const overview = []
+    for (const [key, value] of Object.entries(games)) {
+
+
+        overview.push(value.getOverview(key))
+    }
+    return overview
+}

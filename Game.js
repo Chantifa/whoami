@@ -41,7 +41,7 @@ export default class Game {
 
         shuffle(this._players)
         this._players.forEach(m => {
-            this._personaMap.set(m.userId, getRandomCharacterName())
+            this._personaMap.set(m, getRandomCharacterName())
             this._futureQuestions.set(m, [])
         })
 
@@ -92,7 +92,7 @@ export default class Game {
             console.log(voteDto, this.getCurrentQuestion())
         }
 
-        this._nextPhaseIfAdequate() //todo maybe finish phase if all have voted?
+        this._nextPhaseIfAdequate() // finish phase if all have voted
     }
 
     handleQuestion(user, question) {
@@ -101,16 +101,15 @@ export default class Game {
         const userQuestionList = this._futureQuestions.get(user)
         if(!userQuestionList.includes(question.text)){
             userQuestionList.push(question.text)
-            this._nextPhaseIfAdequate()
         } else {
             console.log("duplicate question")
         }
-
+        this._nextPhaseIfAdequate()
 
     }
 
     _nextPhaseIfAdequate() {
-        //todo check if we can go to the next phase
+        //check if we can go to the next phase
 
         if (this._phase === GamePhase.WAITING_QUESTION) {
             if (this._futureQuestions.get(this.getCurrentUser()).length > 0) {
@@ -170,7 +169,7 @@ export default class Game {
     }
 
     _currentIsResultQuestion() {
-        const persona = this._personaMap.get(this.getCurrentUser().userId)
+        const persona = this._personaMap.get(this.getCurrentUser())
         return this.getCurrentQuestion().toLowerCase().includes(persona.toLowerCase()) //fixme
     }
 
@@ -178,5 +177,15 @@ export default class Game {
         if(!this._players.includes(user)){
             throw new Error(`User ${user} is not a member of the game`)
         }
+    }
+
+    getOverview(room){
+
+        const players = []
+        this._players.forEach(p => players.push(p.userName))
+
+        return {roomName: room,
+        phase: this._phase.phase,
+        players}
     }
 }

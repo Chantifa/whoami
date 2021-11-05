@@ -1,10 +1,10 @@
 import React from "react";
-
-// reactstrap components
 import {Button, Container} from "reactstrap";
+import {useHistory} from "react-router-dom";
 
-function LandingPageHeader() {
+function LandingPage() {
     let pageHeader = React.createRef();
+    const history = useHistory();
 
     React.useEffect(() => {
         if (window.innerWidth < 991) {
@@ -19,6 +19,11 @@ function LandingPageHeader() {
             };
         }
     });
+
+    const routeChange = () => {
+        let path = '/register';
+        history.push(path);
+    }
 
     return (
         <>
@@ -46,6 +51,9 @@ function LandingPageHeader() {
                         >
                             <i className="fa fa-play"/>
                             Watch video
+                        </Button>{' '}
+                        <Button className="btn-round" color="neutral" target="_blank" onClick={routeChange} outline>
+                            Register
                         </Button>
                     </div>
                     <div
@@ -62,4 +70,4 @@ function LandingPageHeader() {
     );
 }
 
-export default LandingPageHeader;
+export default LandingPage;

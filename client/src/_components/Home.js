@@ -1,16 +1,14 @@
-import '../styles.css';
 import React from "react";
 import {Button, Col, Container, Row,} from "reactstrap";
-import ExamplesNavbar from "./ExampleNavbar";
-import LandingPageHeader from "./LandingPageHeader";
+import ExamplesNavbar from "./Navbar";
+import LandingPage from "./LandingPage";
 
-
-export default function Home() {
+function Home() {
     document.documentElement.classList.remove("nav-open");
     return (
         <>
             <ExamplesNavbar />
-            <LandingPageHeader />
+            <LandingPage />
             <div className="main">
                 <div className="section text-center">
                     <Container>
@@ -44,7 +42,7 @@ export default function Home() {
                                     <div className="description">
                                         <h4 className="info-title">About the Project</h4>
                                         <p className="description">
-                                            Read the docs about the project. Everything is on readme in git.ffhs.
+                                            Read the docs about the project. Everything is on readme on git.ffhs.
                                         </p>
                                         <Button className="btn-link" color="success" href="https://git.ffhs.ch/ramona.koksa/whoami/-/blob/dev/README.md">
                                             See more
@@ -91,3 +89,5 @@ export default function Home() {
         </>
     )
 }
+
+export { Home };
