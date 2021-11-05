@@ -12,13 +12,20 @@ export default function useServer(userName, roomName) {
     const [gameInfo, setGameInfo] = useState({})
     const [gameState, setGameState] = useState(null)
 
+    function disconnect() {
+        const {current: socket} = socketRef;
+        console.log("disconnect")
+        socket.removeAllListeners([CHAT_ANNOUNCEMENT.id, CHAT_MESSAGE.id, GameSetupMessage.id, GameStateMessage.id], ERROR.id)
+        socket.disconnect()
+    }
+
     useEffect(() => {
 
-             //fixme
+            //fixme
             const parse = JSON.parse(localStorage.getItem("user")); //fixme
-            if(!parse){
+            if (!parse) {
                 alert("you are not logged in") //fixme
-                         window.location.href = "/login" //fixme
+                window.location.href = "/login" //fixme
                 return //fixme
             }
             const jwt = parse.token; //fixme
@@ -30,60 +37,61 @@ export default function useServer(userName, roomName) {
 
 
             //setup
+
+            if (userName === "") {
+                console.log("user empty")
+                return
+            }
+
             if (socketRef.current === null) {
                 console.log("connect")
                 socketRef.current = io.connect("/")
-            }
-            const {current: socket} = socketRef;
+                const {current: socket} = socketRef;
 
-            //join room
-            socket.emit(JOIN_ROOM.id, {...JOIN_ROOM.getDto(), userName, roomName, jwt})
+                //join room
+                console.log("join")
+                socket.emit(JOIN_ROOM.id, {...JOIN_ROOM.getDto(), userName, roomName, jwt})
 
-            //event handlers
+                //event handlers
 
-            socket.on(ERROR.id, (message) => {
-                console.error("Server Error:")
-                console.error(message)
-            })
-
-            socket.on(CHAT_ANNOUNCEMENT.id, (data) => {
-                setMessageList((old) => {
-                    return [...old, data]
+                socket.on(ERROR.id, (message) => {
+                    console.error("Server Error:")
+                    console.error(message)
                 })
-                console.log(CHAT_ANNOUNCEMENT.id)
-            })
 
-            socket.on(CHAT_MESSAGE.id, (data) => {
-                setMessageList((old) => {
-                    return [...old, data]
+                socket.on(CHAT_ANNOUNCEMENT.id, (data) => {
+                    setMessageList((old) => {
+                        return [...old, data]
+                    })
+                    console.log(CHAT_ANNOUNCEMENT.id)
                 })
-                console.log(CHAT_MESSAGE.id)
-            })
 
-
-            socket.on(GameSetupMessage.id, (data) => {
-                setGameInfo(() => {
-                    return data
+                socket.on(CHAT_MESSAGE.id, (data) => {
+                    setMessageList((old) => {
+                        return [...old, data]
+                    })
+                    console.log(CHAT_MESSAGE.id)
                 })
-                console.log(GameSetupMessage.id)
-            })
 
-            socket.on(GameStateMessage.id, (data) => {
-                setGameState(old => {
-                    if (!old || data.stateNumber > old.stateNumber) {
+
+                socket.on(GameSetupMessage.id, (data) => {
+                    setGameInfo(() => {
                         return data
-                    }
-                    console.log("old data recieced?", old, data)
-                    return old
+                    })
+                    console.log(GameSetupMessage.id)
                 })
-                console.log(GameStateMessage.id)
-            })
 
-            //Cleanup of the hook
-            return () => {
-                console.log("disconnect")
-                socket.removeAllListeners([CHAT_ANNOUNCEMENT.id, CHAT_MESSAGE.id, GameSetupMessage.id, GameStateMessage.id], ERROR.id)
-                socket.disconnect()
+                socket.on(GameStateMessage.id, (data) => {
+                    setGameState(old => {
+                        if (!old || data.stateNumber > old.stateNumber) {
+                            return data
+                        }
+                        console.log("old data recieced?", old, data)
+                        return old
+                    })
+                    console.log(GameStateMessage.id)
+                })
+
             }
         }
         , [userName, roomName])
