@@ -74,9 +74,10 @@ export default function useServer(userName, roomName) {
                 })
 
 
-                socket.on(GameSetupMessage.id, (data) => {
+                socket.on(GameSetupMessage.id, ({personaMapInPlayOrder}) => {
+                    const msg = new GameSetupMessage(personaMapInPlayOrder)
                     setGameInfo(() => {
-                        return data
+                        return {personaMapInPlayOrder: msg.mPersonaMapInPlayOrder}
                     })
                     console.log(GameSetupMessage.id)
                 })

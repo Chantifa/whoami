@@ -2,11 +2,14 @@ import {Col, Row, Table} from "react-bootstrap";
 
 
 export default function GameInfo(props) {
+    console.log(props)
     if (!props.info || !props.info.personaMapInPlayOrder) {
-        return ""
+        return null
     }
+    const people = [...props.info.personaMapInPlayOrder]
 
     function PersonaMapTableBody(innerProps) {
+        console.log(innerProps)
         const user = innerProps.value[0]
         const alias = innerProps.value[1]
         const isOnTurn = (props.state && props.state.currentUser.userId === user.userId)
@@ -33,7 +36,7 @@ export default function GameInfo(props) {
                 </tr>
                 </thead>
                 <tbody>
-                {props.info.personaMapInPlayOrder.map((value, key) => <PersonaMapTableBody key={key} value={value}/> )}
+                {people.map((value, key) => <PersonaMapTableBody key={key} value={value}/> )}
 
                 </tbody>
             </Table>
