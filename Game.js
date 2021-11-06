@@ -62,6 +62,7 @@ export default class Game {
             this.getCurrentQuestion(),
             this._deadline,
             this.getCurrentVotes(),
+            this._phase,
             this._stateNumber++);
     }
 
