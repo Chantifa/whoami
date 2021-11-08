@@ -1,4 +1,5 @@
 import {Col, Row, Table} from "react-bootstrap";
+import GamePhase from "../common/GamePhase.mjs";
 
 
 export default function GameInfo(props) {
@@ -14,16 +15,22 @@ export default function GameInfo(props) {
         const calculatedClassNames = isOnTurn ? "table-info" : ""
 
         let playInfo
-        if (!props.state || !props.state.votes) {
+        const waitingForAQuestion = props.state && (props.state.phase === GamePhase.WAITING_QUESTION.phase)
+        const voteMap = new Map(props.state.votes)
+        if (!props.state || !props.state.votes || !props.state.phase) {
             playInfo = null
         } else if (isOnTurn) {
-            playInfo = props.state.currentQuestion ? props.state.currentQuestion : "thinking of a question"
-        } else if (!props.state.currentQuestion) {
+            if(waitingForAQuestion){
+                playInfo = "thinking of a question"
+            } else {
+                playInfo = props.state.currentQuestion
+            }
+        } else if (waitingForAQuestion) {
             playInfo = "waiting for a question"
-        } else if (props.state.votes.length === 0) {
+        } else if (!voteMap.has(user.userId)) {
             playInfo = "voting.."
         } else {
-            playInfo = new Map(props.state.votes).get(user.userId) ? "yeap" : "nooop"
+            playInfo = voteMap.get(user.userId) ? "yeap" : "nooop"
         }
 
         return <tr className={calculatedClassNames}>
