@@ -3,7 +3,7 @@ import GamePhase from "../common/GamePhase.mjs";
 
 
 export default function GameInfo(props) {
-    if (!props.info || !props.info.personaMapInPlayOrder) {
+    if (!props.info || !props.info.personaMapInPlayOrder || !props.state) {
         return null
     }
     const people = [...props.info.personaMapInPlayOrder]
@@ -11,13 +11,13 @@ export default function GameInfo(props) {
     function PersonaMapTableBody(innerProps) {
         const user = innerProps.value[0]
         const alias = innerProps.value[1]
-        const isOnTurn = (props.state && props.state.currentUser.userId === user.userId)
+        const isOnTurn =  props.state.currentUser.userId === user.userId
         const calculatedClassNames = isOnTurn ? "table-info" : ""
 
         let playInfo
-        const waitingForAQuestion = props.state && (props.state.phase === GamePhase.WAITING_QUESTION.phase)
+        const waitingForAQuestion = props.state.phase === GamePhase.WAITING_QUESTION.phase
         const voteMap = new Map(props.state.votes)
-        if (!props.state || !props.state.votes || !props.state.phase) {
+        if ( !props.state.votes || !props.state.phase) {
             playInfo = null
         } else if (isOnTurn) {
             if(waitingForAQuestion){
