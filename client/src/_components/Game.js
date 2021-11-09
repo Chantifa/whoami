@@ -32,12 +32,12 @@ export default function Game(props) {
 
 
     return <>
-        <main className="container grid" style={{marginTop: 110 + 'px'}}>
+        <main className="container grid" style={{paddingTop: 110 + 'px'}}>
             <Row>
                 <h1> Game {id} </h1>
             </Row>
 
-            <p>{JSON.stringify(gameState)}</p>
+            <code>{JSON.stringify(gameState)}</code>
 
             <Row>
 
@@ -66,7 +66,7 @@ export default function Game(props) {
 
                     <Form onSubmit={handleChatSubmit}>
                         <Form.Group>
-                            <Form.Control type="text" placeholder="Enter your message" onChange={handleChatTextChange}
+                            <Form.Control required type="text" placeholder="Enter your message" onChange={handleChatTextChange}
                                           value={chatText}/>
                             <Form.Text className="text-muted">
                                 You should not ask questions here, this is only the chat
