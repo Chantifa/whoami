@@ -144,6 +144,7 @@ export default class Game {
         if(voteResultIsYes){
             if(this._currentIsResultQuestion()){
                 this._setPhase(GamePhase.FINISHED) //TODO: maybe let the others finish the game
+                return
             }
         }else { //vote result is no or equal
             this._setNextPlayer()
