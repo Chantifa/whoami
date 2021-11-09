@@ -37,13 +37,13 @@ export default function Game(props) {
                 <h1> Game {id} </h1>
             </Row>
 
-            <GameInfo info={gameInfo} state={gameState}/>
+            <p>{JSON.stringify(gameState)}</p>
 
             <Row>
 
                 <Col>
-                    <p>{JSON.stringify(gameState)}</p>
 
+                    <GameInfo info={gameInfo} state={gameState}/>
 
                     <Button className="btn-outline-success" onClick={sendVote.bind(null, true)}> Yeap! </Button>
                     <Button className="btn-outline-danger" onClick={sendVote.bind(null, false)}> Nope! </Button>

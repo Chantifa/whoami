@@ -1,5 +1,5 @@
 import {getRandomCharacterName, shuffle} from "./utils.js";
-import GamePhase from "./GamePhase.js";
+import GamePhase from "./client/src/common/GamePhase.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
 
@@ -62,6 +62,7 @@ export default class Game {
             this.getCurrentQuestion(),
             this._deadline,
             this.getCurrentVotes(),
+            this._phase,
             this._stateNumber++);
     }
 

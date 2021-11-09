@@ -123,9 +123,9 @@ io.on("connection", (socket) => {
             }
 
 
-            const stateMessage = game.getStateMessage()
+            const gameState = game.getStateMessage()
 
-            io.to(roomMembership.room).emit(GameStateMessage.id, stateMessage)
+            io.to(roomMembership.room).emit(GameStateMessage.id, gameState.getDto())
 
         } catch (e) {
             error(socket, e.message)
