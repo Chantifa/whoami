@@ -139,13 +139,14 @@ export default class Game {
     _publishVoteResults() {
 
 
-        const result = this.getCurrentVoteResult()
+        const voteResultIsYes = this.getCurrentVoteResult()
 
-        if(!result){
+        if(voteResultIsYes){
             if(this._currentIsResultQuestion()){
                 this._setPhase(GamePhase.FINISHED) //TODO: maybe let the others finish the game
+                return
             }
-        }else {
+        }else { //vote result is no or equal
             this._setNextPlayer()
         }
 
@@ -158,7 +159,8 @@ export default class Game {
 
     getCurrentVoteResult() {
         let pro = 0, contra = 0
-        this.getCurrentVotes().forEach((votedPro) => {
+        const currentVotes = this.getCurrentVotes();
+        currentVotes.forEach((votedPro, keysAreIgnoredOnlyValueMatters) => {
             if (votedPro) {
                 pro++
             } else {
