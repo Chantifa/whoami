@@ -10,7 +10,7 @@ export default function GameInfo(props) {
 
     function PersonaMapTableBody(innerProps) {
         const user = innerProps.value[0]
-        const alias = innerProps.value[1]
+        const alias = innerProps.value[1] || "That's you"
         const isOnTurn =  props.state.currentUser.userId === user.userId
         const calculatedClassNames = isOnTurn ? "table-info" : ""
 

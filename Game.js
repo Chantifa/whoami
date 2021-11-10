@@ -40,9 +40,9 @@ export default class Game {
         this._personaMap = new Map()
 
         shuffle(this._players)
-        this._players.forEach(m => {
-            this._personaMap.set(m, getRandomCharacterName())
-            this._futureQuestions.set(m, [])
+        this._players.forEach(player => {
+            this._personaMap.set(player, getRandomCharacterName())
+            this._futureQuestions.set(player, [])
         })
 
         this._deadline = Game.createDeadline(this._phase.getLength())

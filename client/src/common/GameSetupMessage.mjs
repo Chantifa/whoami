@@ -13,6 +13,23 @@ export default class GameSetupMessage { //TODO: add start time to enable replays
             throw new Error(`${personaMapInPlayOrder} should be a map or an array of arrays`)
         }
     }
+    
+    getDtoFor(user){
+        const copy = new Map(this.mPersonaMapInPlayOrder)
+        for (const key of this.mPersonaMapInPlayOrder.keys()) {
+            if(key === user){
+                copy.set(key, false)
+                return {
+                    personaMapInPlayOrder: [...copy]
+                }
+            }
+        }
+        console.log(`user ${user} not in personaMap`)
+        
+        return {
+            personaMapInPlayOrder: [...copy]
+        }
+    }
 
     getDto(){
         return {

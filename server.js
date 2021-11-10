@@ -116,8 +116,12 @@ io.on("connection", (socket) => {
 
             const setupMessage = game.getSetupMessage()
 
-            io.to(roomMembership.room).emit(GameSetupMessage.id,
-                setupMessage.getDto());
+            for(let i in roomMembers){
+                const dto = setupMessage.getDtoFor(roomMembers[i])
+                // to individual socketid (private message)
+                io.to(roomMembers[i].socketId).emit(GameSetupMessage.id, dto)
+            }
+
 
             const gameState = game.getStateMessage()
 
