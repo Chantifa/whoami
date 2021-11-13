@@ -167,6 +167,10 @@ export default class Game {
         }
     }
 
+    isDead(){
+        return this._players.length === 0 || this._deadline < Game.createDeadline(-60)
+    }
+
     _setNextPlayer() {
         this._currentUserIndex = ++this._currentUserIndex % this._players.length
     }

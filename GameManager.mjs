@@ -8,10 +8,14 @@ const games = {}
  * @returns {Game}
  */
 export function getGame(room) {
-    if (!games[room]) {
+    if (!games[room] || games[room].isDead()) {
         games[room] = new Game()
     }
     return games[room]
+}
+
+export function remove(room){
+    delete games[room]
 }
 
 export function getOverview(){
