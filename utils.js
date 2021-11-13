@@ -1,12 +1,16 @@
 import * as fs from "fs";
 
-export function randomChoice(arr) {
+function randomChoice(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-const {characters} = JSON.parse(fs.readFileSync('characters.json'))
-export function getRandomCharacterName(){
-    return randomChoice(characters).name
+const characters = JSON.parse(fs.readFileSync('characters.json'))
+export function getTopics(){
+    return Object.keys(characters)
+}
+
+export function getRandomCharacterName(topic){
+    return randomChoice(characters[topic])
 }
 
 export function shuffle(a) {

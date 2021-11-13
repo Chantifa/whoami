@@ -1,4 +1,4 @@
-import {getRandomCharacterName, shuffle} from "./utils.js";
+import {getRandomCharacterName, getTopics, shuffle} from "./utils.js";
 import GamePhase from "./client/src/common/GamePhase.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
@@ -14,10 +14,7 @@ export default class Game {
 
     _questions = []
     _futureQuestions = new Map();
-
-    constructor(...data) {
-        this.data = data
-    }
+    _round = -1;
 
     _setPhase(phase) {
         if (this._phase.getAllowedSuccessors().includes(phase)) {
@@ -32,16 +29,19 @@ export default class Game {
         this._setPhase(GamePhase.INITIAL)
         this._setPhase(GamePhase.WAITING_QUESTION)
 
+        this._round++
         this._questions = []
         this._futureQuestions = new Map()
         this._players = roomMembers
 
 
         this._personaMap = new Map()
+        const possibleTopics = getTopics()
+        const topic = possibleTopics[this._round % possibleTopics.length]
 
         shuffle(this._players)
         this._players.forEach(player => {
-            this._personaMap.set(player, getRandomCharacterName())
+            this._personaMap.set(player, getRandomCharacterName(topic))
             this._futureQuestions.set(player, [])
         })
 
