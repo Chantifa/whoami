@@ -99,6 +99,8 @@ io.on("connection", (socket) => {
                 io.to(roomMembership.room).emit(CHAT_ANNOUNCEMENT.id, {
                     message: `${roomMembership.user.userName} has left the room`
                 });
+                const game = getGame(roomMembership.room)
+                game.dropPlayer(roomMembership.user)
             }
         } catch (e) {
             error(socket, e.message)
