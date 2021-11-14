@@ -118,9 +118,7 @@ export default function Game(props) {
                                 </Form.Group>
                                 <Button type="submit">Send Message</Button>
                             </Form>
-
                         </Col>
-
                     </Row>
                 </Container>
             </div>
