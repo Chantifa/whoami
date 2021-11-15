@@ -41,8 +41,8 @@ export default function GameInfo(props) {
                     <Card className="card card-just-text text-center" data-background="color" data-color="yellow"
                           data-radius="none">
                         <br/>
-                        <h6>{user.userName}</h6>
-                        <h4>{alias}</h4>
+                        <p className="h6">{user.userName}</p>
+                        <p className="h4">{alias}</p>
                         <br/>
                         {props.state ? <p>{playInfo}</p> : null}
                     </Card>

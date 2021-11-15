@@ -45,7 +45,6 @@ export default function Game(props) {
     }
 
     return <>
-        <code>{JSON.stringify(gameState)}</code>
         <div
             style={{
                 backgroundImage:
@@ -57,6 +56,7 @@ export default function Game(props) {
         >
             <div className="filter"/>
         </div>
+        // picture in a circle is displayed start
         <div className="section profile-content">
             <Container>
                 <div className="owner">
@@ -85,14 +85,14 @@ export default function Game(props) {
                             title="Select this button when the person has been found out."
                             onClick={sendVote.bind(null, true)}> Yeap!
                         <i className="fa fa-heart mr-1"/>
-                    </Button>{' '}
-                    <Button className="btn-round ml-1 btn btn-outline-danger"
+                    </Button>
+                    <Button className="btn-round ml-1 btn btn-outline-danger ms-lg-2"
                             data-toggle="tooltip"
                             title="Select this button when the person has NOT been found out."
                             onClick={sendVote.bind(null, false)}> Nope!
                         <i className="nc-icon nc-simple-remove mr-1"/>
-                    </Button>{' '}
-                    <Button className="btn-round ml-1 btn btn-outline-primary"
+                    </Button>
+                    <Button className="btn-round ml-1 btn btn-outline-primary ms-lg-2"
                             data-toggle="tooltip"
                             title="Select this button to start a game."
                             onClick={startGame}> start
