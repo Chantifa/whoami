@@ -53,12 +53,11 @@ export default function GameInfo(props) {
     }
 
     return <Container>
-        {props.state ? <div>Game info</div> : null}
+        {props.state ? <div className="bottom-50"/> : null}
         <br/>
         <div className="row-cols-lg-4 d-flex justify-content-around">
             {people.map((value, key) => <PersonaMapTableBody key={key} value={value}/>)}
         </div>
         <br/>
-
     </Container>
 }
