@@ -56,13 +56,12 @@ export default function Game(props) {
         >
             <div className="filter"/>
         </div>
-        // picture in a circle is displayed start
         <div className="section profile-content">
             <Container>
                 <div className="owner">
                     <div className="avatar">
                         <img
-                            alt="..."
+                            alt="Logo in a circle image"
                             className="img-circle img-no-padding img-responsive"
                             src={require("../assets/img/mobile.png").default}
                             border={"1px solid black"}
