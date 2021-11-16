@@ -1,5 +1,5 @@
-import {Col, Row, Table} from "react-bootstrap";
 import GamePhase from "../common/GamePhase.mjs";
+import {Col, Row, Table} from "reactstrap";
 
 
 export default function GameInfo(props) {
