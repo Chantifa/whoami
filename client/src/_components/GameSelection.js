@@ -1,9 +1,9 @@
 import {Route} from "react-router-dom";
 import {useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {useEffect, useState} from 'react';
-import {ListGroup, ListGroupItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import Game from "./Game";
+import {ListGroup, ListGroupItem} from "reactstrap";
 
 export default function GameSelection() {
 
