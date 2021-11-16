@@ -4,7 +4,7 @@ import {Card, CardBody, CardTitle} from "reactstrap";
 export default function Chat(props) {
 
     return <Card
-        bg={"dark"}>
+        color={"dark"}>
 
         <CardBody className={"overflow-auto"} style={{maxHeight: 40 + 'vh'}}> {/* fixme size should  */}
             <CardTitle>Chat</CardTitle>
