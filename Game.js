@@ -153,6 +153,24 @@ export default class Game {
         this._setPhase(GamePhase.WAITING_QUESTION)
     }
 
+    dropPlayer(user) {
+        const index = this._players.findIndex((player) => player.socketId === user.socketId);
+        if (index !== -1) {
+            this._players.splice(index, 1);
+
+            //make sure that current user mapping still works
+            if (index === this._currentUserIndex) {
+                this._setNextPlayer()
+            } else if (index < this._currentUserIndex){
+                this._currentUserIndex--
+            }
+        }
+    }
+
+    isDead(){
+        return this._players.length === 0 || this._deadline < Game.createDeadline(-60)
+    }
+
     _setNextPlayer() {
         this._currentUserIndex = ++this._currentUserIndex % this._players.length
     }

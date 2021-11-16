@@ -8,7 +8,7 @@ import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./c
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Responses.mjs";
-import {getGame, getOverview} from "./GameManager.mjs";
+import {getGame, getOverview, remove} from "./GameManager.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
 import mongoose from "mongoose";
@@ -99,6 +99,12 @@ io.on("connection", (socket) => {
                 io.to(roomMembership.room).emit(CHAT_ANNOUNCEMENT.id, {
                     message: `${roomMembership.user.userName} has left the room`
                 });
+                const game = getGame(roomMembership.room)
+                game.dropPlayer(roomMembership.user)
+
+                if (game.isDead()){
+                    remove(roomMembership.room)
+                }
             }
         } catch (e) {
             error(socket, e.message)
