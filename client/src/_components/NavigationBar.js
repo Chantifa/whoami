@@ -1,11 +1,10 @@
 import React from "react";
 import {Link, useHistory} from "react-router-dom";
 import classnames from "classnames";
-import {Nav, Navbar} from "react-bootstrap";
-import {Button, Collapse, Container, NavItem, NavLink,} from "reactstrap";
+import {Button, Collapse, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink,} from "reactstrap";
 import logo from "../assets/img/logo.png";
 
-function ExamplesNavbar() {
+export default function NavigationBar() {
 
     const history = useHistory();
 
@@ -50,7 +49,7 @@ function ExamplesNavbar() {
             expand="lg">
             <Container>
                 <div className="navbar-translate">
-                    <Navbar.Brand as={Link} to="/"><img src={logo} alt="logo" width="150" height="55"/></Navbar.Brand>
+                    <NavbarBrand as={Link} to="/"><img src={logo} alt="logo" width="150" height="55"/></NavbarBrand>
                     <button
                         aria-expanded={navbarCollapse}
                         className={classnames("navbar-toggler navbar-toggler", {
@@ -74,7 +73,9 @@ function ExamplesNavbar() {
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <Nav.Link as={Link} to="/rules"><i className="nc-icon nc-book-bookmark"/> Rules</Nav.Link>
+                            <NavLink to="/rules" tag={Link}>
+                                <i className="nc-icon nc-book-bookmark"/> Rules
+                            </NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink
@@ -100,5 +101,3 @@ function ExamplesNavbar() {
         </Navbar>
     );
 }
-
-export default ExamplesNavbar;
