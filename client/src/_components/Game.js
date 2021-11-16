@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
-import {Button, Col, Form, Row} from "react-bootstrap";
 import Chat from "./Chat";
 import GameInfo from "./GameInfo";
+import {Button, Col, Form, FormGroup, FormText, Input, Row} from "reactstrap";
 
 export default function Game(props) {
 
@@ -50,13 +50,13 @@ export default function Game(props) {
                     <Button onClick={startGame}> start </Button>
 
                     <Form onSubmit={handleQuestionSubmit}>
-                        <Form.Group>
-                            <Form.Control type="text" placeholder="Enter your question" onChange={handleQuestionChange}
+                        <FormGroup>
+                            <Input type="text" placeholder="Enter your question" onChange={handleQuestionChange}
                                           value={question}/>
-                            <Form.Text className="text-muted">
+                            <FormText className="text-muted">
                                 Your question will be queued until it's your turn
-                            </Form.Text>
-                        </Form.Group>
+                            </FormText>
+                        </FormGroup>
                         <Button type="submit">Ask Question</Button>
                     </Form>
 
@@ -65,14 +65,14 @@ export default function Game(props) {
                     <Chat messages={messageList}/>
 
                     <Form onSubmit={handleChatSubmit}>
-                        <Form.Group>
-                            <Form.Control required type="text" placeholder="Enter your message"
+                        <FormGroup>
+                            <Input required type="text" placeholder="Enter your message"
                                           onChange={handleChatTextChange}
                                           value={chatText}/>
-                            <Form.Text className="text-muted">
+                            <FormText className="text-muted">
                                 You should not ask questions here, this is only the chat
-                            </Form.Text>
-                        </Form.Group>
+                            </FormText>
+                        </FormGroup>
                         <Button type="submit">Send Message</Button>
                     </Form>
                 </Col>
