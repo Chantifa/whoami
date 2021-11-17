@@ -10,6 +10,7 @@ import {
     Col
 } from "reactstrap";
 import {Form} from "react-bootstrap";
+import GamePhase from "../common/GamePhase.mjs";
 
 export default function Game(props) {
 
@@ -80,6 +81,7 @@ export default function Game(props) {
                     <GameInfo info={gameInfo} state={gameState}/>
 
                     <Button outline className="btn-round ml-1 btn btn-outline-success"
+                            disabled={true}
                             data-toggle="tooltip"
                             title="Select this button when the person has been found out."
                             onClick={sendVote.bind(null, true)}> Yeap!
@@ -92,6 +94,7 @@ export default function Game(props) {
                         <i className="nc-icon nc-simple-remove mr-1"/>
                     </Button>
                     <Button className="btn-round ml-1 btn btn-outline-primary ms-lg-2"
+                            disabled={gameState ? !!GamePhase.INITIAL.phase : false}
                             data-toggle="tooltip"
                             title="Select this button to start a game."
                             onClick={startGame}> start

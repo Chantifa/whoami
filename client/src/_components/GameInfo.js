@@ -1,5 +1,5 @@
 import GamePhase from "../common/GamePhase.mjs";
-import {Container, Row, Col, Card} from "reactstrap";
+import {Container, Col, Card} from "reactstrap";
 
 
 export default function GameInfo(props) {
