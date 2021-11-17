@@ -31,7 +31,7 @@ export default function Game(props) {
         sendVote,
         sendQuestion,
         startGame
-    } = useServer(props.userName, id)
+    } = useServer(props.user, id)
 
     function handleChatSubmit(event) {
         event.preventDefault()
@@ -81,13 +81,14 @@ export default function Game(props) {
                     <GameInfo info={gameInfo} state={gameState}/>
 
                     <Button outline className="btn-round ml-1 btn btn-outline-success"
-                            disabled={true}
+                            //disabled={gameState.currentUser.userId === gameInfo.userId} // FIXME: bei EINEM eingeloggten user funktioniert es
                             data-toggle="tooltip"
                             title="Select this button when the person has been found out."
                             onClick={sendVote.bind(null, true)}> Yeap!
                         <i className="fa fa-heart mr-1"/>
                     </Button>
                     <Button className="btn-round ml-1 btn btn-outline-danger ms-lg-2"
+                            //disabled={gameState.currentUser.userId === gameInfo.userId} // FIXME: bei EINEM eingeloggten user funktioniert es
                             data-toggle="tooltip"
                             title="Select this button when the person has NOT been found out."
                             onClick={sendVote.bind(null, false)}> Nope!
