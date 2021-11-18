@@ -1,7 +1,11 @@
 const roomMemberships = [];
 
-// joins the user to the specific chatroom
+// joins the user to the specific chatroom and drops out of others
 export function addRoomMembership(user, room) {
+
+    if (roomMemberships.find((roomMembership) => roomMembership.user.userId === user.userId)){
+        removeRoomMembership(user.socketId)
+    }
 
     roomMemberships.push({user, room});
 }
