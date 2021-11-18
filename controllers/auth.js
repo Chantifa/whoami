@@ -116,7 +116,7 @@ export function login(req, res) {
                                 ],
                             });
                         }
-                        const access_token = createJWT(user.email, user._id, 3600);
+                        const access_token = createJWT(user.email, user._id, 31556952000);
                         jwt.verify(
                             access_token,
                             process.env.TOKEN_SECRET,
