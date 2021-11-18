@@ -47,9 +47,6 @@ export default function Game(props) {
         setQuestion("")
     }
 
-    console.log(gameState.currentUser.userId)
-    console.log(store.getState().authentication.user.message._id)
-
     return <>
         <div
             style={{
@@ -74,8 +71,8 @@ export default function Game(props) {
                         />
                     </div>
                     <div className="name">
-                        <h4 className="title">Game {id}<br/>
-                        </h4>
+                        <p className="h4">Game {id}<br/>
+                        </p>
                     </div>
                 </div>
             </Container>
