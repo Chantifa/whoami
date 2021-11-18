@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
 import Chat from "./Chat";
 import GameInfo from "./GameInfo";
+import { ReactReduxContext } from 'react-redux';
 import {
     Button,
     Container,
@@ -17,6 +18,7 @@ export default function Game(props) {
     const {id} = useParams();
     const [chatText, setChatChatText] = useState("Hello");
     const [question, setQuestion] = useState("Who am I?")
+    const {store} = useContext(ReactReduxContext);
 
     let pageHeader = React.createRef();
 
@@ -44,6 +46,9 @@ export default function Game(props) {
         sendQuestion(question)
         setQuestion("")
     }
+
+    console.log(gameState.currentUser.userId)
+    console.log(store.getState().authentication.user.message._id)
 
     return <>
         <div
@@ -81,14 +86,14 @@ export default function Game(props) {
                     <GameInfo info={gameInfo} state={gameState}/>
 
                     <Button outline className="btn-round ml-1 btn btn-outline-success"
-                            //disabled={gameState.currentUser.userId === gameInfo.userId} // FIXME: bei EINEM eingeloggten user funktioniert es
+                            disabled={gameState.currentUser.userId === store.getState().authentication.user.message._id}
                             data-toggle="tooltip"
                             title="Select this button when the person has been found out."
                             onClick={sendVote.bind(null, true)}> Yeap!
                         <i className="fa fa-heart mr-1"/>
                     </Button>
                     <Button className="btn-round ml-1 btn btn-outline-danger ms-lg-2"
-                            //disabled={gameState.currentUser.userId === gameInfo.userId} // FIXME: bei EINEM eingeloggten user funktioniert es
+                            disabled={gameState.currentUser.userId === store.getState().authentication.user.message._id}
                             data-toggle="tooltip"
                             title="Select this button when the person has NOT been found out."
                             onClick={sendVote.bind(null, false)}> Nope!

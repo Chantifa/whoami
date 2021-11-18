@@ -1,15 +1,18 @@
 import {Route} from "react-router-dom";
 import {useRouteMatch} from "react-router-dom/cjs/react-router-dom";
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {ListGroup, ListGroupItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import Game from "./Game";
+import {ReactReduxContext} from "react-redux";
 
 export default function GameSelection() {
 
     const [user, setUser] = useState("")
+    const {store} = useContext(ReactReduxContext);
+
     useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem("user")).message.name) //fixme
+        setUser(store.getState().authentication.user.message.name)
 
     }, [])
 
