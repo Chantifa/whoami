@@ -9,7 +9,7 @@ export default function GameInfo(props) {
     const people = [...props.info.personaMapInPlayOrder]
 
 
-    function PersonaMapTableBody(innerProps) {
+    function MapPersona(innerProps) {
         const user = innerProps.value[0]
         const alias = innerProps.value[1] || "That's you"
         const isOnTurn = props.state.currentUser.userId === user.userId
@@ -56,7 +56,7 @@ export default function GameInfo(props) {
         {props.state ? <div className="bottom-50"/> : null}
         <br/>
         <div className="row-cols-lg-4 d-flex justify-content-around">
-            {people.map((value, key) => <PersonaMapTableBody key={key} value={value}/>)}
+            {people.map((value, key) => <MapPersona key={key} value={value}/>)}
         </div>
         <br/>
     </Container>

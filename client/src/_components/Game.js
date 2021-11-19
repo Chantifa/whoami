@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import {useContext, useState, createRef} from "react";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
 import Chat from "./Chat";
@@ -14,7 +14,7 @@ export default function Game(props) {
     const [question, setQuestion] = useState("Who am I?")
     const {store} = useContext(ReactReduxContext);
 
-    let pageHeader = React.createRef();
+    let pageHeader = createRef();
 
     const handleChatTextChange = (event) => setChatChatText(event.target.value);
     const handleQuestionChange = (event) => setQuestion(event.target.value);
@@ -101,7 +101,7 @@ export default function Game(props) {
                     </Button>
                     <Form className="contact-form" onSubmit={handleQuestionSubmit}>
                         <FormGroup>
-                            <FormText type="text" placeholder="Enter your question"
+                            <Input type="text" placeholder="Enter your question"
                                           onChange={handleQuestionChange}
                                           value={question}/>
 
