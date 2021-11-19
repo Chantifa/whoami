@@ -10,7 +10,7 @@ export default class Game {
     _players = []
     _currentUserIndex = 0
     _stateNumber = 0
-    _deadline
+    _deadline = Game.createDeadline(120)
 
     _questions = []
     _futureQuestions = new Map();
@@ -27,10 +27,11 @@ export default class Game {
         }
     }
 
-    _setPhase(phase) {
+    _transitionToPhase(phase) {
         if (this._phase.getAllowedSuccessors().includes(phase)) {
             this._phase = phase
             console.log("NOW PHASE:", phase)
+            this._deadline = Game.createDeadline(phase.getLength())
         } else {
             throw new Error(`Phase transition from ${this._phase} to ${phase} not allowed`)
         }
@@ -45,8 +46,8 @@ export default class Game {
     }
 
     start(roomMembers) {
-        this._setPhase(GamePhase.INITIAL)
-        this._setPhase(GamePhase.WAITING_QUESTION)
+        this._transitionToPhase(GamePhase.INITIAL)
+        this._transitionToPhase(GamePhase.WAITING_QUESTION)
         this._statsCallbacks.gameStarted(roomMembers).catch(e => console.log(e.message))
 
         this._round++
@@ -64,8 +65,6 @@ export default class Game {
             this._personaMap.set(player, getRandomCharacterName(topic))
             this._futureQuestions.set(player, [])
         })
-
-        this._deadline = Game.createDeadline(this._phase.getLength())
     }
 
     getCurrentUser() {
@@ -155,7 +154,7 @@ export default class Game {
     }
 
     _publishQuestion() {
-        this._setPhase(GamePhase.WAITING_VOTE)
+        this._transitionToPhase(GamePhase.WAITING_VOTE)
         const usersFutureQuestions = this._futureQuestions.get(this.getCurrentUser());
         const text = usersFutureQuestions.shift()
         const question = {text, votes: new Map()}
@@ -170,7 +169,7 @@ export default class Game {
 
         if(voteResultIsYes){
             if(this._currentIsResultQuestion()){
-                this._setPhase(GamePhase.FINISHED) //TODO: maybe let the others finish the game
+                this._transitionToPhase(GamePhase.FINISHED) //TODO: maybe let the others finish the game
                 this._statsCallbacks.gameFinished(this._players).catch(e => console.log(e.message))
                 this._statsCallbacks.gameWon(this.getCurrentUser()).catch(e => console.log(e.message))
                 return
@@ -179,7 +178,7 @@ export default class Game {
             this._setNextPlayer()
         }
 
-        this._setPhase(GamePhase.WAITING_QUESTION)
+        this._transitionToPhase(GamePhase.WAITING_QUESTION)
     }
 
     dropPlayer(user) {
@@ -204,7 +203,7 @@ export default class Game {
     }
 
     isDead(){
-        return this._players.length === 0 || this._deadline < Game.createDeadline(-60)
+        return this._deadline < Game.createDeadline(-60) || (this._players.length === 0 && this._deadline < Game.createDeadline(-5))
     }
 
     _setNextPlayer() {
