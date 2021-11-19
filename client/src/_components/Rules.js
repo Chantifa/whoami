@@ -1,5 +1,5 @@
 import React from "react";
-import ExamplesNavbar from "./Navbar";
+import ExamplesNavbar from "./NavigationBar";
 import {
   Button,
   Card,

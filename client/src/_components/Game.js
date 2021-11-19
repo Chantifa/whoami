@@ -4,14 +4,8 @@ import useServer from "../serverConnection";
 import Chat from "./Chat";
 import GameInfo from "./GameInfo";
 import { ReactReduxContext } from 'react-redux';
-import {
-    Button,
-    Container,
-    Row,
-    Col
-} from "reactstrap";
-import {Form} from "react-bootstrap";
 import GamePhase from "../common/GamePhase.mjs";
+import {Button, Col, Form, FormGroup, FormText, Input, Row, Container} from "reactstrap";
 
 export default function Game(props) {
 
@@ -121,14 +115,14 @@ export default function Game(props) {
                 <Col className="p-5 ms-xl-1">
                     <Chat messages={messageList}/>
                     <Form onSubmit={handleChatSubmit}>
-                        <Form.Group>
-                            <Form.Control required type="text" placeholder="Enter your message"
+                        <FormGroup>
+                            <Input required type="text" placeholder="Enter your message"
                                           onChange={handleChatTextChange}
                                           value={chatText}/>
-                            <Form.Text className="text-muted">
+                            <FormText className="text-muted">
                                 You should not ask questions here, this is only the chat
-                            </Form.Text>
-                        </Form.Group>
+                            </FormText>
+                        </FormGroup>
                         <Button type="submit">Send Message</Button>
                     </Form>
                 </Col>

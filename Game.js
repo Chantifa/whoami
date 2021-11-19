@@ -86,6 +86,11 @@ export default class Game {
         if (this._phase !== GamePhase.WAITING_VOTE) {
             throw new Error("Voting is only possible in the voting phase")
         }
+
+        if (this.getCurrentUser().userId === user.userId){
+            throw new Error("You can not answer your own questions.")
+        }
+
         if (voteDto.question === this.getCurrentQuestion()) {
             this._questions.at(-1).votes.set(user.userId, voteDto.vote)
         } else {
@@ -117,7 +122,7 @@ export default class Game {
                 this._publishQuestion()
             }
         } else if (this._phase === GamePhase.WAITING_VOTE) {
-            if (this.getCurrentVotes().size === this._players.length) {
+            if (this.getCurrentVotes().size === this._players.length -1) {
                 this._publishVoteResults()
             }
         }
@@ -151,6 +156,24 @@ export default class Game {
         }
 
         this._setPhase(GamePhase.WAITING_QUESTION)
+    }
+
+    dropPlayer(user) {
+        const index = this._players.findIndex((player) => player.socketId === user.socketId);
+        if (index !== -1) {
+            this._players.splice(index, 1);
+
+            //make sure that current user mapping still works
+            if (index === this._currentUserIndex) {
+                this._setNextPlayer()
+            } else if (index < this._currentUserIndex){
+                this._currentUserIndex--
+            }
+        }
+    }
+
+    isDead(){
+        return this._players.length === 0 || this._deadline < Game.createDeadline(-60)
     }
 
     _setNextPlayer() {
