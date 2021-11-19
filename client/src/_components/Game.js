@@ -27,7 +27,9 @@ export default function Game(props) {
         sendVote,
         sendQuestion,
         startGame
-    } = useServer(props.user, id)
+    } = useServer(props.userName, id)
+
+    console.log(gameState)
 
     function handleChatSubmit(event) {
         event.preventDefault()
@@ -77,14 +79,14 @@ export default function Game(props) {
                     <GameInfo info={gameInfo} state={gameState}/>
 
                     <Button outline className="btn-round ml-1 btn btn-outline-success"
-                            disabled={gameState.currentUser.userId === store.getState().authentication.user.message._id}
+                            disabled={gameState ? gameState.currentUser.userId === store.getState().authentication.user.message._id : false}
                             data-toggle="tooltip"
                             title="Select this button when the person has been found out."
                             onClick={sendVote.bind(null, true)}> Yeap!
                         <i className="fa fa-heart mr-1"/>
                     </Button>
                     <Button className="btn-round ml-1 btn btn-outline-danger ms-lg-2"
-                            disabled={gameState.currentUser.userId === store.getState().authentication.user.message._id}
+                            disabled={gameState ? gameState.currentUser.userId === store.getState().authentication.user.message._id : false}
                             data-toggle="tooltip"
                             title="Select this button when the person has NOT been found out."
                             onClick={sendVote.bind(null, false)}> Nope!
@@ -97,34 +99,38 @@ export default function Game(props) {
                             onClick={startGame}> start
                         <i className="nc-icon nc-button-play mr-1"/>
                     </Button>
-
                     <Form className="contact-form" onSubmit={handleQuestionSubmit}>
-                        <Form.Group>
-                            <Form.Control type="text" placeholder="Enter your question"
+                        <FormGroup>
+                            <FormText type="text" placeholder="Enter your question"
                                           onChange={handleQuestionChange}
                                           value={question}/>
 
-                            <Form.Text className="text-muted">
+                            <FormText className="text-muted">
                                 Your question will be queued until it's your turn
-                            </Form.Text>
-                        </Form.Group>
+                            </FormText>
+                        </FormGroup>
                         <Button className="btn-round btn-warning text-black" type="submit">Ask Question</Button>
                         <div className="margin-top"/>
                     </Form>
+
                 </Col>
-                <Col className="p-5 ms-xl-1">
+
+                    <Col>
+
                     <Chat messages={messageList}/>
+
                     <Form onSubmit={handleChatSubmit}>
                         <FormGroup>
                             <Input required type="text" placeholder="Enter your message"
-                                          onChange={handleChatTextChange}
-                                          value={chatText}/>
+                                   onChange={handleChatTextChange}
+                                   value={chatText}/>
                             <FormText className="text-muted">
                                 You should not ask questions here, this is only the chat
                             </FormText>
                         </FormGroup>
                         <Button type="submit">Send Message</Button>
                     </Form>
+
                 </Col>
             </Row>
         </Container>

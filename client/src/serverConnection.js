@@ -25,6 +25,7 @@ export default function useServer(userName, roomName) {
 
         const jwt = store.getState().authentication.user.token
 
+
             //setup
 
             if (userName === "") {
