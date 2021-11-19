@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
 
-export function createJWT(email, userId, duration) {
+export function createJWT(email, userId, durationInMilliseconds) {
     const payload = {
         email,
         userId,
-        duration
+        durationInMilliseconds
     };
     return jwt.sign(payload, process.env.TOKEN_SECRET, {
-        expiresIn: duration,
+        expiresIn: durationInMilliseconds,
     });
 }

@@ -5,6 +5,8 @@ import {createJWT} from "../utils/auth.js";
 
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
+const expireDurationInMS = 31556952000 // set to one year
+
 export function register(req, res, next) {
     const {name, email, password, password_confirmation} = req.body;
     let errors = [];
@@ -116,7 +118,7 @@ export function login(req, res) {
                                 ],
                             });
                         }
-                        const access_token = createJWT(user.email, user._id, 3600);
+                        const access_token = createJWT(user.email, user._id, expireDurationInMS);
                         jwt.verify(
                             access_token,
                             process.env.TOKEN_SECRET,
