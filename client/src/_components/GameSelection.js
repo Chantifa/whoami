@@ -1,9 +1,8 @@
-import {Route} from "react-router-dom";
+import { Route} from "react-router-dom";
 import {useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {useEffect, useState} from 'react';
-import {ListGroup, ListGroupItem} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
 import Game from "./Game";
+import {ListGroup, ListGroupItem, NavLink} from "reactstrap";
 
 export default function GameSelection() {
 
@@ -22,10 +21,12 @@ export default function GameSelection() {
             <Route exact path={path}>
                 <ListGroup>
                     {/*todo get this list from fetch call*/}
-                    <LinkContainer to={url + "/7"}><ListGroupItem> 7</ListGroupItem></LinkContainer>
-                    <LinkContainer to={url + "/6"}><ListGroupItem> 6</ListGroupItem></LinkContainer>
-                    <LinkContainer to={url + "/5"}><ListGroupItem> 5</ListGroupItem></LinkContainer>
-                    <LinkContainer to={url + "/4"}><ListGroupItem> 4</ListGroupItem></LinkContainer>
+                    <ListGroupItem><NavLink href={url + "/7"} > 7</NavLink> </ListGroupItem>
+                    <ListGroupItem><NavLink href={url + "/6"} > 6</NavLink> </ListGroupItem>
+                    <ListGroupItem><NavLink href={url + "/5"} > 5</NavLink> </ListGroupItem>
+                    <ListGroupItem><NavLink href={url + "/4"} > 4</NavLink> </ListGroupItem>
+                    <ListGroupItem><NavLink href={url + "/3"} > 3</NavLink> </ListGroupItem>
+                    <ListGroupItem><NavLink href={url + "/2"} > 2</NavLink> </ListGroupItem>
                 </ListGroup>
             </Route>
         </>

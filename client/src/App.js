@@ -9,7 +9,7 @@ import { PrivateRoute } from './_components';
 import { Login } from './_components';
 import { Register } from './_components';
 import { Home } from './_components';
-import Navbar from './_components/Navbar';
+import Navbar from './_components/NavigationBar';
 import Rules from './_components/Rules';
 import Footer from './_components/Footer';
 import { Provider } from 'react-redux';
