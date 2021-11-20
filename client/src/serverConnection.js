@@ -1,9 +1,10 @@
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {io} from "socket.io-client";
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./common/Requests.mjs";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./common/Responses.mjs";
 import GameStateMessage from "./common/GameStateMessage.mjs";
 import GameSetupMessage from "./common/GameSetupMessage.mjs";
+import {ReactReduxContext} from "react-redux";
 
 export default function useServer(userName, roomName) {
     const socketRef = useRef(null)
@@ -11,6 +12,7 @@ export default function useServer(userName, roomName) {
     const [messageList, setMessageList] = useState([])
     const [gameInfo, setGameInfo] = useState({})
     const [gameState, setGameState] = useState(null)
+    const {store} = useContext(ReactReduxContext);
 
     function disconnect() {
         const {current: socket} = socketRef;
@@ -21,19 +23,7 @@ export default function useServer(userName, roomName) {
 
     useEffect(() => {
 
-            //fixme
-            const parse = JSON.parse(localStorage.getItem("user")); //fixme
-            if (!parse) {
-                alert("you are not logged in") //fixme
-                window.location.href = "/login" //fixme
-                return //fixme
-            }
-            const jwt = parse.token; //fixme
-            if (!jwt) { //fixme
-                alert("you are not logged in") //fixme
-                window.location.href = "/login" //fixme
-                return // fixme
-            }//fixme
+        const jwt = store.getState().authentication.user.token
 
 
             //setup

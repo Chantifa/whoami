@@ -208,7 +208,8 @@ the [client package.json](client/package.json).
 9. `redux`: Wird verwendet, um den Zustand zwischen Komponenten zu verwalten
 10. `react-redux`: Verwendung von Redux mit React
 11. `redux-thunk`: Middleware für Redux, das ermöglicht einen direkten Zugriff auf die dispatch-Methode um asynchrone Aufrue tätigen zu können.
-12. `jwt-decode`: Wird zum Entschlüsseln verwendet
+12. `jwt-decode`: Wird zum entschlüsseln verwendet
+13. `reactstrap`: Wird für die Verwendung vom React-Theme benötigt
 
 # API und Datenhaltung
 Für die Registrierung eines Users und das LoginBody wurden zwei API's bereitgestellt:
