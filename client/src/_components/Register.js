@@ -19,10 +19,10 @@ function Register() {
     const registering = useSelector(state => state.registration.registering);
     const dispatch = useDispatch();
 
-    // reset login status
+    // reset login status //TODO this logs the user out once if the Register.js is rendered - why once? is it needed?
     useEffect(() => {
         dispatch(userActions.logout());
-    }, []);
+    }, [dispatch]);
 
     function handleChange(e) {
         const { name, value } = e.target;

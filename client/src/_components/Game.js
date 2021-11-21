@@ -29,8 +29,6 @@ export default function Game(props) {
         startGame
     } = useServer(props.userName, id)
 
-    console.log(gameState)
-
     function handleChatSubmit(event) {
         event.preventDefault()
         sendMessage(chatText)
@@ -60,7 +58,7 @@ export default function Game(props) {
                 <div className="owner">
                     <div className="avatar">
                         <img
-                            alt="Logo in a circle image"
+                            alt="Logo in a circle"
                             className="img-circle img-no-padding img-responsive"
                             src={require("../assets/img/mobile.png").default}
                             border={"1px solid black"}
