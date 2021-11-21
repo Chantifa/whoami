@@ -12,7 +12,7 @@ export default function GameSelection() {
 
     useEffect(() => {
         setUser(store.getState().authentication.user.message.name)
-    }, [])
+    }, [store])
 
     let {path, url} = useRouteMatch();
 

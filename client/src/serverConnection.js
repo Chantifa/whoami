@@ -14,16 +14,10 @@ export default function useServer(userName, roomName) {
     const [gameState, setGameState] = useState(null)
     const {store} = useContext(ReactReduxContext);
 
-    function disconnect() {
-        const {current: socket} = socketRef;
-        console.log("disconnect")
-        socket.removeAllListeners([CHAT_ANNOUNCEMENT.id, CHAT_MESSAGE.id, GameSetupMessage.id, GameStateMessage.id], ERROR.id)
-        socket.disconnect()
-    }
 
     useEffect(() => {
 
-        const jwt = store.getState().authentication.user.token
+            const jwt = store.getState().authentication.user.token
 
 
             //setup
@@ -85,7 +79,7 @@ export default function useServer(userName, roomName) {
 
             }
         }
-        , [userName, roomName])
+        , [userName, roomName, store])
 
     //Request methods
     function sendMessage(message) {

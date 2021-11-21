@@ -18,9 +18,9 @@ function Login() {
     const location = useLocation();
 
     // reset login status
-    useEffect(() => {
+    useEffect(() => { //TODO this logs the user out once if the Login.js is rendered - why once? is it needed?
         dispatch(userActions.logout());
-    }, []);
+    }, [dispatch]);
 
     function handleChange(e) {
         const { name, value } = e.target;
