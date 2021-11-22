@@ -2,6 +2,7 @@ import {getRandomCharacterName, getTopics, shuffle} from "./utils.js";
 import GamePhase from "./client/src/common/GamePhase.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
+import {gameFinished, gameStarted, gameWon} from "./controllers/userinfo";
 
 export default class Game {
 
@@ -28,6 +29,7 @@ export default class Game {
     start(roomMembers) {
         this._setPhase(GamePhase.INITIAL)
         this._setPhase(GamePhase.WAITING_QUESTION)
+        gameStarted(roomMembers).catch(e =>console.log(e.message))
 
         this._round++
         this._questions = []
@@ -151,6 +153,8 @@ export default class Game {
         if(voteResultIsYes){
             if(this._currentIsResultQuestion()){
                 this._setPhase(GamePhase.FINISHED) //TODO: maybe let the others finish the game
+                gameFinished(this._players).catch(e =>console.log(e.message))
+                gameWon(this.getCurrentUser()).catch(e =>console.log(e.message))
                 return
             }
         }else { //vote result is no or equal
