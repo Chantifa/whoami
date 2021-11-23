@@ -3,13 +3,27 @@ import {useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {createRef, useContext, useEffect, useState} from 'react';
 import Game from "./Game";
 import {ReactReduxContext} from "react-redux";
-import {Button, Input, ListGroup} from "reactstrap";
-
-function GameSelectionItem(props) {
-    return <code>{JSON.stringify(props.game)} </code>
-}
+import {Button, Input, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from "reactstrap";
 
 export default function GameSelection() {
+
+    function GameSelectionItem(props) {
+
+        /*{roomName: room,
+            phase: this._phase.phase,
+            players}*/
+
+        return <ListGroupItem tag="a" href={/game/ + props.game.roomName}>
+
+            <ListGroupItemHeading>
+                {props.game.roomName}({props.game.phase})
+            </ListGroupItemHeading>
+            <ListGroupItemText>
+                <code>{JSON.stringify(props.game)}</code>
+
+            </ListGroupItemText>
+        </ListGroupItem>
+    }
 
     function getRandId() {
         const ID_LENGTH = 8

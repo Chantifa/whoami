@@ -1,6 +1,7 @@
 import {
     addRoomMembership,
     getCurrentRoomMembership,
+    getOverview,
     getRoomMemberships,
     removeRoomMembership
 } from "./RoomMembershipRepo.js";
