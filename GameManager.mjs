@@ -14,6 +14,10 @@ export function getGame(room) {
     return games[room]
 }
 
+export function gameExistsFor(room){
+    return room in games
+}
+
 export function remove(room){
     delete games[room]
 }
