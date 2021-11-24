@@ -2,7 +2,7 @@ import {getRandomCharacterName, getTopics, shuffle} from "./utils.js";
 import GamePhase from "./client/src/common/GamePhase.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
-import {gameFinished, gameStarted, gameWon} from "./controllers/userinfo";
+import {gameFinished, gameStarted, gameWon} from "./controllers/userinfo.js";
 
 export default class Game {
 

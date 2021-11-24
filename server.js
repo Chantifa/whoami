@@ -18,6 +18,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import db from "./model/User.js";
 import jsonwebtoken from "jsonwebtoken";
+import UserInfo from "./model/UserInfo.js";
 
 
 dotenv.config();
@@ -194,6 +195,21 @@ io.on("connection", (socket) => {
 app.get('/api/games', (req, res) => {
     res.send(getOverview());
 });
+
+app.get('/api/user/:userId/info', (req, res) => {
+    const userId = req.params.userId
+
+    UserInfo.findOne({'userId': userId})
+        .then(userInfo => {
+            if (!userInfo){
+                res.status(404).json({userInfo: "Not found"})
+            } else {
+                res.status(200).json(userInfo)
+            }
+        })
+        .catch(error => console.log(error, error.message))
+
+})
 
 //const db = mongoose.connection;
 
