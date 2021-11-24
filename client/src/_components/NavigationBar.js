@@ -3,6 +3,7 @@ import {Link, useHistory} from "react-router-dom";
 import classnames from "classnames";
 import {Button, Collapse, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink,} from "reactstrap";
 import logo from "../assets/img/logo.png";
+import UserStatsBadge from "./UserStatsBadge";
 
 export default function NavigationBar() {
 
@@ -95,6 +96,10 @@ export default function NavigationBar() {
                                 <i className="nc-icon nc-spaceship"/> Login
                             </Button>
                         </NavItem>
+                        <NavItem>
+                            <UserStatsBadge color="dark"/>
+                        </NavItem>
+
                     </Nav>
                 </Collapse>
             </Container>
