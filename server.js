@@ -9,7 +9,7 @@ import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./c
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Responses.mjs";
-import {gameExistsFor, getGame, getOverview, remove} from "./GameManager.mjs";
+import {gameExistsFor, getGame, remove} from "./GameManager.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
 import mongoose from "mongoose";

@@ -3,9 +3,27 @@ import {useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 import {createRef, useContext, useEffect, useState} from 'react';
 import Game from "./Game";
 import {ReactReduxContext} from "react-redux";
-import {Button, Input, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from "reactstrap";
+import {
+    Button,
+    Col,
+    Container,
+    Input,
+    ListGroup,
+    ListGroupItem,
+    ListGroupItemHeading,
+    ListGroupItemText,
+    Row
+} from "reactstrap";
 
 export default function GameSelection() {
+
+    function UserList(props) {
+        return <Col><h2 className="h5">{props.title}</h2> {props.user.length === 0
+            ? <p className="text-muted fs-6"> Anybody here yet! </p>
+            : <ul>{props.user.map((value, index) => <li key={index}>{value}</li>)}
+            </ul>}
+        </Col>
+    }
 
     function GameSelectionItem(props) {
 
@@ -18,8 +36,11 @@ export default function GameSelection() {
             <ListGroupItemHeading>
                 {props.game.roomName}({props.game.phase})
             </ListGroupItemHeading>
-            <ListGroupItemText>
-                <code>{JSON.stringify(props.game)}</code>
+            <ListGroupItemText tag={"div"} className="container-fluid">
+                <Row>
+                    <UserList user={props.game.players} title="Playing"/>
+                    <UserList user={props.game.viewers} title="Viewing"/>
+                </Row>
 
             </ListGroupItemText>
         </ListGroupItem>
@@ -69,13 +90,17 @@ export default function GameSelection() {
             <Route path={`${path}/:id`}>
                 <Game userName={user}/></Route>
             <Route exact path={path}>
-                <h1>Game Overview</h1>
-                <ListGroup>
-                    {games.map((value, key) => <GameSelectionItem key={key} game={value}/>)}
-                </ListGroup>
-                <Button onClick={setRefresh.bind(null, refresh + 1)}>Refresh</Button>
-                <Input type="text" maxLength="12" minLength="4" value={selectedGame} onChange={handleSelectedChange}/>
-                <a href={"/game/" + selectedGame} className="btn btn-success"> Join Room</a>
+                <Container>
+
+                    <h1>Game Overview</h1>
+                    <ListGroup>
+                        {games.map((value, key) => <GameSelectionItem key={key} game={value}/>)}
+                    </ListGroup>
+                    <Button onClick={setRefresh.bind(null, refresh + 1)}>Refresh</Button>
+                    <Input type="text" maxLength="12" minLength="4" value={selectedGame}
+                           onChange={handleSelectedChange}/>
+                    <a href={"/game/" + selectedGame} className="btn btn-success"> Join Room</a>
+                </Container>
             </Route>
         </>
     )
