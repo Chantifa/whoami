@@ -11,13 +11,20 @@ const userInfo = new mongoose.Schema({
         min: 1,
         max: 255
     },
+    gamesStarted: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     gamesFinished: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     gamesWon: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     }
 }, {
     timestamps: true,
