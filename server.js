@@ -8,7 +8,7 @@ import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./c
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Responses.mjs";
-import {getGame, getOverview, remove} from "./GameManager.mjs";
+import {gameExistsFor, getGame, getOverview, remove} from "./GameManager.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
 import mongoose from "mongoose";
@@ -35,6 +35,16 @@ const io = new Server(server);
 function error(socket, message) {
     socket.emit(ERROR.id, ERROR.getDto(message))
     console.log(`Error occured on ${socket}, message: ${message}`)
+}
+
+function sendIndividualGameSetupMessage(game, roomMembers) {
+    const setupMessage = game.getSetupMessage()
+
+    for (let i in roomMembers) {
+        const dto = setupMessage.getDtoFor(roomMembers[i])
+        // to individual socketid (private message)
+        io.to(roomMembers[i].socketId).emit(GameSetupMessage.id, dto)
+    }
 }
 
 //initializing the socket io connection
@@ -67,6 +77,13 @@ io.on("connection", (socket) => {
         socket.broadcast.to(roomName).emit(CHAT_ANNOUNCEMENT.id, {
             message: `${userName} has joined the chat`,
         });
+
+        // sends the personas to the person joining if the games is running
+        if (gameExistsFor(roomName)){
+            const game = getGame(roomName)
+            socket.emit(GameSetupMessage.id, game.getSetupMessage().getDto())
+            socket.emit(GameStateMessage.id, game.getStateMessage().getDto())
+        }
     });
 
     //user sending message
@@ -104,6 +121,8 @@ io.on("connection", (socket) => {
 
                 if (game.isDead()){
                     remove(roomMembership.room)
+                } else {
+                    sendIndividualGameSetupMessage(game, getRoomMemberships(roomMembership.room))
                 }
             }
         } catch (e) {
@@ -119,14 +138,7 @@ io.on("connection", (socket) => {
             const currentRoomMemberships = getRoomMemberships(roomMembership.room)
             const roomMembers = currentRoomMemberships.map(roomMembership => roomMembership.user)
             game.start(roomMembers)
-
-            const setupMessage = game.getSetupMessage()
-
-            for(let i in roomMembers){
-                const dto = setupMessage.getDtoFor(roomMembers[i])
-                // to individual socketid (private message)
-                io.to(roomMembers[i].socketId).emit(GameSetupMessage.id, dto)
-            }
+            sendIndividualGameSetupMessage(game, roomMembers);
 
 
             const gameState = game.getStateMessage()

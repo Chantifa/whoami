@@ -117,13 +117,15 @@ export default class Game {
     _nextPhaseIfAdequate() {
         //check if we can go to the next phase
 
+        if (this._phase === GamePhase.WAITING_VOTE) {
+            if (this.getCurrentVotes().size === this._players.length -1) {
+                this._publishVoteResults()
+            }
+        }
+        // both can happen
         if (this._phase === GamePhase.WAITING_QUESTION) {
             if (this._futureQuestions.get(this.getCurrentUser()).length > 0) {
                 this._publishQuestion()
-            }
-        } else if (this._phase === GamePhase.WAITING_VOTE) {
-            if (this.getCurrentVotes().size === this._players.length -1) {
-                this._publishVoteResults()
             }
         }
 
@@ -160,6 +162,7 @@ export default class Game {
 
     dropPlayer(user) {
         const index = this._players.findIndex((player) => player.socketId === user.socketId);
+        const dropingPlayer = this._players[index]
         if (index !== -1) {
             this._players.splice(index, 1);
 
@@ -169,6 +172,12 @@ export default class Game {
             } else if (index < this._currentUserIndex){
                 this._currentUserIndex--
             }
+        }
+        if (this._players.length <= 1){
+            //todo: let the remaining player win
+            this._phase = GamePhase.FINISHED
+        } else {
+            this._personaMap.delete(dropingPlayer)
         }
     }
 
