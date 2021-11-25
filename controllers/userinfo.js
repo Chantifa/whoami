@@ -24,3 +24,5 @@ export async function gameWon(user) {
     const query = {'userId': user.userId}
     return UserInfo.findOneAndUpdate(query, {$inc: {gamesWon: 1}, username: user.userName}, {upsert: true}).exec()
 }
+
+export default {gameStarted, gameFinished, gameWon}
