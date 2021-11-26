@@ -61,5 +61,5 @@ export function getOverview() {
 }
 
 export function removeAllAndEverything() {
-    roomMemberships.splice(0, roomMemberships.length)
+    _roomMemberships.splice(0, _roomMemberships.length)
 }
