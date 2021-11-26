@@ -38,7 +38,7 @@ test("Bad Test that tests a lot", () => {
     tt.start(users.slice(0,2))
     overview = tt.getOverview(rooms[0])
 
-    expect(overview.players).toStrictEqual([users[0].userName, users[1].userName])
+    expect(overview.players.sort()).toStrictEqual([users[0].userName, users[1].userName].sort())
     expect(overview.roomName).toBe(rooms[0])
     expect(overview.phase).toBe(GamePhase.WAITING_QUESTION.phase)
 
