@@ -1,4 +1,4 @@
-import React from "react";
+import {useState, useEffect} from "react";
 import {Link, useHistory} from "react-router-dom";
 import classnames from "classnames";
 import {Button, Collapse, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink,} from "reactstrap";
@@ -9,8 +9,8 @@ export default function NavigationBar() {
 
     const history = useHistory();
 
-    const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
-    const [navbarCollapse, setNavbarCollapse] = React.useState(false);
+    const [navbarColor, setNavbarColor] = useState("navbar-transparent");
+    const [navbarCollapse, setNavbarCollapse] = useState(false);
 
     const toggleNavbarCollapse = () => {
         setNavbarCollapse(!navbarCollapse);
@@ -22,7 +22,7 @@ export default function NavigationBar() {
         history.push(path);
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         const updateNavbarColor = () => {
             if (
                 document.documentElement.scrollTop > 299 ||
@@ -49,25 +49,26 @@ export default function NavigationBar() {
             color-on-scroll="300"
             expand="lg">
             <Container>
-                <div className="navbar-translate">
-                    <NavbarBrand as={Link} to="/"><img src={logo} alt="logo" width="150" height="55"/></NavbarBrand>
-                    <button
-                        aria-expanded={navbarCollapse}
-                        className={classnames("navbar-toggler navbar-toggler", {
-                            toggled: navbarCollapse,
-                        })}
-                        onClick={toggleNavbarCollapse}>
-                        <span className="navbar-toggler-bar bar1"/>
-                        <span className="navbar-toggler-bar bar2"/>
-                        <span className="navbar-toggler-bar bar3"/>
-                    </button>
-                </div>
-                <Collapse
-                    className="justify-content-end"
-                    navbar
-                    isOpen={navbarCollapse}
-                >
-                    <Nav navbar>
+
+                <Nav navbar>
+                    <div className="navbar-translate">
+                        <NavbarBrand href="/"><img src={logo} alt="logo" width="150" height="55"/></NavbarBrand>
+                        <Button
+                            aria-expanded={navbarCollapse}
+                            className={classnames("navbar-toggler navbar-toggler", {
+                                toggled: navbarCollapse,
+                            })}
+                            onClick={toggleNavbarCollapse}>
+                            <span className="navbar-toggler-bar bar1"/>
+                            <span className="navbar-toggler-bar bar2"/>
+                            <span className="navbar-toggler-bar bar3"/>
+                        </Button>
+                    </div>
+                    <Collapse
+                        className="justify-content-end"
+                        navbar
+                        isOpen={navbarCollapse}
+                    >
                         <NavItem>
                             <NavLink to="/index" tag={Link}>
                                 <i className="nc-icon nc-layout-11"/> Components
@@ -99,9 +100,9 @@ export default function NavigationBar() {
                         <NavItem>
                             <UserStatsBadge color="dark"/>
                         </NavItem>
+                    </Collapse>
+                </Nav>
 
-                    </Nav>
-                </Collapse>
             </Container>
         </Navbar>
     );
