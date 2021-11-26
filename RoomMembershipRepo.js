@@ -59,3 +59,7 @@ export function getOverview() {
 
     return overview
 }
+
+export function removeAllAndEverything() {
+    _roomMemberships.splice(0, _roomMemberships.length)
+}
