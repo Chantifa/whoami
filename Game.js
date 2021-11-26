@@ -2,7 +2,6 @@ import {getRandomCharacterName, getTopics, shuffle} from "./utils.js";
 import GamePhase from "./client/src/common/GamePhase.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
-import {gameFinished, gameStarted, gameWon} from "./controllers/userinfo.js";
 
 export default class Game {
 
@@ -16,6 +15,17 @@ export default class Game {
     _questions = []
     _futureQuestions = new Map();
     _round = -1;
+    _statsCallbacks = {
+        gameStarted: () => {
+            return Promise.resolve()
+        },
+        gameFinished: () => {
+            return Promise.resolve()
+        },
+        gameWon: () => {
+            return Promise.resolve()
+        }
+    }
 
     _setPhase(phase) {
         if (this._phase.getAllowedSuccessors().includes(phase)) {
@@ -26,10 +36,18 @@ export default class Game {
         }
     }
 
+    setStatsCallbacks(statsCallbacks) {
+        if ("gameStarted" in statsCallbacks && "gameFinished" in statsCallbacks && "gameWon" in statsCallbacks) {
+            this._statsCallbacks = statsCallbacks
+        } else {
+            throw new Error("statsCallbacks must implement all needed methods")
+        }
+    }
+
     start(roomMembers) {
         this._setPhase(GamePhase.INITIAL)
         this._setPhase(GamePhase.WAITING_QUESTION)
-        gameStarted(roomMembers).catch(e =>console.log(e.message))
+        this._statsCallbacks.gameStarted(roomMembers).catch(e => console.log(e.message))
 
         this._round++
         this._questions = []
@@ -153,8 +171,8 @@ export default class Game {
         if(voteResultIsYes){
             if(this._currentIsResultQuestion()){
                 this._setPhase(GamePhase.FINISHED) //TODO: maybe let the others finish the game
-                gameFinished(this._players).catch(e =>console.log(e.message))
-                gameWon(this.getCurrentUser()).catch(e =>console.log(e.message))
+                this._statsCallbacks.gameFinished(this._players).catch(e => console.log(e.message))
+                this._statsCallbacks.gameWon(this.getCurrentUser()).catch(e => console.log(e.message))
                 return
             }
         }else { //vote result is no or equal
@@ -178,7 +196,7 @@ export default class Game {
             }
         }
         if (this._players.length <= 1){
-            //todo: let the remaining player win
+            this._statsCallbacks.gameWon(this._players[0]).catch(e => console.log(e.message))
             this._phase = GamePhase.FINISHED
         } else {
             this._personaMap.delete(dropingPlayer)

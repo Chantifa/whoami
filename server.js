@@ -19,6 +19,7 @@ import authRoutes from "./routes/auth.js";
 import db from "./model/User.js";
 import jsonwebtoken from "jsonwebtoken";
 import UserInfo from "./model/UserInfo.js";
+import statsCallback from "./controllers/userinfo.js";
 
 
 dotenv.config();
@@ -136,6 +137,7 @@ io.on("connection", (socket) => {
         try {
             const roomMembership = getCurrentRoomMembership(socket.id);
             const game = getGame(roomMembership.room);
+            game.setStatsCallbacks(statsCallback)
             const currentRoomMemberships = getRoomMemberships(roomMembership.room)
             const roomMembers = currentRoomMemberships.map(roomMembership => roomMembership.user)
             game.start(roomMembers)
