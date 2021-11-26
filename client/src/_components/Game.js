@@ -1,4 +1,4 @@
-import {useContext, useState, createRef} from "react";
+import {useContext, useState} from "react";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
 import Chat from "./Chat";
@@ -14,7 +14,6 @@ export default function Game(props) {
     const [question, setQuestion] = useState("Who am I?")
     const {store} = useContext(ReactReduxContext);
 
-    let pageHeader = createRef();
 
     const handleChatTextChange = (event) => setChatChatText(event.target.value);
     const handleQuestionChange = (event) => setQuestion(event.target.value);
@@ -42,17 +41,6 @@ export default function Game(props) {
     }
 
     return <>
-        <div
-            style={{
-                backgroundImage:
-                    "url(" + require("../assets/img/galaxy.jpg").default + ")",
-            }}
-            className="page-header page-header-xs"
-            data-parallax={true}
-            ref={pageHeader}
-        >
-            <div className="filter"/>
-        </div>
         <div className="section profile-content">
             <Container>
                 <div className="owner">
@@ -65,12 +53,11 @@ export default function Game(props) {
                         />
                     </div>
                     <div className="name">
-                        <p className="h4">Game {id}<br/>
-                        </p>
+                        <h1 className="h4">Game {id}</h1>
                     </div>
                 </div>
             </Container>
-            </div>
+        </div>
         <Container fluid>
             <Row>
                 <Col className="square border border-1 border-dark rounded-3 ms-xl-5 p-3">
