@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {Link, useHistory} from "react-router-dom";
 import classnames from "classnames";
-import {Button, Collapse, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink,} from "reactstrap";
+import {Button, Collapse, Container, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
 import logo from "../assets/img/logo.png";
 import UserStatsBadge from "./UserStatsBadge";
 
@@ -48,62 +48,59 @@ export default function NavigationBar() {
             className={classnames("fixed-top", navbarColor)}
             color-on-scroll="300"
             expand="lg">
-            <Container>
 
+            <div className="navbar-translate ms-xl-5">
+                <NavbarBrand href="/"><img src={logo} alt="logo" width="150" height="55"/></NavbarBrand>
+                <NavbarToggler onClick={toggleNavbarCollapse}/>
+                <button
+                    aria-expanded={navbarCollapse}
+                    className={classnames("navbar-toggler", {
+                        toggled: navbarCollapse,
+                    })}
+                    onClick={toggleNavbarCollapse}>
+                    <span className="navbar-toggler-bar bar1"/>
+                    <span className="navbar-toggler-bar bar2"/>
+                    <span className="navbar-toggler-bar bar3"/>
+                </button>
+            </div>
+            <Collapse
+                className="justify-content-end"
+                navbar
+                isOpen={navbarCollapse}>
                 <Nav navbar>
-                    <div className="navbar-translate">
-                        <NavbarBrand href="/"><img src={logo} alt="logo" width="150" height="55"/></NavbarBrand>
+                    <NavItem>
+                        <NavLink to="/index" tag={Link}>
+                            <i className="nc-icon nc-layout-11"/> Components
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink to="/rules" tag={Link}>
+                            <i className="nc-icon nc-book-bookmark"/> Rules
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            data-placement="bottom"
+                            href="https://git.ffhs.ch/ramona.koksa/whoami"
+                            target="_blank">
+                            <i className="fa fa-github"/>
+                            <p className="d-lg-none">GitHub</p>
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
                         <Button
-                            aria-expanded={navbarCollapse}
-                            className={classnames("navbar-toggler navbar-toggler", {
-                                toggled: navbarCollapse,
-                            })}
-                            onClick={toggleNavbarCollapse}>
-                            <span className="navbar-toggler-bar bar1"/>
-                            <span className="navbar-toggler-bar bar2"/>
-                            <span className="navbar-toggler-bar bar3"/>
+                            className="btn-round me-xxl-5"
+                            color="danger"
+                            onClick={routeChange}
+                            target="_blank">
+                            <i className="nc-icon nc-spaceship"/> Login
                         </Button>
-                    </div>
-                    <Collapse
-                        className="justify-content-end"
-                        navbar
-                        isOpen={navbarCollapse}
-                    >
-                        <NavItem>
-                            <NavLink to="/index" tag={Link}>
-                                <i className="nc-icon nc-layout-11"/> Components
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to="/rules" tag={Link}>
-                                <i className="nc-icon nc-book-bookmark"/> Rules
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                data-placement="bottom"
-                                href="https://git.ffhs.ch/ramona.koksa/whoami"
-                                target="_blank">
-                                <i className="fa fa-github"/>
-                                <p className="d-lg-none">GitHub</p>
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <Button
-                                className="btn-round"
-                                color="danger"
-                                onClick={routeChange}
-                                target="_blank">
-                                <i className="nc-icon nc-spaceship"/> Login
-                            </Button>
-                        </NavItem>
-                        <NavItem>
-                            <UserStatsBadge color="dark"/>
-                        </NavItem>
-                    </Collapse>
+                    </NavItem>
+                    <NavItem>
+                        <UserStatsBadge color="dark"/>
+                    </NavItem>
                 </Nav>
-
-            </Container>
+            </Collapse>
         </Navbar>
     );
 }
