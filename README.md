@@ -80,9 +80,7 @@ Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
 ## Getting started
 
-Wir empfehlen die Installation auf einem Linux
-
-1. (node.js)[https://nodejs.org/] installieren, Version >= 16.6.0
+1. (node.js)[https://nodejs.org/] installieren, Version >= 16.6.0 (Auf Linux via `apt install node`)
 2. Repository klonen
 3. Dependencies des Servers installieren
 4. Zum Client wechseln
@@ -90,10 +88,9 @@ Wir empfehlen die Installation auf einem Linux
 6. Zurück ins project root wechseln
 7. das ganze starten mit `npm run start-all`
 
-Alternativ können mit zwei prozessen der Client und der Server separat mit `npm start` in ihrem entsprechenden Ordner gestartet werden.
+Alternativ können mit zwei Prozessen der Client und der Server separat mit `npm start` in Ihrem entsprechenden Ordner gestartet werden.
 
 ```bash
-apt install node
 git clone
 npm ci
 cd /client
