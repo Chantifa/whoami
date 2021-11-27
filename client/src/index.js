@@ -5,7 +5,7 @@ import {App} from './App';
 import reportWebVitals from "./reportWebVitals";
 import "./assets/scss/paper-kit.scss?v=1.3.0";
 import { Provider } from 'react-redux';
-
+import './i18n';
 import { store } from './_helpers';
 
 ReactDOM.render(
