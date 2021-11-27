@@ -1,3 +1,4 @@
+import {Suspense} from 'react';
 import {Redirect, Route, Router, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
