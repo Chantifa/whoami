@@ -40,9 +40,6 @@ export default function Game(props) {
         setQuestion("")
     }
 
-    console.log("render with gameInfo")
-    console.log(gameInfo)
-    console.log(gameState)
     const ownUserId = store.getState().authentication.user.message._id //fixme
     const players = Array.from(gameInfo?.personaMapInPlayOrder?.keys() || [])
     const playing = players.some(player => player.userId === ownUserId)
@@ -50,10 +47,6 @@ export default function Game(props) {
     const votable = playing
         && gameState?.phase === GamePhase.WAITING_VOTE.phase
         && gameState?.currentUser.userId !== ownUserId
-
-    console.log({
-        ownUserId, players, playing, startable, votable
-    })
 
     return <>
         <div className="section profile-content">
