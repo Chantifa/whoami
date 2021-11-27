@@ -6,11 +6,11 @@ import {ReactReduxContext} from "react-redux";
 export default function UserStatsBadge({color}){
 
 
-    const {store} = useContext(ReactReduxContext);
+    const {store} = useContext(ReactReduxContext); // FIXME: you don't need to create context -> useSelector() / store is already added in App()
     const [userInfo, setUserInfo] = useState(null)
 
     useEffect(() => {
-        const userId = store?.getState()?.authentication?.user?.message?._id
+        const userId = store?.getState()?.authentication?.user?.message?._id // fixme: does not render - it loads after refresh
         if(!userId) {
             setUserInfo(null)
             return
@@ -18,7 +18,7 @@ export default function UserStatsBadge({color}){
         fetch('/api/userInfo/' + userId)
             .then(response => response.json())
             .then(data => setUserInfo(data))
-            .catch(e => alert(e.message)) //fixme alert
+            .catch(e => alert(e.message)) //fixme alert - 500er Error is throwing "unexpected token p in json at position 0"
 
         return () => setUserInfo(null)
 
