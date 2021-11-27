@@ -33,7 +33,7 @@ function login(email, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-function logout() {
+export function logout() {
     userService.logout();
     return { type: userConstants.LOGOUT };
 }
