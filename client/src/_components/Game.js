@@ -40,9 +40,20 @@ export default function Game(props) {
         setQuestion("")
     }
 
-    const playing = true // fixme
-    const startable = gameState ? !!GamePhase.INITIAL.phase : false
-    const votable = playing && (gameState ? gameState.currentUser.userId === store.getState().authentication.user.message._id : false)
+    console.log("render with gameInfo")
+    console.log(gameInfo)
+    console.log(gameState)
+    const ownUserId = store.getState().authentication.user.message._id //fixme
+    const players = Array.from(gameInfo?.personaMapInPlayOrder?.keys() || [])
+    const playing = players.some(player => player.userId === ownUserId)
+    const startable = gameState === null || [GamePhase.INITIAL.phase, GamePhase.FINISHED.phase].includes(gameState.phase)
+    const votable = playing
+        && gameState?.phase === GamePhase.WAITING_VOTE.phase
+        && gameState?.currentUser.userId !== ownUserId
+
+    console.log({
+        ownUserId, players, playing, startable, votable
+    })
 
     return <>
         <div className="section profile-content">
@@ -68,21 +79,21 @@ export default function Game(props) {
                     <GameInfo info={gameInfo} state={gameState}/>
 
                     <Button outline className="btn-round ml-1 btn btn-outline-success"
-                            disabled={votable}
+                            disabled={!votable}
                             data-toggle="tooltip"
                             title="Select this button when the person has been found out."
                             onClick={sendVote.bind(null, true)}> Yeap!
                         <i className="fa fa-heart mr-1"/>
                     </Button>
                     <Button className="btn-round ml-1 btn btn-outline-danger ms-lg-2"
-                            disabled={votable}
+                            disabled={!votable}
                             data-toggle="tooltip"
                             title="Select this button when the person has NOT been found out."
                             onClick={sendVote.bind(null, false)}> Nope!
                         <i className="nc-icon nc-simple-remove mr-1"/>
                     </Button>
                     <Button className="btn-round ml-1 btn btn-outline-primary ms-lg-2"
-                            disabled={startable}
+                            disabled={!startable}
                             data-toggle="tooltip"
                             title="Select this button to start a game."
                             onClick={startGame}> start
@@ -92,13 +103,15 @@ export default function Game(props) {
                         <FormGroup>
                             <Input required type="text" placeholder="Enter your question"
                                    onChange={handleQuestionChange}
+                                   disabled={!playing || startable}
                                    value={question}/>
 
                             <FormText className="text-muted">
                                 Your question will be queued until it's your turn
                             </FormText>
                         </FormGroup>
-                        <Button className="btn-round btn-warning text-black" type="submit">Ask Question</Button>
+                        <Button className="btn-round btn-warning text-black" type="submit"
+                                disabled={!playing || startable}>Ask Question</Button>
                         <div className="margin-top"/>
                     </Form>
 
