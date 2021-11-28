@@ -81,7 +81,7 @@ function Login() {
                                         }
 
                                         <Button block className="btn-round" color="danger">
-                                            {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                            {loggingIn && <span className="spinner-border spinner-border-sm mr-1"/>}
                                             Login
                                         </Button>
                                         <div className="mt-4 forgot">
