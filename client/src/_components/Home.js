@@ -1,4 +1,3 @@
-import React from "react";
 import {Button, Col, Container, Row,} from "reactstrap";
 import ExamplesNavbar from "./NavigationBar";
 import LandingPage from "./LandingPage";
