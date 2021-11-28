@@ -1,37 +1,45 @@
 import {useContext, useEffect, useState} from "react";
 import {Badge} from "reactstrap";
-import {ReactReduxContext} from "react-redux";
-
+import {ReactReduxContext, useSelector} from "react-redux";
 
 export default function UserStatsBadge({color}){
 
-
-    const {store} = useContext(ReactReduxContext); // FIXME: you don't need to create context -> useSelector() / store is already added in App()
+    const authInfo = useSelector(state => state.authentication.user.message._id)
+    const {store} = useContext(ReactReduxContext);
     const [userInfo, setUserInfo] = useState(null)
 
     useEffect(() => {
-        const userId = store?.getState()?.authentication?.user?.message?._id // fixme: does not render - it loads after refresh
-        if(!userId) {
+
+        if(!authInfo) {
             setUserInfo(null)
             return
         }
-        fetch('/api/userInfo/' + userId)
+
+        fetch('/api/userInfo/' + authInfo)
             .then(response => response.json())
             .then(data => setUserInfo(data))
-            .catch(e => alert(e.message)) //fixme alert - 500er Error is throwing "unexpected token p in json at position 0"
+            .catch(e => alert(e.message)) //fixme alert
 
         return () => setUserInfo(null)
 
-    }, [store, "this should be triggered on login change"]) //fixme
+    }, [])
 
     if (!store?.getState()?.authentication?.user?.message?._id){
         return null
     }
+
     let badge
+
     if (!userInfo){
         badge =  <Badge pill color={color} > Loading... </Badge>
     } else {
-        badge = <Badge pill color={color}> ({userInfo.gamesStarted}|{userInfo.gamesWon}|{userInfo.gamesFinished}) </Badge>
+        badge = <Badge pill color={color}>
+            <i className="nc-icon nc-button-play me-1"/>
+            Started: {userInfo.gamesStarted}
+            <i className="nc-icon nc-chart-bar-32 me-1 ms-4"/>
+            Won: {userInfo.gamesWon}
+            <i className="nc-icon nc-check-2 me-1 ms-4"/>
+            Finished: {userInfo.gamesFinished}</Badge>
     }
 
     return <div className="d-flex flex-column justify-content-center h-100">{badge}</div>

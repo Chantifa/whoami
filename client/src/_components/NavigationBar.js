@@ -1,4 +1,4 @@
-import {useState, useEffect, useContext} from "react";
+import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import classnames from "classnames";
 import {Button, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
@@ -92,7 +92,7 @@ export default function NavigationBar() {
                                     <UserStatsBadge color="dark"/>
                                 </NavItem>
                                 <Button
-                                    className="btn-round me-xxl-5"
+                                    className="btn-round me-xxl-5 ms-xl-5"
                                     color="danger"
                                     onClick={logout}
                                     href="/">
@@ -102,7 +102,7 @@ export default function NavigationBar() {
                             :
                             <>
                                 <Button
-                                    className="btn-round me-xxl-5"
+                                    className="btn-round me-xxl-5 ms-xl-5"
                                     color="danger"
                                     href="/login">
                                     <i className="nc-icon nc-spaceship"/> Login
