@@ -13,7 +13,7 @@ function Home() {
                 <div className="section text-center">
                     <Container>
                         <Row>
-                            <Col className="ml-auto mr-auto" md="15">
+                            <Col className="ml-auto mr-auto" md="12">
                                 <h2 className="title">About the game</h2>
                                 <p className="h5 description">
                                     Who Am I? is a guessing game where players use yes or no questions to guess the
