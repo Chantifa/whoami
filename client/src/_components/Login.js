@@ -54,7 +54,7 @@ function Login() {
                         <Row>
                             <Col className="ml-auto mr-auto" lg="12">
                                 <Card className="card-register ml-auto mr-auto" lg="4">
-                                    <h3 className="title mx-auto">Welcome</h3>
+                                    <h1 className="h3 title mx-auto">Welcome</h1>
 
                                     <Form className="register-form" onSubmit={handleSubmit}>
                                         <label>Email</label>
@@ -84,8 +84,7 @@ function Login() {
                                             {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
                                             Login
                                         </Button>
-                                        <br></br>
-                                        <div className="forgot">
+                                        <div className="mt-4 forgot">
                                             <Link to="/register" color="danger" className="btn-link">Register</Link>
                                         </div>
                                     </Form>
