@@ -9,20 +9,25 @@ export default function UserStatsBadge({color}){
     const [userInfo, setUserInfo] = useState(null)
 
     useEffect(() => {
+        const fetchUserInfo = () => {
 
-        if(!authInfo) {
-            setUserInfo(null)
-            return
+            if(!authInfo) {
+                setUserInfo(null)
+                return
+            }
+
+            fetch('/api/userInfo/' + authInfo)
+                .then(response => response.json())
+                .then(data => setUserInfo(data))
+                .catch(e => alert(e.message)) //fixme alert
+
+            return () => setUserInfo({})
+
         }
 
-        fetch('/api/userInfo/' + authInfo)
-            .then(response => response.json())
-            .then(data => setUserInfo(data))
-            .catch(e => alert(e.message)) //fixme alert
+        fetchUserInfo();
 
-        return () => setUserInfo(null)
-
-    }, [])
+    }, [authInfo]);
 
     if (!store?.getState()?.authentication?.user?.message?._id){
         return null
