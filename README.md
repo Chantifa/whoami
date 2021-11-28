@@ -80,6 +80,16 @@ Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
 ## Getting started
 
+1. (node.js)[https://nodejs.org/] installieren, Version >= 16.6.0 (Auf Linux via `apt install node`)
+2. Repository klonen
+3. Dependencies des Servers installieren
+4. Zum Client wechseln
+5. Dependencies des Clients installieren
+6. Zurück ins project root wechseln
+7. das ganze starten mit `npm run start-all`
+
+Alternativ können mit zwei Prozessen der Client und der Server separat mit `npm start` in Ihrem entsprechenden Ordner gestartet werden.
+
 ```bash
 git clone
 npm ci
@@ -95,7 +105,7 @@ npm run start-all
 * MongoDB: Dokumentendatenbank
 * Express: Node.js Webframework
 * React: Clientseitiges JS-Framework
-* Node: Führende JS-Webserver
+* Node: Führender JS-Webserver
 
 ## Architektur
 
@@ -105,7 +115,7 @@ beschrieben gemeinsam existiert [der common Ordner](client/src/common), auf welc
 ### Backend
 
 Das Backend ist ein simples `express` mit einem server.js, welches sowohl websockets als auch http requests
-entgegennimmt.
+entgegennimmt. Einzelne Teile wurden hier Ausgelagert, unter anderem das Game-Management, das User-Auth-Handling und das Raum-Management.
 
 ### Frontend
 
@@ -120,14 +130,14 @@ Client, Other Clients beschreibt eine beliebige Anzahl anderer Clients.
 
 Nachrichten und deren Aufbau können [im common Ordner](client/src/common) gefunden werden.
 
-#### Chat
+#### Chat & Nachrichten
 
-Jederzeit kann ein User etwas in den Chat schreiben. Für die Spiellogik müssen die Interaktionen jedoch als solche
-markiert werden. Diese Logik passiert auf dem Client. Somit werden die Nachrichten entweder als entsprechende
-Interaktion gesendet oder als Chat.
+Jederzeit kann ein User etwas in den Chat schreiben. Für die Spiellogik stehen auf dem Client entsprechende
+Controls zur Verfügung. So werden die Nachrichten entweder als entsprechende Interaktion gesendet.
 
 Der Server wertet die Interaktionen gemäss dem Spielablauf aus, Chat-Nachrichten werden an alle (auch den Sender) im
-Raum gebroadcasted.
+Raum multicasted. Broadcasts sind möglich aber nicht verwendet. Beim nachjoinen in ein laufendes Spiel werden Informationen 
+per Singlecast dem Joiner mitgeteilt.
 
 #### Join & Leave
 
