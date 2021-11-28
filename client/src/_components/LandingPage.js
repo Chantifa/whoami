@@ -33,8 +33,8 @@ function LandingPage() {
                 <Container>
                     <div className="motto text-center">
                         <h1>Who am I</h1>
-                        <h3>guess who you are - register now!</h3>
-                        <br/>
+                        <p className="h3 mb-4">guess who you are - register now!</p>
+
                         <Button href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                                 target="_blank"
                                 className="btn-round mx-2"
