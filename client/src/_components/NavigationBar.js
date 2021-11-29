@@ -1,16 +1,17 @@
-import {useEffect, useState} from "react";
-import {Link, useHistory} from "react-router-dom";
+import {useState, useEffect} from "react";
+import {Link} from "react-router-dom";
 import classnames from "classnames";
-import {Button, Collapse, Nav, Navbar, NavbarBrand, NavItem, NavLink,} from "reactstrap";
+import {Button, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
 import logo from "../assets/img/logo.png";
 import UserStatsBadge from "./UserStatsBadge";
+import {logout} from '../_actions/index'
+import {useSelector} from "react-redux";
 
 export default function NavigationBar() {
 
-    const history = useHistory();
-
     const [navbarColor, setNavbarColor] = useState("navbar-transparent");
     const [navbarCollapse, setNavbarCollapse] = useState(false);
+    const loggedIn = useSelector(state => state.authentication.loggedIn);
 
     const toggleNavbarCollapse = () => {
         setNavbarCollapse(!navbarCollapse);
@@ -18,6 +19,7 @@ export default function NavigationBar() {
     };
 
     useEffect(() => {
+
         const updateNavbarColor = () => {
             if (
                 document.documentElement.scrollTop > 299 ||
@@ -38,6 +40,7 @@ export default function NavigationBar() {
             window.removeEventListener("scroll", updateNavbarColor);
         };
     });
+
     return (
         <Navbar
             className={classnames("fixed-top", navbarColor)}
@@ -46,7 +49,8 @@ export default function NavigationBar() {
 
             <div className="navbar-translate ms-xl-5">
                 <NavbarBrand href="/"><img src={logo} alt="logo" width="150" height="55"/></NavbarBrand>
-                <button
+                <NavbarToggler onClick={toggleNavbarCollapse}/>
+                <Button
                     aria-expanded={navbarCollapse}
                     className={classnames("navbar-toggler", {
                         toggled: navbarCollapse,
@@ -55,7 +59,7 @@ export default function NavigationBar() {
                     <span className="navbar-toggler-bar bar1"/>
                     <span className="navbar-toggler-bar bar2"/>
                     <span className="navbar-toggler-bar bar3"/>
-                </button>
+                </Button>
             </div>
             <Collapse
                 className="justify-content-end"
@@ -77,21 +81,34 @@ export default function NavigationBar() {
                             data-placement="bottom"
                             href="https://git.ffhs.ch/ramona.koksa/whoami"
                             target="_blank">
-                            <i className="fa fa-gitlab"/>
-                            <p className="d-lg-none">GitLab</p>
+                            <i className="fa fa-github"/>
+                            <p className="d-lg-none">GitHub</p>
                         </NavLink>
                     </NavItem>
-                    <NavItem>
-                        <Button
-                            href="/login"
-                            className="btn-round me-xxl-5"
-                            color="danger">
-                            <i className="nc-icon nc-spaceship"/> Login
-                        </Button>
-                    </NavItem>
-                    <NavItem>
-                        <UserStatsBadge color="dark"/>
-                    </NavItem>
+                    {
+                        loggedIn ?
+                            <>
+                                <NavItem>
+                                    <UserStatsBadge color="dark"/>
+                                </NavItem>
+                                <Button
+                                    className="btn-round me-xxl-5 ms-xl-5"
+                                    color="danger"
+                                    onClick={logout}
+                                    href="/">
+                                    <i className="nc-icon nc-spaceship"/> Logout
+                                </Button>
+                            </>
+                            :
+                            <>
+                                <Button
+                                    className="btn-round me-xxl-5 ms-xl-5"
+                                    color="danger"
+                                    href="/login">
+                                    <i className="nc-icon nc-spaceship"/> Login
+                                </Button>
+                            </>
+                    }
                 </Nav>
             </Collapse>
         </Navbar>
