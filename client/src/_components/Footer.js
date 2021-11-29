@@ -1,17 +1,13 @@
-import React from "react";
-
-// reactstrap components
 import {Container, Row} from "reactstrap";
 
-function Footer() {
+export default function Footer() {
     return (
         <footer className="footer footer-black footer-white">
             <Container>
                 <Row>
                     <div className="credits ml-auto">
             <span className="copyright">
-              © {new Date().getFullYear()}, made with{" "}
-                <i className="fa fa-heart heart" aria-hidden="true"/> by FFHS - Ramona Koksa | Yves Bastian Pellaton
+              &copy; {new Date().getFullYear()}, made with <i className="fa fa-heart heart" aria-hidden="true"/>at FFHS - Ramona Koksa | Yves Bastian Pellaton
             </span>
                     </div>
                 </Row>
@@ -19,5 +15,3 @@ function Footer() {
         </footer>
     );
 }
-
-export default Footer;

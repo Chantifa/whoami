@@ -1,7 +1,7 @@
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Link, useHistory} from "react-router-dom";
 import classnames from "classnames";
-import {Button, Collapse, Container, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
+import {Button, Collapse, Nav, Navbar, NavbarBrand, NavItem, NavLink,} from "reactstrap";
 import logo from "../assets/img/logo.png";
 import UserStatsBadge from "./UserStatsBadge";
 
@@ -16,11 +16,6 @@ export default function NavigationBar() {
         setNavbarCollapse(!navbarCollapse);
         document.documentElement.classList.toggle("nav-open");
     };
-
-    const routeChange = () => {
-        let path = '/login';
-        history.push(path);
-    }
 
     useEffect(() => {
         const updateNavbarColor = () => {
@@ -51,7 +46,6 @@ export default function NavigationBar() {
 
             <div className="navbar-translate ms-xl-5">
                 <NavbarBrand href="/"><img src={logo} alt="logo" width="150" height="55"/></NavbarBrand>
-                <NavbarToggler onClick={toggleNavbarCollapse}/>
                 <button
                     aria-expanded={navbarCollapse}
                     className={classnames("navbar-toggler", {
@@ -83,16 +77,15 @@ export default function NavigationBar() {
                             data-placement="bottom"
                             href="https://git.ffhs.ch/ramona.koksa/whoami"
                             target="_blank">
-                            <i className="fa fa-github"/>
-                            <p className="d-lg-none">GitHub</p>
+                            <i className="fa fa-gitlab"/>
+                            <p className="d-lg-none">GitLab</p>
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <Button
+                            href="/login"
                             className="btn-round me-xxl-5"
-                            color="danger"
-                            onClick={routeChange}
-                            target="_blank">
+                            color="danger">
                             <i className="nc-icon nc-spaceship"/> Login
                         </Button>
                     </NavItem>
