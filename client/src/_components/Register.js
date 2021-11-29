@@ -54,7 +54,7 @@ function Register() {
                         <Row>
                             <Col className="ml-auto mr-auto">
                                 <Card className="card-register ml-auto mr-auto" lg="4">
-                                    <h3 className="title mx-auto">Welcome</h3>
+                                    <h1 className="title h3 mx-auto">Welcome</h1>
 
                                     <Form className="register-form" onSubmit={handleSubmit}>
                                         <label>Name</label>
@@ -102,11 +102,10 @@ function Register() {
                                             <div className="invalid-feedback">Password is required</div>
                                         }
                                         <Button block className="btn-round" color="danger">
-                                            {registering && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                            {registering && <span className="spinner-border spinner-border-sm mr-1"/>}
                                             Register
                                         </Button>
-                                        <br></br>
-                                        <div className="forgot">
+                                        <div className="mt-4 forgot">
                                             <Link to="/login" className="btn-link">Cancel</Link>
                                         </div>
                                     </Form>
