@@ -9,6 +9,7 @@ export default function UserStatsBadge({color}){
     const [userInfo, setUserInfo] = useState(null)
 
     useEffect(() => {
+        let isMounted = true
         const fetchUserInfo = () => {
 
             if(!authInfo) {
@@ -18,7 +19,7 @@ export default function UserStatsBadge({color}){
 
             fetch('/api/userInfo/' + authInfo)
                 .then(response => response.json())
-                .then(data => setUserInfo(data))
+                .then(data => isMounted && setUserInfo(data))
                 .catch(e => alert(e.message)) //fixme alert
 
             return () => setUserInfo({})
@@ -26,6 +27,7 @@ export default function UserStatsBadge({color}){
         }
 
         fetchUserInfo();
+        return () => isMounted = false
 
     }, [authInfo]);
 
