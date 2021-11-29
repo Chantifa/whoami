@@ -1,10 +1,10 @@
-import React from "react";
 import ExamplesNavbar from "./NavigationBar";
 import {Button, Card, CardBody, CardTitle, Col, Container, Row} from "reactstrap";
+import {createRef} from "react";
 
 export default function Rules() {
 
-  let pageHeader = React.createRef();
+  let pageHeader = createRef();
 
   return (
     <>
