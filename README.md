@@ -117,6 +117,8 @@ beschrieben gemeinsam existiert [der common Ordner](client/src/common), auf welc
 Das Backend ist ein simples `express` mit einem server.js, welches sowohl websockets als auch http requests
 entgegennimmt. Einzelne Teile wurden hier Ausgelagert, unter anderem das Game-Management, das User-Auth-Handling und das Raum-Management.
 
+Die Schnittstellen wurden via Swagger dokumentiert und können im Backend wie folgt eingesehen werden: http://localhost:5000/doc.
+
 ### Frontend
 
 Das Frontend ist React basiert und befindet sich under [client/](client/). Bei der Entwicklung existiert hierzu ein
@@ -232,87 +234,11 @@ Für die Registrierung eines Users und das LoginBody wurden zwei API's bereitges
 2. Wenn der User noch nicht existiert, dann wird das Passwort verschlüsselt via `bcrypt`
 3. `name`, `password` und `email` werden in der MongoDB persistiert.
 
-Der Request-Body sieht dann wie folgt aus:
-```json
-{
-    "name": "ffhs-webe",
-    "email": "YOURMAIL@TEST.ch",
-    "password": "123456",
-    "password_confirmation": "123456"
-}
-```
-
-```json
-{
-    "success": true,
-    "result": {
-        "name": "ffhs-webe",
-        "email": "YOURMAIL@TEST.ch",
-        "password": "$2b$10$PrqUYbNzFfBLDppngYIKdekVG2P2xgD3682.F7cQLfnooN6zTaBU2",
-        "_id": "6175609939ccbef4c4067693",
-        "createdAt": "2021-10-24T13:33:13.905Z",
-        "updatedAt": "2021-10-24T13:33:13.905Z",
-        "__v": 0
-    }
-}
-```
-
-### User-Schema:
-
-```json
-{
-   "_id": {
-      "$oid": "61754918f09576face1d352e"
-   },
-   "name": "ffhs-webe",
-   "email": "test@test.ch",
-   "password": "$2b$10$6p1LMZEtPNyQ50XvuJe4xOHEKBe4Td5gsqDefjZb3EHAH04ni/216",
-   "createdAt": {
-      "$date": {
-         "$numberLong": "1635076376967"
-      }
-   },
-   "updatedAt": {
-      "$date": {
-         "$numberLong": "1635076376967"
-      }
-   },
-   "__v": {
-      "$numberInt": "0"
-   }
-}
-```
-
 ## Loginlogik
 1. Zunächst wird geprüft ob der User existiert, wenn nicht, dann wird ein Fehler geworfen - `user not found`
 2. Wenn der User existiert, dann wird via `bcrypt.compare()` das Password geprüft.
 3. Der jwt-Token wird für eine Stunde aktiviert.
 4. Wenn alles funktioniert hat, wird eine Response mit Status `<200 OK>` zurückgegeben.
-
-Der Request-Body sieht dann wie folgt aus:
-
-```json
-{
-    "email": "tetetest@TEST.ch",
-    "password": "123456"
-}
-```
-Response:
-```json
-{
-    "success": true,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRldGV0ZXN0QFRFU1QuY2giLCJ1c2VySWQiOiI2MTc1NTlkMWM0ZGU0YzNmZmU1MDc5YjkiLCJkdXJhdGlvbiI6MzYwMCwiaWF0IjoxNjM1MDgxODcxLCJleHAiOjE2MzUwODU0NzF9.hJd1vuMwOJFyYa2R2yNnUb535xY7F3FrkJvivgUlsU4",
-    "message": {
-        "_id": "617559d1c4de4c3ffe5079b9",
-        "name": "webe",
-        "email": "ffhs@test.ch",
-        "password": "$2b$10$nf7rTpX9853vfZDLRTHM4en3gNgJZuejqbIsFSpjnhvaRM0SsbORi",
-        "createdAt": "2021-10-24T13:04:17.232Z",
-        "updatedAt": "2021-10-24T13:04:17.232Z",
-        "__v": 0
-    }
-}
-```
 
 ## Testkonzept
 Im Rahmen des Projektes wurde entschieden, dass nur die Teststufe Unit abgedeckt wird. Die Teststufen Integration und System werden entsprechend nur bei Bedarf abgedeckt. 
@@ -324,7 +250,7 @@ Das Frontend wird manuell getestet. Allfällige Bugs sind im Gitlab unter issues
 * Trivial: Der Bug hat keine Auswirkung auf die Funktionalität, z.B. ein subjektives «Nice-to-have».
 
 Nach jedem Commit werden die Tests automatisch in der Gitlab CI/CD ausgeführt. Gemerged darf nur werden, sobald alle Tests durchgelaufen sind.
-Non-functional (NFR) Testfälle werden bei bedarf ebenfalls automatisiert. Dies ist aber der Entwicklung selbst überlassen. 
-Auf die statische Code Analyse wird bewusst verzichtet. Leider bietet das FFHS-Git keine Möglichkeit, Sonarqube bzw. Sonarcloud in die CI/CD-Pipeline mitaufzunehmen.
-Schlägt ein Test fehl, ist zu prüfen ob es bei der Umsetzung von neuen Features neue Bugs generiert hat oder ob der Test nicht mehr valide ist.
+Non-functional (NFR) Testfälle werden bei Bedarf ebenfalls automatisiert. Dies ist aber der Entwicklung selbst überlassen. 
+Auf die statische Codeanalyse wird bewusst verzichtet. Leider bietet das FFHS-Git keine Möglichkeit, Sonarqube bzw. Sonarcloud in die CI/CD-Pipeline mitaufzunehmen.
+Schlägt ein Test fehl, ist zu prüfen, ob es bei der Umsetzung von neuen Features neue Bugs generiert hat oder ob der Test nicht mehr valide ist.
 
