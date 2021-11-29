@@ -21,7 +21,8 @@ import db from "./model/User.js";
 import jsonwebtoken from "jsonwebtoken";
 import UserInfo from "./model/UserInfo.js";
 import statsCallback from "./controllers/userinfo.js";
-
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 dotenv.config();
 
@@ -256,3 +257,7 @@ app.use(cors())
 
 //routes middleware
 app.use('/api', authRoutes);
+
+// api documentation
+const swaggerDocument = YAML.load('./swagger.yaml');
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

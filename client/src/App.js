@@ -1,9 +1,7 @@
-import {useEffect} from 'react';
 import {Redirect, Route, Router, Switch} from 'react-router-dom';
-import {Provider, useDispatch} from 'react-redux';
+import {Provider} from 'react-redux';
 
 import {history, store} from './_helpers';
-import {alertActions} from './_actions';
 import {Home, Login, PrivateRoute, Register} from './_components';
 import Navbar from './_components/NavigationBar';
 import Rules from './_components/Rules';
@@ -13,17 +11,7 @@ import Highscore from "./_components/Highscore";
 
 function App() {
 
-    const dispatch = useDispatch();
-
-    useEffect(() => { //TODO: this once removes the alert actions when the App.js is rendered - what is the purpose of this?
-        history.listen((location, action) => {
-            // clear alert on location change
-            dispatch(alertActions.clear());
-        });
-    }, [dispatch]);
-
     return (
-
         <Provider store={store}>
         <Router history={history}>
             <div className="App">
@@ -41,10 +29,7 @@ function App() {
             <Footer />
         </Router>
         </Provider>
-
-
-
     );
 }
 
-export { App }
+export {App}
