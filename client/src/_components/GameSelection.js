@@ -15,6 +15,8 @@ import {
     Row
 } from "reactstrap";
 
+import PopupAlert from "./PopupAlert";
+
 export default function GameSelection() {
 
     function UserList(props) {
@@ -26,10 +28,6 @@ export default function GameSelection() {
     }
 
     function GameSelectionItem(props) {
-
-        /*{roomName: room,
-            phase: this._phase.phase,
-            players}*/
 
         return <ListGroupItem tag="a" href={/game/ + props.game.roomName}>
 
@@ -55,6 +53,7 @@ export default function GameSelection() {
     const [games, setGames] = useState([])
     const [refresh, setRefresh] = useState(0)
     const [selectedGame, setSelectedGame] = useState(getRandId())
+    const [thrownError, setThrownError] = useState(null)
     const {store} = useContext(ReactReduxContext);
 
     let pageHeader = createRef();
@@ -67,7 +66,7 @@ export default function GameSelection() {
         fetch("/api/games")
             .then(response => response.json())
             .then(json => setGames(json))
-            .catch(e => alert(e.message)) //fixme alerts
+            .catch(e => setThrownError(e))
     }, [refresh])
 
     let {path, url} = useRouteMatch();
@@ -76,6 +75,7 @@ export default function GameSelection() {
 
     return (
         <>
+            <PopupAlert state={{thrownError, setThrownError}}/>
             <div
                 style={{
                     backgroundImage:
