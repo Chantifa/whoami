@@ -8,7 +8,7 @@ export default function Highscore() {
     let pageHeader = createRef();
 
     const fetchRankingData = () => {
-        fetch('/api/ranking')
+        fetch('/api/userinfo/highscore')
             .then(response => response.json())
             .then(data => setRanking(data))
             .catch(e => {
@@ -21,7 +21,7 @@ export default function Highscore() {
 
     useEffect(() => {
         fetchRankingData()
-    }, [ranking]);
+    }, []);
 
     return (
         <>
@@ -37,8 +37,7 @@ export default function Highscore() {
             </div>
 
             <Container>
-                <p className="h1">Highscore Ranking</p>
-                <br/>
+                <p className="h1 mb-5">Highscore Ranking</p>
 
                 <Table>
                     <thead>
