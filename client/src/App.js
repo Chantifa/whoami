@@ -13,6 +13,7 @@ import Highscore from "./_components/Highscore";
 function App() {
 
     return (
+        <Suspense fallback="loading">
         <Provider store={store}>
         <Router history={history}>
             <div className="App">
@@ -30,6 +31,7 @@ function App() {
             <Footer />
         </Router>
         </Provider>
+        </Suspense>
     );
 }
 

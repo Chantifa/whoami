@@ -1,15 +1,13 @@
 import {Button, Container} from "reactstrap";
-import {useEffect} from "react";
+import {useEffect, createRef} from "react";
 
-import {useHistory} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 
 
 function LandingPage() {
-    const {t, i18n} = useTranslation();
+    const {t} = useTranslation();
 
-    let pageHeader = React.createRef();
-    const history = useHistory();
+    let pageHeader = createRef();
 
     useEffect(() => {
         if (window.innerWidth < 991) {

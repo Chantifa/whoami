@@ -1,17 +1,21 @@
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import classnames from "classnames";
-import {Button, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
+import {Button, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
 import logo from "../assets/img/logo.png";
 import UserStatsBadge from "./UserStatsBadge";
 import {logout} from '../_actions/index'
 import {useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 export default function NavigationBar() {
 
     const [navbarColor, setNavbarColor] = useState("navbar-transparent");
     const [navbarCollapse, setNavbarCollapse] = useState(false);
     const loggedIn = useSelector(state => state.authentication.loggedIn);
+
+    //Calling t and i18n method from useTranslation hook
+    const {i18n} = useTranslation();
 
     const toggleNavbarCollapse = () => {
         setNavbarCollapse(!navbarCollapse);
@@ -40,6 +44,11 @@ export default function NavigationBar() {
             window.removeEventListener("scroll", updateNavbarColor);
         };
     });
+
+    //Creating a method to change the language onClick
+    const changeLang = (lng) => {
+        i18n.changeLanguage(lng);
+    }
 
     return (
         <Navbar
@@ -83,6 +92,20 @@ export default function NavigationBar() {
                             target="_blank">
                             <i className="fa fa-github"/>
                             <p className="d-lg-none">GitHub</p>
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            onClick={() => changeLang('de')}
+                            href="#">
+                            <i className="nc-icon nc-globe"/> DE
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            onClick={() => changeLang('en')}
+                            href="#">
+                            <i className="nc-icon nc-globe"/> EN
                         </NavLink>
                     </NavItem>
                     {
