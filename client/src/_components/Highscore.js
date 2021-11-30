@@ -8,7 +8,7 @@ export default function Highscore() {
     let pageHeader = createRef();
 
     const fetchRankingData = () => {
-        fetch('/api/userinfo/highscore')
+        fetch('/api/ranking/')
             .then(response => response.json())
             .then(data => setRanking(data))
             .catch(e => {
