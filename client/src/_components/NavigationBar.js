@@ -67,8 +67,8 @@ export default function NavigationBar() {
                 isOpen={navbarCollapse}>
                 <Nav navbar>
                     <NavItem>
-                        <NavLink to="/index" tag={Link}>
-                            <i className="nc-icon nc-layout-11"/> Components
+                        <NavLink to="/highscore" tag={Link}>
+                            <i className="nc-icon nc-controller-modern"/> Highscore
                         </NavLink>
                     </NavItem>
                     <NavItem>
