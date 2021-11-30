@@ -200,40 +200,43 @@ app.get('/api/games', (req, res) => {
     res.send(getOverview());
 });
 
+
+app.get('/api/ranking', (req, res) => {
+
+    UserInfo.find({}, ["username", "userId", "gamesStarted", "gamesFinished", "gamesWon"])
+        .sort({"gamesWon": -1}).limit(10)
+        .exec()
+        .then(highscore => {
+            if (!highscore) {
+                res.status(404).json({highscore: "Not found"})
+            } else {
+                res.status(200).json(highscore)
+            }
+        })
+        .catch(error => {
+            console.log(error, error.message)
+            res.status(500)
+        })
+
+})
+
+
 app.get('/api/userInfo/:userId', (req, res) => {
     const userId = req.params.userId
 
-    if (userId.toLowerCase() === "highscore" || userId === "") {
-        UserInfo.find({}, ["username", "userId","gamesStarted", "gamesFinished", "gamesWon" ])
-            .sort({ "gamesWon" : -1}).limit(10)
-            .exec()
-            .then(highscore => {
-                if (!highscore) {
-                    res.status(404).json({userInfo: "Not found"})
-                } else {
-                    res.status(200).json(highscore)
-                }
-            })
-            .catch(error => {
-                console.log(error, error.message)
-                res.status(500)
-            })
 
-    } else {
-        UserInfo.findOne({'userId': userId})
-            .then(userInfo => {
-                if (!userInfo) {
-                    res.status(404).json({userInfo: "Not found"})
-                } else {
-                    res.status(200).json(userInfo)
-                }
-            })
-            .catch(error => {
-                console.log(error, error.message)
-                res.status(500)
-            })
-
-    }
+    UserInfo.findOne({'userId': userId})
+        .then(userInfo => {
+            if (!userInfo) {
+                res.status(404).json({userInfo: "Not found"})
+            } else {
+                res.status(200).json(userInfo)
+            }
+        })
+        .catch(error => {
+            console.log(error, error.message)
+            res.status(500)
+        })
 
 
 })
