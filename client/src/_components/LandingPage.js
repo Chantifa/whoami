@@ -1,7 +1,12 @@
 import {Button, Container} from "reactstrap";
-import {createRef, useEffect} from "react";
+import {useEffect, createRef} from "react";
+
+import {useTranslation} from "react-i18next";
+
 
 function LandingPage() {
+    const {t} = useTranslation();
+
     let pageHeader = createRef();
 
     useEffect(() => {
@@ -32,8 +37,8 @@ function LandingPage() {
                 <div className="filter"/>
                 <Container>
                     <div className="motto text-center">
-                        <h1>Who am I</h1>
-                        <p className="h3 mb-4">guess who you are - register now!</p>
+                        <h1>{t("Who am I")}</h1>
+                        <p className="h3 mb-4">{t("guess who you are - register now!")}</p>
 
                         <Button href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                                 target="_blank"
