@@ -1,12 +1,14 @@
 import {useContext, useEffect, useState} from "react";
 import {Badge} from "reactstrap";
 import {ReactReduxContext, useSelector} from "react-redux";
+import PopupAlert from "./PopupAlert";
 
 export default function UserStatsBadge({color}){
 
     const authInfo = useSelector(state => state.authentication.user.message._id)
     const {store} = useContext(ReactReduxContext);
     const [userInfo, setUserInfo] = useState(null)
+    const [thrownError, setThrownError] = useState(null)
 
     useEffect(() => {
         let isMounted = true
@@ -20,7 +22,7 @@ export default function UserStatsBadge({color}){
             fetch('/api/userInfo/' + authInfo)
                 .then(response => response.json())
                 .then(data => isMounted && setUserInfo(data))
-                .catch(e => alert(e.message)) //fixme alert
+                .catch(e => setThrownError(e))
 
             return () => setUserInfo({})
 
@@ -32,7 +34,7 @@ export default function UserStatsBadge({color}){
     }, [authInfo]);
 
     if (!store?.getState()?.authentication?.user?.message?._id){
-        return null
+        return <PopupAlert state={{thrownError, setThrownError}}/>
     }
 
     let badge
@@ -49,5 +51,7 @@ export default function UserStatsBadge({color}){
             Finished: {userInfo.gamesFinished}</Badge>
     }
 
-    return <div className="d-flex flex-column justify-content-center h-100">{badge}</div>
+    return <div className="d-flex flex-column justify-content-center h-100">{badge}
+        <PopupAlert state={{thrownError, setThrownError}}/>
+    </div>
 }

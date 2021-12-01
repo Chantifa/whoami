@@ -1,19 +1,19 @@
 import {createRef, useEffect, useState} from "react";
 import {Container, Table} from "reactstrap";
+import PopupAlert from "./PopupAlert";
 
 
 export default function Highscore() {
 
     const [ranking, setRanking] = useState([]);
+    const [thrownError, setThrownError] = useState(null)
     let pageHeader = createRef();
 
     const fetchRankingData = () => {
         fetch('/api/ranking/')
             .then(response => response.json())
             .then(data => setRanking(data))
-            .catch(e => {
-                alert(e.message)
-            }) // fixme alert
+            .catch(e => setThrownError(e))
 
         return () => setRanking([])
 
@@ -25,6 +25,7 @@ export default function Highscore() {
 
     return (
         <>
+            <PopupAlert state={{thrownError, setThrownError}}/>
             <div
                 style={{
                     backgroundImage:
