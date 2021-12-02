@@ -68,6 +68,10 @@ export default class Game {
     }
 
     start(roomMembers) {
+        if(roomMembers.length < 2){
+            throw new Error("You can not play alone")
+        }
+
         this._transitionToPhase(GamePhase.INITIAL)
         this._transitionToPhase(GamePhase.WAITING_QUESTION)
         this._statsCallbacks.gameStarted(roomMembers).catch(e => console.log(e.message))
