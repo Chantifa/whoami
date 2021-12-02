@@ -4,23 +4,23 @@ import {
     getOverview,
     getRoomMemberships,
     removeRoomMembership
-} from "./RoomMembershipRepo.js";
+} from "./model/RoomMembershipRepo.js";
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./client/src/common/Requests.mjs";
 import {Server} from "socket.io";
 import express from "express";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./client/src/common/Responses.mjs";
-import {gameExistsFor, getGame, remove} from "./GameManager.mjs";
+import {gameExistsFor, getGame, remove} from "./model/GameRepo.js";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
-import authRoutes from "./routes/auth.js";
+import apiRoutes from "./routes.js";
 import db from "./model/User.js";
 import jsonwebtoken from "jsonwebtoken";
 import UserInfo from "./model/UserInfo.js";
-import statsCallback from "./controllers/userinfo.js";
+import statsCallback from "./model/userInfoRepo.js";
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 
@@ -196,51 +196,6 @@ io.on("connection", (socket) => {
 });
 
 
-app.get('/api/games', (req, res) => {
-    res.send(getOverview());
-});
-
-
-app.get('/api/ranking', (req, res) => {
-
-    UserInfo.find({}, ["username", "userId", "gamesStarted", "gamesFinished", "gamesWon"])
-        .sort({"gamesWon": -1}).limit(10)
-        .exec()
-        .then(highscore => {
-            if (!highscore) {
-                res.status(404).json({highscore: "Not found"})
-            } else {
-                res.status(200).json(highscore)
-            }
-        })
-        .catch(error => {
-            console.log(error, error.message)
-            res.status(500)
-        })
-
-})
-
-
-app.get('/api/userInfo/:userId', (req, res) => {
-    const userId = req.params.userId
-
-
-    UserInfo.findOne({'userId': userId})
-        .then(userInfo => {
-            if (!userInfo) {
-                res.status(404).json({userInfo: "Not found"})
-            } else {
-                res.status(200).json(userInfo)
-            }
-        })
-        .catch(error => {
-            console.log(error, error.message)
-            res.status(500)
-        })
-
-
-})
-
 //const db = mongoose.connection;
 
 mongoose.connect(
@@ -259,7 +214,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 //routes middleware
-app.use('/api', authRoutes);
+app.use('/api', apiRoutes);
 
 // api documentation
 const swaggerDocument = YAML.load('./swagger.yaml');

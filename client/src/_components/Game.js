@@ -56,7 +56,7 @@ export default function Game(props) {
                         <img
                             alt="Logo in a circle"
                             className="img-circle img-no-padding img-responsive"
-                            src={require("../assets/img/mobile.png").default}
+                            src="/img/mobile.png"
                             border={"1px solid black"}
                         />
                     </div>

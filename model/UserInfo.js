@@ -33,3 +33,4 @@ const userInfo = new mongoose.Schema({
 })
 
 export default mongoose.model("UserInfo", userInfo);
+

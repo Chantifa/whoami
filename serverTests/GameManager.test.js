@@ -1,27 +1,28 @@
-import {getGame, getOverview, remove} from "./GameManager.mjs";
+import {getGame, getOverview, remove} from "../model/GameRepo.js";
 
 const room = "MyRoomId"
 const room2 = "MySECONDRoomId"
 
-test('getOverview gets an epmty overview when there are no games', () => {
-    const overview = getOverview()
+test('getOverview gets an epmty overview when there are no games', async () => {
+    const overview = await getOverview()
     expect(overview).toStrictEqual([])
 })
 
 
-test('getOverview gets a created game', () => {
+test('getOverview gets a created game', async () => {
     const game = getGame(room)
-    const overview = getOverview()
+    const overview = await getOverview()
     expect(overview.length).toBe(1)
     expect(overview[0]).toStrictEqual(game.getOverview(room))
 
     remove(room)
 })
 
-test('remove removes a game ', () => {
+test('remove removes a game ', async () => {
     getGame(room)
     remove(room)
-    expect(getOverview()).toStrictEqual([])
+    const overview = await getOverview()
+    expect(overview).toStrictEqual([])
 })
 
 test('getGame gets the same Game', () =>  {

@@ -2,7 +2,6 @@ import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import classnames from "classnames";
 import {Button, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
-import logo from "../assets/img/logo.png";
 import UserStatsBadge from "./UserStatsBadge";
 import {logout} from '../_actions/index'
 import {useSelector} from "react-redux";
@@ -57,7 +56,7 @@ export default function NavigationBar() {
             expand="lg">
 
             <div className="navbar-translate ms-xl-5">
-                <NavbarBrand href="/"><img src={logo} alt="logo" width="150" height="55"/></NavbarBrand>
+                <NavbarBrand href="/"><img src="/img/logo.png" alt="logo" width="150" height="55"/></NavbarBrand>
                 <NavbarToggler onClick={toggleNavbarCollapse}/>
                 <Button
                     aria-expanded={navbarCollapse}
@@ -90,8 +89,8 @@ export default function NavigationBar() {
                             data-placement="bottom"
                             href="https://git.ffhs.ch/ramona.koksa/whoami"
                             target="_blank">
-                            <i className="fa fa-github"/>
-                            <p className="d-lg-none">GitHub</p>
+                            <i className="fa fa-gitlab"/>
+                            <p className="d-lg-none">GitLab</p>
                         </NavLink>
                     </NavItem>
                     <NavItem>

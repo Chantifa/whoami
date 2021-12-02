@@ -12,7 +12,7 @@ export default function Rules() {
       <div
         style={{
           backgroundImage:
-            "url(" + require("../assets/img/rules.jpg").default + ")",
+            "url(/img/rules.jpg)",
         }}
         className="page-header"
         data-parallax={true}
@@ -57,7 +57,7 @@ export default function Rules() {
                   group, the more fun the game becomes.
                 </p>
                 <br/>
-                <img src={require("../assets/img/mobile.png").default} alt="logo" width="100" height="100"></img>
+                <img src="/img/mobile.png" alt="logo" width="100" height="100"></img>
               </Col>
             </Row>
 

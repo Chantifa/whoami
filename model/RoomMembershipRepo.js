@@ -1,4 +1,4 @@
-import {getGame} from "./GameManager.mjs";
+import {getGame} from "./GameRepo.js";
 
 const _roomMemberships = [];
 
@@ -47,7 +47,7 @@ function getAllRooms() {
     return [...new Set(_roomMemberships.map(roomMembership => roomMembership.room))]
 }
 
-export function getOverview() {
+export function getOverview(_, res) {
     const overview = []
     for (const room of getAllRooms()) {
         const game = getGame(room)
@@ -55,6 +55,10 @@ export function getOverview() {
         const viewers = getRoomMemberships(room).map(roomMembersip => roomMembersip.user.userName)
         current.viewers = viewers.filter(viewer => !current.players.includes(viewer))
         overview.push(current)
+    }
+
+    if(res){
+        res.send(overview);
     }
 
     return overview

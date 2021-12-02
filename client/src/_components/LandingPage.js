@@ -28,7 +28,7 @@ function LandingPage() {
             <div
                 style={{
                     backgroundImage:
-                        "url(" + require("../assets/img/banner.jpg").default + ")",
+                        "url(/img/banner.jpg)",
                 }}
                 className="page-header"
                 data-parallax={true}
@@ -60,7 +60,7 @@ function LandingPage() {
                     <div
                         style={{
                             backgroundImage:
-                                "url(" + require("../assets/img/clouds.png").default + ")",
+                                "url(/img/clouds.png)",
                         }}
                         className="moving-clouds"
                         ref={pageHeader}
