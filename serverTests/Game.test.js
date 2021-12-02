@@ -1,6 +1,6 @@
-import Game from "./Game";
-import {USER} from "./client/src/common/Types.mjs";
-import GamePhase from "./client/src/common/GamePhase.mjs";
+import Game from "../Game.js";
+import {USER} from "../client/src/common/Types.mjs";
+import GamePhase from "../client/src/common/GamePhase.mjs";
 
 
 let tt;
