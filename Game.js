@@ -209,9 +209,10 @@ export default class Game {
 
     dropPlayer(user) {
         const index = this._players.findIndex((player) => player.socketId === user.socketId);
-        const dropingPlayer = this._players[index]
         if (index !== -1) {
+            const droppingPlayer = this._players[index]
             this._players.splice(index, 1);
+            this._personaMap.delete(droppingPlayer)
 
             //make sure that current user mapping still works
             if (index === this._currentUserIndex) {
@@ -223,9 +224,8 @@ export default class Game {
         if (this._players.length <= 1){
             this._statsCallbacks.gameWon(this._players[0]).catch(e => console.log(e.message))
             this._phase = GamePhase.FINISHED
-        } else {
-            this._personaMap.delete(dropingPlayer)
         }
+
     }
 
     isDead(){
