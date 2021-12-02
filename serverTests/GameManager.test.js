@@ -1,4 +1,4 @@
-import {getGame, getOverview, remove} from "../GameManager.mjs";
+import {getGame, getOverview, remove} from "../model/GameRepo.js";
 
 const room = "MyRoomId"
 const room2 = "MySECONDRoomId"

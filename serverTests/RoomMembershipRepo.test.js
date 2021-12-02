@@ -3,7 +3,7 @@ import {
     getCurrentRoomMembership, getRoomMemberships,
     removeAllAndEverything,
     removeRoomMembership
-} from "../RoomMembershipRepo.js";
+} from "../model/RoomMembershipRepo.js";
 import {USER} from "../client/src/common/Types.mjs";
 
 const user = USER.getDto()
