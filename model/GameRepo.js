@@ -22,10 +22,9 @@ export function remove(room){
     delete games[room]
 }
 
-export function getOverview(){
+export async function getOverview(){
     const overview = []
     for (const [key, value] of Object.entries(games)) {
-
 
         overview.push(value.getOverview(key))
     }

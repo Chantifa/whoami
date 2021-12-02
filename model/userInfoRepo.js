@@ -27,7 +27,7 @@ export async function gameWon(user) {
 
 export default {gameStarted, gameFinished, gameWon}
 
-export function getRanking(req, res){
+export async function getRanking(req, res){
     UserInfo.find({}, ["username", "userId", "gamesStarted", "gamesFinished", "gamesWon"])
         .sort({"gamesWon": -1}).limit(10)
         .exec()
@@ -44,7 +44,7 @@ export function getRanking(req, res){
         })
 }
 
-export function getUserInfo(req, res){
+export async function getUserInfo(req, res){
     const userId = req.params.userId
 
 
