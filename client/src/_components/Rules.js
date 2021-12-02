@@ -57,7 +57,7 @@ export default function Rules() {
                   group, the more fun the game becomes.
                 </p>
                 <br/>
-                <img src="/public/img/mobile.png" alt="logo" width="100" height="100"></img>
+                <img src="/img/mobile.png" alt="logo" width="100" height="100"></img>
               </Col>
             </Row>
 
