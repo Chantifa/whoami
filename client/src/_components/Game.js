@@ -6,12 +6,14 @@ import GameInfo from "./GameInfo";
 import {ReactReduxContext} from 'react-redux';
 import GamePhase from "../common/GamePhase.mjs";
 import {Button, Col, Container, Form, FormGroup, FormText, Input, Row} from "reactstrap";
+import PopupAlert from "./PopupAlert";
 
 export default function Game(props) {
 
     const {id} = useParams();
     const [chatText, setChatChatText] = useState("Hello");
     const [question, setQuestion] = useState("Who am I?")
+    const [thrownError, setThrownError] = useState(null)
     const {store} = useContext(ReactReduxContext);
 
 
@@ -26,7 +28,7 @@ export default function Game(props) {
         sendVote,
         sendQuestion,
         startGame
-    } = useServer(props.userName, id)
+    } = useServer(props.userName, id, setThrownError)
 
     function handleChatSubmit(event) {
         event.preventDefault()
@@ -49,6 +51,7 @@ export default function Game(props) {
         && gameState?.currentUser.userId !== ownUserId
 
     return <>
+        <PopupAlert state={{thrownError, setThrownError}}/>
         <div className="section profile-content">
             <Container>
                 <div className="owner">

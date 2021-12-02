@@ -6,7 +6,7 @@ import GameStateMessage from "./common/GameStateMessage.mjs";
 import GameSetupMessage from "./common/GameSetupMessage.mjs";
 import {ReactReduxContext} from "react-redux";
 
-export default function useServer(userName, roomName) {
+export default function useServer(userName, roomName, messageHandler) {
     const socketRef = useRef(null)
 
     const [messageList, setMessageList] = useState([])
@@ -39,8 +39,10 @@ export default function useServer(userName, roomName) {
                 //event handlers
 
                 socket.on(ERROR.id, (message) => {
-                    console.error("Server Error:")
+                    message.name="Server Error"
+                    console.error(message.name)
                     console.error(message)
+                    messageHandler(message)
                 })
 
                 socket.on(CHAT_ANNOUNCEMENT.id, (data) => {
