@@ -89,8 +89,8 @@ export default function NavigationBar() {
                             data-placement="bottom"
                             href="https://git.ffhs.ch/ramona.koksa/whoami"
                             target="_blank">
-                            <i className="fa fa-github"/>
-                            <p className="d-lg-none">GitHub</p>
+                            <i className="fa fa-gitlab"/>
+                            <p className="d-lg-none">GitLab</p>
                         </NavLink>
                     </NavItem>
                     <NavItem>
