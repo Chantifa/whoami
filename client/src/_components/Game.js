@@ -1,12 +1,26 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
 import Chat from "./Chat";
 import GameInfo from "./GameInfo";
 import {ReactReduxContext} from 'react-redux';
 import GamePhase from "../common/GamePhase.mjs";
-import {Button, Col, Container, Form, FormGroup, FormText, Input, Row} from "reactstrap";
+import {
+    Button,
+    Col,
+    Container,
+    Form,
+    FormGroup,
+    FormText,
+    Input,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    Row
+} from "reactstrap";
 import PopupAlert from "./PopupAlert";
+import UserStatsBadge from "./UserStatsBadge";
 
 export default function Game(props) {
 
@@ -14,6 +28,7 @@ export default function Game(props) {
     const [chatText, setChatChatText] = useState("Hello");
     const [question, setQuestion] = useState("Who am I?")
     const [thrownError, setThrownError] = useState(null)
+    const [showGameEndDialog, setShowGameEndDialog] = useState(false)
     const {store} = useContext(ReactReduxContext);
 
 
@@ -45,13 +60,37 @@ export default function Game(props) {
     const ownUserId = store.getState().authentication.user.message._id //fixme
     const players = Array.from(gameInfo?.personaMapInPlayOrder?.keys() || [])
     const playing = players.some(player => player.userId === ownUserId)
+    const isOnTurn = gameState?.currentUser?.userId === ownUserId
     const startable = gameState === null || [GamePhase.INITIAL.phase, GamePhase.FINISHED.phase].includes(gameState.phase)
     const votable = playing
         && gameState?.phase === GamePhase.WAITING_VOTE.phase
-        && gameState?.currentUser.userId !== ownUserId
+        && !isOnTurn
+    const won = gameState?.phase === GamePhase.FINISHED.phase
+        && isOnTurn
+
+    useEffect(()=> {
+        if(gameState?.phase === GamePhase.FINISHED.phase && playing && gameState.currentUser) {
+            setShowGameEndDialog(true)
+            console.log(gameState)
+        }
+    }, [gameState?.phase])
 
     return <>
         <PopupAlert state={{thrownError, setThrownError}}/>
+        <Modal isOpen={showGameEndDialog}>
+            <ModalHeader>{won ? "You Won!" : "You lost"}</ModalHeader>
+            <ModalBody>
+                Your current stats: <UserStatsBadge/>
+            </ModalBody>
+            <ModalFooter>
+                <Button
+                    color="success"
+                    onClick={setShowGameEndDialog.bind(null, false)}
+                >
+                    {won ? "Yay.." : "Duh.."}
+                </Button>
+            </ModalFooter>
+        </Modal>
         <div className="section profile-content">
             <Container>
                 <div className="owner">
