@@ -79,7 +79,7 @@ export default function GameSelection() {
             <div
                 style={{
                     backgroundImage:
-                        "url(" + require("../assets/img/galaxy.jpg").default + ")",
+                        "url(/img/galaxy.jpg)",
                 }}
                 className="page-header page-header-xs"
                 data-parallax={true}

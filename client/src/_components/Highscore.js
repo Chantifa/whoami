@@ -29,7 +29,7 @@ export default function Highscore() {
             <div
                 style={{
                     backgroundImage:
-                        "url(" + require("../assets/img/winner.jpg").default + ")",
+                        "url(/img/winner.jpg)",
                 }}
                 className="page-header page-header-xs"
                 data-parallax={true}

@@ -45,7 +45,7 @@ function Login() {
                 className="page-header"
                 style={{
                     backgroundImage:
-                        "url(" + require("../assets/img/user.svg").default + ")",
+                        "url(/img/user.svg)",
                 }}
             >
                 <div className="filter" />
