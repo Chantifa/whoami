@@ -1,7 +1,17 @@
 import User from "../model/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import {createJWT} from "../utils/auth.js";
+
+function createJWT(email, userId, durationInMilliseconds) {
+    const payload = {
+        email,
+        userId,
+        durationInMilliseconds
+    };
+    return jwt.sign(payload, process.env.TOKEN_SECRET, {
+        expiresIn: durationInMilliseconds,
+    });
+}
 
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
