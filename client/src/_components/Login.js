@@ -7,6 +7,12 @@ import ExamplesNavbar from "./NavigationBar";
 import { userActions } from '../_actions';
 
 function Login() {
+    /**
+     * This component returns the login page so that the user can log in
+     *
+     * @component
+     * @return Login component
+     */
     const [inputs, setInputs] = useState({
         email: '',
         password: ''
@@ -18,7 +24,7 @@ function Login() {
     const location = useLocation();
 
     // reset login status
-    useEffect(() => { //TODO this logs the user out once if the Login.js is rendered - why once? is it needed?
+    useEffect(() => {
         dispatch(userActions.logout());
     }, [dispatch]);
 

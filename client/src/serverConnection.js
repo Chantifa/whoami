@@ -16,6 +16,7 @@ export default function useServer(userName, roomName, messageHandler) {
 
 
     useEffect(() => {
+        let messageHandler;
 
             const jwt = store.getState().authentication.user.token
 

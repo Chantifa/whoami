@@ -26,36 +26,36 @@ dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
 
 ## Projektziele
 
-| ID | Systemziele                                                                              | *M*uss / *K*ann |
-|----|------------------------------------------------------------------------------------------|:-------------:|
-| 1  | Das System soll die Benutzer über eine ansprechende, grafische Oberfläche führen.        | M           |
-| 2  | Die Kommunikation des Spiels muss über einen Chat stattfinden.                           | M           |
-| 3  | Es müssen mind. drei Levels mit unterschiedlichen Schwierigkeitsstufen sein.             | M           |
-| 4  | Das System soll auf Deutsch und Englisch zur Verfügung stehen. Standardsprache: Englisch | K           |
-| 5  | Die Kommunikation kann auch über ein Gespräch (Voice) stattfinden.                       | K           |
-| 6  | Chatbot – man spielt gegen einen Bot.                                                    | K           |
+| ID | Systemziele                                                                              | *M*uss / *K*ann |Erreicht
+|----|------------------------------------------------------------------------------------------|:-------------:|:------:|
+| 1  | Das System soll die Benutzer über eine ansprechende, grafische Oberfläche führen.        | M           |:white_check_mark:|
+| 2  | Die Kommunikation des Spiels muss über einen Chat stattfinden.                           | M           |:white_check_mark:|
+| 3  | Es müssen mind. drei Levels mit unterschiedlichen Schwierigkeitsstufen sein.             | M           |:white_check_mark:|
+| 4  | Das System soll auf Deutsch und Englisch zur Verfügung stehen. Standardsprache: Englisch | M           |:white_check_mark:|
 
-| ID | Vorgehensziele                                                               | *M*uss / *K*ann |
-|----|------------------------------------------------------------------------------|:-------------:|
-| 1  | Die Entwicklung des Projektes soll iterativ erfolgen                         | M           |
-| 2  | Termine und Deadlines sind einzuhalten.                                      | M           |
-| 3  | CI / CD soll angewendet werden | K           |
+| ID | Vorgehensziele                                                               | *M*uss / *K*ann |Erreicht
+|----|------------------------------------------------------------------------------|:-------------:|:-------:|
+| 1  | Die Entwicklung des Projektes soll iterativ erfolgen                         | M           |:white_check_mark:|
+| 2  | Termine und Deadlines sind einzuhalten.                                      | M           |:white_check_mark:|
+| 3  | CI / CD soll angewendet werden | K           |:white_check_mark:|
 
 ### Arbeitsablauf
 
 1. Ein Issue wird erstellt. Er bekommt entsprechende Tags und verwendet wo vorhanden die Vorlage.
-1. (Bei Grossem Aufwand oder Impact) Der Issue wird diskutiert und mit ~"status::todo" als beriet für die Entwicklung
+2. (Bei Grossem Aufwand oder Impact) Der Issue wird diskutiert und mit ~"status::todo" als beriet für die Entwicklung
    markiert
-1. Der Issue wird assigend und wenn begonnen wird mit ~"status::progress" markiert. Es wird
+3. Der Issue wird assigend und wenn begonnen wird mit ~"status::progress" markiert. Es wird
    aus [dev](https://git.ffhs.ch/ramona.koksa/whoami/-/tree/dev) ein neuer branch erstellt. Es kann bereits ein
    merge-request erstellt werden, dieser sollte aber als `DRAFT:` makiert sein.
-1. Mit `/spend` kann die verwendete Zeit getrackt werden.
-1. Ist der Code ready, wird ein merge-request erstellt oder beim bestehenden die `DRAFT:` markierung entfernt. Der
+4. Mit `/spend` kann die verwendete Zeit getrackt werden.
+5. Ist der Code ready, wird ein merge-request erstellt oder beim bestehenden die `DRAFT:` markierung entfernt. Der
    merge-request ist mit dem issue zu verknüpfen: `Resolves #9` sollte reichen. Es ist sicherzustellen, dass der branch
    auf dev rebased ist und die History sauber ist.
-1. Die andere Person assignen und das label ~"status::review" setzen.
-1. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie glücklich, merget
+6. Die andere Person assignen und das label ~"status::review" setzen.
+7. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie glücklich, merget
    sie nach dev.
+
+Das Projekttagebuch kann unter [doc](doc/journal.md) eingesehen werden.
 
 ### Definition of Done
 
@@ -124,6 +124,45 @@ Die Schnittstellen wurden via Swagger dokumentiert und können im Backend wie fo
 Das Frontend ist React basiert und befindet sich under [client/](client/). Bei der Entwicklung existiert hierzu ein
 development server, welcher jeweils einen build erstellt und diesen an den Client sendet. Für den Kunden kann dann ein
 produktiv build erstellt und deployed werden.
+
+#### Frontend structure
+
+```
+├───assets
+│   ├───fonts
+│   └───scss
+│       ├───paper-kit
+│       │   ├───cards
+│       │   ├───mixins
+│       │   └───plugins
+│       └───react
+│           ├───paper-kit
+│           └───plugins
+├───common
+├───_actions
+├───_components
+     |─── Chat.js
+     |─── ChatMessage.js
+     |─── Footer.js
+     |─── Game.js
+     |─── GameInfo.js
+     |─── GameSelection.js
+     |─── Highscore.js
+     |─── Home.js
+     |─── index.js
+     |─── LandingPage.js
+     |─── Login.js
+     |─── NavigationBar.js
+     |─── PopupAlert.js
+     |─── PrivateRoute.js
+     |─── Register.js
+     |─── Rules.js
+     |─── UserStatsBadge.js
+├───_constants
+├───_helpers
+├───_reducers
+└───_services
+```
 
 ### Protokoll Client Server
 

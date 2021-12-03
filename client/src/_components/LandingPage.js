@@ -5,6 +5,12 @@ import {useTranslation} from "react-i18next";
 
 
 function LandingPage() {
+    /**
+     * This component returns the banner of landing page and swipes the header color
+     *
+     * @component
+     * @return LandingPage component
+     */
     const {t} = useTranslation();
 
     let pageHeader = createRef();

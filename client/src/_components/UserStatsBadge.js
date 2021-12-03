@@ -4,6 +4,13 @@ import {ReactReduxContext, useSelector} from "react-redux";
 import PopupAlert from "./PopupAlert";
 
 export default function UserStatsBadge({color}){
+    /**
+     * This component returns the user infos in the header as badge item.
+     *
+     * @component
+     * @param {string} color background color of badge
+     * @return badge component
+     */
 
     const authInfo = useSelector(state => state.authentication.user.message._id)
     const {store} = useContext(ReactReduxContext);

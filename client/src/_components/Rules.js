@@ -3,6 +3,12 @@ import {Button, Card, CardBody, CardTitle, Col, Container, Row} from "reactstrap
 import {createRef} from "react";
 
 export default function Rules() {
+  /**
+   * This component returns the rules page so that the user can read the rules of the game.
+   *
+   * @component
+   * @return Rules component
+   */
 
   let pageHeader = createRef();
 

@@ -18,6 +18,12 @@ import {
 import PopupAlert from "./PopupAlert";
 
 export default function GameSelection() {
+    /**
+     * This component shows created rooms and allows the user to select a game lobby.
+     *
+     * @component
+     * @return GameSelection component
+     */
 
     function UserList(props) {
         return <Col><h2 className="h5">{props.title}</h2> {props.user.length === 0
@@ -69,7 +75,7 @@ export default function GameSelection() {
             .catch(e => setThrownError(e))
     }, [refresh])
 
-    let {path, url} = useRouteMatch();
+    let {path} = useRouteMatch();
 
     const handleSelectedChange = (event) => setSelectedGame(event.target.value);
 
