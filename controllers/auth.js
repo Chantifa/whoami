@@ -13,7 +13,7 @@ function createJWT(email, userId, durationInMilliseconds) {
     });
 }
 
-const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const emailRegexp = /^[^@\s]+@[^@\s]+$/;
 
 const expireDurationInMS = 31556952000 // set to one year
 
