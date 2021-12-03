@@ -75,7 +75,7 @@ export default function GameSelection() {
             .catch(e => setThrownError(e))
     }, [refresh])
 
-    let {path, url} = useRouteMatch();
+    let {path} = useRouteMatch();
 
     const handleSelectedChange = (event) => setSelectedGame(event.target.value);
 
@@ -99,11 +99,11 @@ export default function GameSelection() {
                 <Container>
 
                     <h1>Game Overview</h1>
-                    <ListGroup>
+                    <ListGroup className="my-1">
                         {games.map((value, key) => <GameSelectionItem key={key} game={value}/>)}
                     </ListGroup>
-                    <Button onClick={setRefresh.bind(null, refresh + 1)}>Refresh</Button>
-                    <Input type="text" maxLength="12" minLength="4" value={selectedGame}
+                    <Button className="my-1" onClick={setRefresh.bind(null, refresh + 1)}>Refresh</Button>
+                    <Input  className="my-1" type="text" maxLength="12" minLength="4" value={selectedGame}
                            onChange={handleSelectedChange}/>
                     <a href={"/game/" + selectedGame} className="btn btn-success"> Join Room</a>
                 </Container>
