@@ -103,7 +103,7 @@ export default function GameSelection() {
                         {games.map((value, key) => <GameSelectionItem key={key} game={value}/>)}
                     </ListGroup>
                     <Button className="my-1" onClick={setRefresh.bind(null, refresh + 1)}>Refresh</Button>
-                    <Input  className="my-1" type="text" maxLength="12" minLength="4" value={selectedGame}
+                    <Input  className="my-1" type="text" maxLength="12" value={selectedGame}
                            onChange={handleSelectedChange}/>
                     <a href={"/game/" + selectedGame} className="btn btn-success"> Join Room</a>
                 </Container>

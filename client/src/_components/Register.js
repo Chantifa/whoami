@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import NavigationBar from "./NavigationBar.js";
 import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
 import userActions from "../_actions/user.actions.js";
 
@@ -43,7 +42,6 @@ export default function Register() {
 
     return (
         <>
-            <NavigationBar/>
             <div
                 className="page-header"
                 style={{

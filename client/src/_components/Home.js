@@ -1,5 +1,4 @@
 import {Button, Col, Container, Row,} from "reactstrap";
-import NavigationBar from "./NavigationBar";
 import LandingPage from "./LandingPage";
 
 /**
@@ -11,7 +10,6 @@ export default function Home() {
     document.documentElement.classList.remove("nav-open");
     return (
         <>
-            <NavigationBar/>
             <LandingPage/>
             <div className="main">
                 <div className="section text-center">

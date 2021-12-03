@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
-import ExamplesNavbar from "./NavigationBar";
 import userActions from "../_actions/user.actions";
 
 
@@ -46,7 +45,6 @@ export default function Login() {
 
     return (
         <>
-            <ExamplesNavbar/>
             <div
                 className="page-header"
                 style={{
