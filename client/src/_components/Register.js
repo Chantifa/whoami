@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import ExamplesNavbar from "./Navbar";
-import { Button, Card, Col, Container, Form, Input, Row } from "reactstrap";
+import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
+import userActions from "../_actions/user.actions.js";
 
-import { userActions } from '../_actions';
-
-
-function Register() {
+/**
+ * This component is used to register a user.
+ * @component
+ * @returns {JSX.Element}
+ */
+export default function Register() {
     const [user, setUser] = useState({
         name: '',
         email: '',
         password: '',
         password_confirmation: ''
     });
-    
+
     const [submitted, setSubmitted] = useState(false);
     const registering = useSelector(state => state.registration.registering);
     const dispatch = useDispatch();
@@ -22,11 +24,11 @@ function Register() {
     // reset login status
     useEffect(() => {
         dispatch(userActions.logout());
-    }, []);
+    }, [dispatch]);
 
     function handleChange(e) {
-        const { name, value } = e.target;
-        setUser(user => ({ ...user, [name]: value }));
+        const {name, value} = e.target;
+        setUser(user => ({...user, [name]: value}));
     }
 
     function handleSubmit(e) {
@@ -40,21 +42,20 @@ function Register() {
 
     return (
         <>
-            <ExamplesNavbar />
             <div
                 className="page-header"
                 style={{
                     backgroundImage:
-                        "url(" + require("../assets/img/user.svg").default + ")",
+                        "url(/img/user.svg)",
                 }}
             >
-                <div className="filter" />
+                <div className="filter"/>
                 <div className="align-content-lg-center">
                     <Container>
                         <Row>
                             <Col className="ml-auto mr-auto">
                                 <Card className="card-register ml-auto mr-auto" lg="4">
-                                    <h3 className="title mx-auto">Welcome</h3>
+                                    <h1 className="title h3 mx-auto">Welcome</h1>
 
                                     <Form className="register-form" onSubmit={handleSubmit}>
                                         <label>Name</label>
@@ -102,11 +103,10 @@ function Register() {
                                             <div className="invalid-feedback">Password is required</div>
                                         }
                                         <Button block className="btn-round" color="danger">
-                                            {registering && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                            {registering && <span className="spinner-border spinner-border-sm mr-1"/>}
                                             Register
                                         </Button>
-                                        <br></br>
-                                        <div className="forgot">
+                                        <div className="mt-4 forgot">
                                             <Link to="/login" className="btn-link">Cancel</Link>
                                         </div>
                                     </Form>
@@ -120,5 +120,3 @@ function Register() {
 
     );
 }
-
-export { Register }

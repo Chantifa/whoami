@@ -1,9 +1,9 @@
-import { userConstants } from '../_constants';
-import { userService } from '../_services';
-import { alertActions } from './';
-import { history } from '../_helpers';
+import userService from "../_services/user.service.js";
+import alertActions from "./alert.actions.js";
+import userConstants from "../_constants/user.constants.js";
+import {history} from "../_helpers/history.js";
 
-export const userActions = {
+export default {
     login,
     logout,
     register,
@@ -13,11 +13,11 @@ export const userActions = {
 
 function login(email, password) {
     return dispatch => {
-        dispatch(request({ email }));
+        dispatch(request({email}));
 
         userService.login(email, password)
             .then(
-                user => { 
+                user => {
                     dispatch(success(user));
                     history.push('/game');
                 },
@@ -28,14 +28,22 @@ function login(email, password) {
             );
     };
 
-    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+    function request(user) {
+        return {type: userConstants.LOGIN_REQUEST, user}
+    }
+
+    function success(user) {
+        return {type: userConstants.LOGIN_SUCCESS, user}
+    }
+
+    function failure(error) {
+        return {type: userConstants.LOGIN_FAILURE, error}
+    }
 }
 
-function logout() {
+export function logout() {
     userService.logout();
-    return { type: userConstants.LOGOUT };
+    return {type: userConstants.LOGOUT};
 }
 
 function register(user) {
@@ -44,7 +52,7 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                user => {
                     dispatch(success());
                     history.push('/api/login');
                     dispatch(alertActions.success('Registration successful'));
@@ -56,9 +64,17 @@ function register(user) {
             );
     };
 
-    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+    function request(user) {
+        return {type: userConstants.REGISTER_REQUEST, user}
+    }
+
+    function success(user) {
+        return {type: userConstants.REGISTER_SUCCESS, user}
+    }
+
+    function failure(error) {
+        return {type: userConstants.REGISTER_FAILURE, error}
+    }
 }
 
 function getAll() {
@@ -72,9 +88,17 @@ function getAll() {
             );
     };
 
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+    function request() {
+        return {type: userConstants.GETALL_REQUEST}
+    }
+
+    function success(users) {
+        return {type: userConstants.GETALL_SUCCESS, users}
+    }
+
+    function failure(error) {
+        return {type: userConstants.GETALL_FAILURE, error}
+    }
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -89,7 +113,15 @@ function _delete(id) {
             );
     };
 
-    function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
-    function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
-    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+    function request(id) {
+        return {type: userConstants.DELETE_REQUEST, id}
+    }
+
+    function success(id) {
+        return {type: userConstants.DELETE_SUCCESS, id}
+    }
+
+    function failure(id, error) {
+        return {type: userConstants.DELETE_FAILURE, id, error}
+    }
 }

@@ -1,7 +1,29 @@
-import {getRandomCharacterName, shuffle} from "./utils.js";
-import GamePhase from "./GamePhase.js";
+import GamePhase from "./client/src/common/GamePhase.mjs";
 import GameStateMessage from "./client/src/common/GameStateMessage.mjs";
 import GameSetupMessage from "./client/src/common/GameSetupMessage.mjs";
+import * as fs from "fs";
+
+function randomChoice(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+const characters = JSON.parse(fs.readFileSync('characters.json'))
+
+function getTopics() {
+    return Object.keys(characters)
+}
+
+function getRandomCharacterName(topic) {
+    return randomChoice(characters[topic])
+}
+
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
 
 export default class Game {
 
@@ -10,42 +32,65 @@ export default class Game {
     _players = []
     _currentUserIndex = 0
     _stateNumber = 0
-    _deadline
+    _deadline = Game.createDeadline(120)
 
     _questions = []
     _futureQuestions = new Map();
-
-    constructor(...data) {
-        this.data = data
+    _round = -1;
+    _statsCallbacks = {
+        gameStarted: () => {
+            return Promise.resolve()
+        },
+        gameFinished: () => {
+            return Promise.resolve()
+        },
+        gameWon: () => {
+            return Promise.resolve()
+        }
     }
 
-    _setPhase(phase) {
+    _transitionToPhase(phase) {
         if (this._phase.getAllowedSuccessors().includes(phase)) {
             this._phase = phase
             console.log("NOW PHASE:", phase)
+            this._deadline = Game.createDeadline(phase.getLength())
         } else {
             throw new Error(`Phase transition from ${this._phase} to ${phase} not allowed`)
         }
     }
 
-    start(roomMembers) {
-        this._setPhase(GamePhase.INITIAL)
-        this._setPhase(GamePhase.WAITING_QUESTION)
+    setStatsCallbacks(statsCallbacks) {
+        if ("gameStarted" in statsCallbacks && "gameFinished" in statsCallbacks && "gameWon" in statsCallbacks) {
+            this._statsCallbacks = statsCallbacks
+        } else {
+            throw new Error("statsCallbacks must implement all needed methods")
+        }
+    }
 
+    start(roomMembers) {
+        if(roomMembers.length < 2){
+            throw new Error("You can not play alone")
+        }
+
+        this._transitionToPhase(GamePhase.INITIAL)
+        this._transitionToPhase(GamePhase.WAITING_QUESTION)
+        this._statsCallbacks.gameStarted(roomMembers).catch(e => console.log(e.message))
+
+        this._round++
         this._questions = []
         this._futureQuestions = new Map()
         this._players = roomMembers
 
 
         this._personaMap = new Map()
+        const possibleTopics = getTopics()
+        const topic = possibleTopics[this._round % possibleTopics.length]
 
         shuffle(this._players)
-        this._players.forEach(m => {
-            this._personaMap.set(m, getRandomCharacterName())
-            this._futureQuestions.set(m, [])
+        this._players.forEach(player => {
+            this._personaMap.set(player, getRandomCharacterName(topic))
+            this._futureQuestions.set(player, [])
         })
-
-        this._deadline = Game.createDeadline(this._phase.getLength())
     }
 
     getCurrentUser() {
@@ -62,6 +107,7 @@ export default class Game {
             this.getCurrentQuestion(),
             this._deadline,
             this.getCurrentVotes(),
+            this._phase,
             this._stateNumber++);
     }
 
@@ -85,6 +131,11 @@ export default class Game {
         if (this._phase !== GamePhase.WAITING_VOTE) {
             throw new Error("Voting is only possible in the voting phase")
         }
+
+        if (this.getCurrentUser().userId === user.userId){
+            throw new Error("You can not answer your own questions.")
+        }
+
         if (voteDto.question === this.getCurrentQuestion()) {
             this._questions.at(-1).votes.set(user.userId, voteDto.vote)
         } else {
@@ -111,23 +162,21 @@ export default class Game {
     _nextPhaseIfAdequate() {
         //check if we can go to the next phase
 
+        if (this._phase === GamePhase.WAITING_VOTE) {
+            if (this.getCurrentVotes().size === this._players.length -1) {
+                this._publishVoteResults()
+            }
+        }
+        // both can happen
         if (this._phase === GamePhase.WAITING_QUESTION) {
             if (this._futureQuestions.get(this.getCurrentUser()).length > 0) {
                 this._publishQuestion()
             }
-        } else if (this._phase === GamePhase.WAITING_VOTE) {
-            if (this.getCurrentVotes().size === this._players.length) {
-                this._publishVoteResults()
-            }
-        }
-
-        if (this._deadline < new Date()) {
-            //todo deadline hit
         }
     }
 
     _publishQuestion() {
-        this._setPhase(GamePhase.WAITING_VOTE)
+        this._transitionToPhase(GamePhase.WAITING_VOTE)
         const usersFutureQuestions = this._futureQuestions.get(this.getCurrentUser());
         const text = usersFutureQuestions.shift()
         const question = {text, votes: new Map()}
@@ -138,17 +187,45 @@ export default class Game {
     _publishVoteResults() {
 
 
-        const result = this.getCurrentVoteResult()
+        const voteResultIsYes = this.getCurrentVoteResult()
 
-        if(!result){
+        if(voteResultIsYes){
             if(this._currentIsResultQuestion()){
-                this._setPhase(GamePhase.FINISHED) //TODO: maybe let the others finish the game
+                this._transitionToPhase(GamePhase.FINISHED)
+                this._statsCallbacks.gameFinished(this._players).catch(e => console.log(e.message))
+                this._statsCallbacks.gameWon(this.getCurrentUser()).catch(e => console.log(e.message))
+                return
             }
-        }else {
+        }else { //vote result is no or equal
             this._setNextPlayer()
         }
 
-        this._setPhase(GamePhase.WAITING_QUESTION)
+        this._transitionToPhase(GamePhase.WAITING_QUESTION)
+    }
+
+    dropPlayer(user) {
+        const index = this._players.findIndex((player) => player.socketId === user.socketId);
+        if (index !== -1) {
+            const droppingPlayer = this._players[index]
+            this._players.splice(index, 1);
+            this._personaMap.delete(droppingPlayer)
+
+            //make sure that current user mapping still works
+            if (index === this._currentUserIndex) {
+                this._setNextPlayer()
+            } else if (index < this._currentUserIndex){
+                this._currentUserIndex--
+            }
+        }
+        if (this._players.length <= 1){
+            this._statsCallbacks.gameWon(this._players[0]).catch(e => console.log(e.message))
+            this._phase = GamePhase.FINISHED
+        }
+
+    }
+
+    isDead(){
+        return this._deadline < Game.createDeadline(-60) || (this._players.length === 0 && this._deadline < Game.createDeadline(-5))
     }
 
     _setNextPlayer() {
@@ -157,7 +234,8 @@ export default class Game {
 
     getCurrentVoteResult() {
         let pro = 0, contra = 0
-        this.getCurrentVotes().forEach((votedPro) => {
+        const currentVotes = this.getCurrentVotes();
+        currentVotes.forEach((votedPro, keysAreIgnoredOnlyValueMatters) => {
             if (votedPro) {
                 pro++
             } else {
@@ -170,7 +248,7 @@ export default class Game {
 
     _currentIsResultQuestion() {
         const persona = this._personaMap.get(this.getCurrentUser())
-        return this.getCurrentQuestion().toLowerCase().includes(persona.toLowerCase()) //fixme
+        return this.getCurrentQuestion().toLowerCase().includes(persona.toLowerCase())
     }
 
     _validateUser(user) {

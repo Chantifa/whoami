@@ -1,9 +1,21 @@
 import User from "../model/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import {createJWT} from "../utils/auth.js";
 
-const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+function createJWT(email, userId, durationInMilliseconds) {
+    const payload = {
+        email,
+        userId,
+        durationInMilliseconds
+    };
+    return jwt.sign(payload, process.env.TOKEN_SECRET, {
+        expiresIn: durationInMilliseconds,
+    });
+}
+
+const emailRegexp = /^[^@\s]+@[^@\s]+$/;
+
+const expireDurationInMS = 31556952000 // set to one year
 
 export function register(req, res, next) {
     const {name, email, password, password_confirmation} = req.body;
@@ -68,7 +80,7 @@ export function register(req, res, next) {
 }
 
 export function login(req, res) {
-    const { email, password } = req.body;
+    const {email, password} = req.body;
     const errors = [];
 
     if (!email) {
@@ -116,7 +128,7 @@ export function login(req, res) {
                                 ],
                             });
                         }
-                        const access_token = createJWT(user.email, user._id, 3600);
+                        const access_token = createJWT(user.email, user._id, expireDurationInMS);
                         jwt.verify(
                             access_token,
                             process.env.TOKEN_SECRET,

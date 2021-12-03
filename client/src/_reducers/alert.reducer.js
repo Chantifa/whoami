@@ -1,6 +1,7 @@
-import { alertConstants } from '../_constants';
+import alertConstants from "../_constants/alert.constants.js";
 
-export function alert(state = {}, action) {
+
+export default function alert(state = {}, action) {
     switch (action.type) {
         case alertConstants.SUCCESS:
             return {

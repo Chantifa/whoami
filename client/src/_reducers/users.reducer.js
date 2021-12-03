@@ -1,6 +1,7 @@
-import { userConstants } from '../_constants';
+import userConstants from "../_constants/user.constants.js";
 
-export function users(state = {}, action) {
+
+export default function users(state = {}, action) {
     switch (action.type) {
         case userConstants.GETALL_REQUEST:
             return {
@@ -20,7 +21,7 @@ export function users(state = {}, action) {
                 ...state,
                 items: state.items.map(user =>
                     user.id === action.id
-                        ? { ...user, deleting: true }
+                        ? {...user, deleting: true}
                         : user
                 )
             };
@@ -36,9 +37,9 @@ export function users(state = {}, action) {
                 items: state.items.map(user => {
                     if (user.id === action.id) {
                         // make copy of user without 'deleting:true' property
-                        const { deleting, ...userCopy } = user;
+                        const {deleting, ...userCopy} = user;
                         // return copy of user with 'deleteError:[error]' property
-                        return { ...userCopy, deleteError: action.error };
+                        return {...userCopy, deleteError: action.error};
                     }
 
                     return user;

@@ -1,12 +1,20 @@
-import React from "react";
 import {Button, Container} from "reactstrap";
-import {useHistory} from "react-router-dom";
+import {createRef, useEffect} from "react";
 
+import {useTranslation} from "react-i18next";
+
+/**
+ * This component returns the banner of landing page and swipes the header color
+ *
+ * @returns {JSX.Element}
+ * @component
+ */
 function LandingPage() {
-    let pageHeader = React.createRef();
-    const history = useHistory();
+    const {t} = useTranslation();
 
-    React.useEffect(() => {
+    let pageHeader = createRef();
+
+    useEffect(() => {
         if (window.innerWidth < 991) {
             const updateScroll = () => {
                 let windowScrollTop = window.pageYOffset / 3;
@@ -20,17 +28,12 @@ function LandingPage() {
         }
     });
 
-    const routeChange = () => {
-        let path = '/register';
-        history.push(path);
-    }
-
     return (
         <>
             <div
                 style={{
                     backgroundImage:
-                        "url(" + require("../assets/img/banner.jpg").default + ")",
+                        "url(/img/banner.jpg)",
                 }}
                 className="page-header"
                 data-parallax={true}
@@ -39,27 +42,30 @@ function LandingPage() {
                 <div className="filter"/>
                 <Container>
                     <div className="motto text-center">
-                        <h1>Who am I</h1>
-                        <h3>guess who you are - register now!</h3>
-                        <br/>
-                        <Button
-                            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                            className="btn-round mr-1"
-                            color="neutral"
-                            target="_blank"
-                            outline
+                        <h1>{t("Who am I")}</h1>
+                        <p className="h3 mb-4">{t("guess who you are - register now!")}</p>
+
+                        <Button href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                                target="_blank"
+                                className="btn-round mx-2"
+                                color="neutral"
+                                outline
                         >
-                            <i className="fa fa-play"/>
-                            Watch video
-                        </Button>{' '}
-                        <Button className="btn-round" color="neutral" target="_blank" onClick={routeChange} outline>
-                            Register
+                            <i className="fa fa-play mx-1"/>Watch video
+                        </Button>
+                        <Button href="/register"
+                                target="_blank"
+                                className="btn-round mx-2 btn"
+                                color="neutral"
+                                outline
+                        >
+                            <i className="fa fa-user-plus mx-1"/>Register
                         </Button>
                     </div>
                     <div
                         style={{
                             backgroundImage:
-                                "url(" + require("../assets/img/clouds.png").default + ")",
+                                "url(/img/clouds.png)",
                         }}
                         className="moving-clouds"
                         ref={pageHeader}

@@ -1,29 +1,19 @@
-import { authHeader } from '../_helpers';
-
-export const userService = {
-    login,
-    logout,
-    register,
-    getAll,
-    getById,
-    update,
-    delete: _delete
-};
+import {authHeader} from "../_helpers/auth-header.js";
 
 function login(email, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email, password})
     };
 
     return fetch(`/api/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(user))
 
-            return user;
+            return user
         });
 }
 
@@ -38,7 +28,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`/game`, requestOptions).then(handleResponse);
+    return fetch(`/game`, requestOptions).then(handleResponse)
 }
 
 function getById(id) {
@@ -47,27 +37,27 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`/game/${id}`, requestOptions).then(handleResponse);
+    return fetch(`/game/${id}`, requestOptions).then(handleResponse)
 }
 
 function register(user) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     };
 
-    return fetch(`/api/register`, requestOptions).then(handleResponse);
+    return fetch(`/api/register`, requestOptions).then(handleResponse)
 }
 
 function update(user) {
     const requestOptions = {
         method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     };
 
-    return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);;
+    return fetch(`/users/${user.id}`, requestOptions).then(handleResponse)
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -97,3 +87,13 @@ function handleResponse(response) {
         return data;
     });
 }
+
+export default {
+    login,
+    logout,
+    register,
+    getAll,
+    getById,
+    update,
+    delete: _delete
+};

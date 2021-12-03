@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Card, Col, Container, Form, Input, Row } from "reactstrap";
-import ExamplesNavbar from "./Navbar";
+import {useEffect, useState} from 'react';
+import {Link, useLocation} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
+import userActions from "../_actions/user.actions";
 
-import { userActions } from '../_actions';
 
-function Login() {
+
+/**
+ * The Login page so that the user can log in
+ * @returns {JSX.Element}
+ * @component
+ */
+export default function Login() {
     const [inputs, setInputs] = useState({
         email: '',
         password: ''
     });
     const [submitted, setSubmitted] = useState(false);
-    const { email, password } = inputs;
+    const {email, password} = inputs;
     const loggingIn = useSelector(state => state.authentication.loggingIn);
     const dispatch = useDispatch();
     const location = useLocation();
@@ -20,11 +25,11 @@ function Login() {
     // reset login status
     useEffect(() => {
         dispatch(userActions.logout());
-    }, []);
+    }, [dispatch]);
 
     function handleChange(e) {
-        const { name, value } = e.target;
-        setInputs(inputs => ({ ...inputs, [name]: value }));
+        const {name, value} = e.target;
+        setInputs(inputs => ({...inputs, [name]: value}));
     }
 
     function handleSubmit(e) {
@@ -33,28 +38,27 @@ function Login() {
         setSubmitted(true);
         if (email && password) {
             // get return url from location state or default to home page
-            const { from } = location.state || { from: { pathname: "/" } };
+            const {from} = location.state || {from: {pathname: "/"}};
             dispatch(userActions.login(email, password, from));
         }
     }
 
     return (
         <>
-            <ExamplesNavbar />
             <div
                 className="page-header"
                 style={{
                     backgroundImage:
-                        "url(" + require("../assets/img/user.svg").default + ")",
+                        "url(/img/user.svg)",
                 }}
             >
-                <div className="filter" />
+                <div className="filter"/>
                 <div className="align-content-lg-center">
                     <Container>
                         <Row>
                             <Col className="ml-auto mr-auto" lg="12">
                                 <Card className="card-register ml-auto mr-auto" lg="4">
-                                    <h3 className="title mx-auto">Welcome</h3>
+                                    <h1 className="h3 title mx-auto">Welcome</h1>
 
                                     <Form className="register-form" onSubmit={handleSubmit}>
                                         <label>Email</label>
@@ -81,11 +85,10 @@ function Login() {
                                         }
 
                                         <Button block className="btn-round" color="danger">
-                                            {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                            {loggingIn && <span className="spinner-border spinner-border-sm mr-1"/>}
                                             Login
                                         </Button>
-                                        <br></br>
-                                        <div className="forgot">
+                                        <div className="mt-4 forgot">
                                             <Link to="/register" color="danger" className="btn-link">Register</Link>
                                         </div>
                                     </Form>
@@ -99,5 +102,3 @@ function Login() {
 
     );
 }
-
-export { Login };
