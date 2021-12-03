@@ -1,7 +1,6 @@
 import {
     addRoomMembership,
     getCurrentRoomMembership,
-    getOverview,
     getRoomMemberships,
     removeRoomMembership
 } from "./model/RoomMembershipRepo.js";
@@ -19,10 +18,13 @@ import cors from "cors";
 import apiRoutes from "./routes.js";
 import db from "./model/User.js";
 import jsonwebtoken from "jsonwebtoken";
-import UserInfo from "./model/UserInfo.js";
 import statsCallback from "./model/userInfoRepo.js";
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
+
+/**
+ * The server handles the sockets as well as the database connection, middleware and the swagger documentation
+ */
 
 dotenv.config();
 

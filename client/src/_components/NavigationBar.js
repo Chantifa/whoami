@@ -8,7 +8,12 @@ import {useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 
 export default function NavigationBar() {
-
+    /**
+     * This component returns the navigation bar so that the user can navigate trough the header
+     *
+     * @component
+     * @return NavigationBar component
+     */
     const [navbarColor, setNavbarColor] = useState("navbar-transparent");
     const [navbarCollapse, setNavbarCollapse] = useState(false);
     const loggedIn = useSelector(state => state.authentication.loggedIn);

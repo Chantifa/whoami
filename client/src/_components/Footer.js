@@ -1,6 +1,12 @@
 import {Container, Row} from "reactstrap";
 
 export default function Footer() {
+    /**
+     * This component returns the footer
+     *
+     * @component
+     * @return Footer
+     */
     return (
         <footer className="footer footer-black footer-white">
             <Container>

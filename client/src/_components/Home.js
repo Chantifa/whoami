@@ -3,6 +3,12 @@ import ExamplesNavbar from "./NavigationBar";
 import LandingPage from "./LandingPage";
 
 function Home() {
+    /**
+     * This component returns the landing page
+     *
+     * @component
+     * @return Home component
+     */
     document.documentElement.classList.remove("nav-open");
     return (
         <>

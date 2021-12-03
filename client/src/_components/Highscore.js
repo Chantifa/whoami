@@ -4,6 +4,12 @@ import PopupAlert from "./PopupAlert";
 
 
 export default function Highscore() {
+    /**
+     * This component displays the ranking of the top players.
+     *
+     * @component
+     * @return Highscore component
+     */
 
     const [ranking, setRanking] = useState([]);
     const [thrownError, setThrownError] = useState(null)

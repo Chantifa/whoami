@@ -8,6 +8,12 @@ import { userActions } from '../_actions';
 
 
 function Register() {
+    /**
+     * This component is used to register an user. The user infos will be persisted to mongodb.
+     *
+     * @component
+     * @return Register component
+     */
     const [user, setUser] = useState({
         name: '',
         email: '',
