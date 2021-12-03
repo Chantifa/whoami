@@ -1,6 +1,9 @@
-
-
 export default class GamePhase {
+    static INITIAL = new GamePhase("INITIAL");
+    static WAITING_QUESTION = new GamePhase("WAITING_QUESTION",);
+    static WAITING_VOTE = new GamePhase("WAITING_VOTE");
+    static FINISHED = new GamePhase("FINISHED");
+
     phaseLength;
     phase;
 
@@ -8,11 +11,6 @@ export default class GamePhase {
         this.phase = phase
         this.phaseLength = phaseLength;
     }
-
-    static INITIAL = new GamePhase("INITIAL");
-    static WAITING_QUESTION = new GamePhase("WAITING_QUESTION",);
-    static WAITING_VOTE = new GamePhase("WAITING_VOTE");
-    static FINISHED = new GamePhase("FINISHED");
 
     getLength() {
         return this.phaseLength

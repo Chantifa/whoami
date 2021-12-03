@@ -3,14 +3,14 @@ import {Badge} from "reactstrap";
 import {useSelector} from "react-redux";
 import PopupAlert from "./PopupAlert";
 
-export default function UserStatsBadge({color}){
-    /**
-     * This component returns the user infos in the header as badge item.
-     *
-     * @component
-     * @param {string} color background color of badge
-     * @return badge component
-     */
+/**
+ * This component returns the user infos badge.
+ *
+ * @component
+ * @param {string} color background color of badge
+ * @returns {JSX.Element}
+ */
+export default function UserStatsBadge({color}) {
 
     const authInfo = useSelector(state => state.authentication.user.message._id)
     const [userInfo, setUserInfo] = useState(null)
@@ -20,7 +20,7 @@ export default function UserStatsBadge({color}){
         let isMounted = true
         const fetchUserInfo = () => {
 
-            if(!authInfo) {
+            if (!authInfo) {
                 setUserInfo(null)
                 return
             }
@@ -39,14 +39,14 @@ export default function UserStatsBadge({color}){
 
     }, [authInfo]);
 
-    if (!authInfo){
+    if (!authInfo) {
         return <PopupAlert state={{thrownError, setThrownError}}/>
     }
 
     let badge
 
-    if (!userInfo){
-        badge =  <Badge pill color={color} > Loading... </Badge>
+    if (!userInfo) {
+        badge = <Badge pill color={color}> Loading... </Badge>
     } else {
         badge = <Badge pill color={color}>
             <i className="nc-icon nc-button-play me-1"/>

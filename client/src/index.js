@@ -1,16 +1,16 @@
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import {App} from './App';
+import App from './App';
 import reportWebVitals from "./reportWebVitals";
 import "./assets/scss/paper-kit.scss?v=1.3.0";
-import { Provider } from 'react-redux';
-import './i18n';
-import { store } from './_helpers';
+import {Provider} from 'react-redux';
+import './i18n.js';
+import store from "./_helpers/store.js";
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <App/>
     </Provider>,
     document.getElementById('root')
 );

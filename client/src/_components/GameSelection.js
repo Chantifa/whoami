@@ -17,13 +17,13 @@ import {
 
 import PopupAlert from "./PopupAlert";
 
+/**
+ * The GameSelection Page that shows created rooms and allows the user to select a game lobby.
+ *
+ * @returns {JSX.Element}
+ * @component
+ */
 export default function GameSelection() {
-    /**
-     * This component shows created rooms and allows the user to select a game lobby.
-     *
-     * @component
-     * @return GameSelection component
-     */
 
     function UserList(props) {
         return <Col><h2 className="h5">{props.title}</h2> {props.user.length === 0
@@ -75,7 +75,7 @@ export default function GameSelection() {
             .catch(e => setThrownError(e))
     }, [refresh])
 
-    let {path} = useRouteMatch();
+    let {path, url} = useRouteMatch();
 
     const handleSelectedChange = (event) => setSelectedGame(event.target.value);
 
@@ -99,11 +99,11 @@ export default function GameSelection() {
                 <Container>
 
                     <h1>Game Overview</h1>
-                    <ListGroup className="mt-1 mb-1">
+                    <ListGroup>
                         {games.map((value, key) => <GameSelectionItem key={key} game={value}/>)}
                     </ListGroup>
-                    <Button className="mt-1 mb-1" onClick={setRefresh.bind(null, refresh + 1)}>Refresh</Button>
-                    <Input className="mt-1 mb-1" type="text" maxLength="12" minLength="4" value={selectedGame}
+                    <Button onClick={setRefresh.bind(null, refresh + 1)}>Refresh</Button>
+                    <Input type="text" maxLength="12" minLength="4" value={selectedGame}
                            onChange={handleSelectedChange}/>
                     <a href={"/game/" + selectedGame} className="btn btn-success"> Join Room</a>
                 </Container>

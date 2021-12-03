@@ -2,14 +2,12 @@ import {createRef, useEffect, useState} from "react";
 import {Container, Table} from "reactstrap";
 import PopupAlert from "./PopupAlert";
 
-
+/**
+ * The Highscore Page that displays the ranking of the top players.
+ * @returns {JSX.Element}
+ * @component
+ */
 export default function Highscore() {
-    /**
-     * This component displays the ranking of the top players.
-     *
-     * @component
-     * @return Highscore component
-     */
 
     const [ranking, setRanking] = useState([]);
     const [thrownError, setThrownError] = useState(null)

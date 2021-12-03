@@ -80,7 +80,7 @@ export function register(req, res, next) {
 }
 
 export function login(req, res) {
-    const { email, password } = req.body;
+    const {email, password} = req.body;
     const errors = [];
 
     if (!email) {

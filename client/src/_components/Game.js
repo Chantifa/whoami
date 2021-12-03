@@ -22,14 +22,14 @@ import {
 import PopupAlert from "./PopupAlert";
 import UserStatsBadge from "./UserStatsBadge";
 
+/**
+ * This component is used to return the whole game main section with chat
+ *
+ * @component
+ * @param props - React element describing what should appear on the screen
+ * @returns {JSX.Element}
+ */
 export default function Game(props) {
-    /**
-     * This component is used to return the whole game main section with chat
-     *
-     * @component
-     * @param props - React element describing what should appear on the screen
-     * @return Game component
-     */
 
     const {id} = useParams()
     const [chatText, setChatChatText] = useState("Hello")
@@ -73,8 +73,8 @@ export default function Game(props) {
     const won = gameState?.phase === GamePhase.FINISHED.phase
         && isOnTurn
 
-    useEffect(()=> {
-        if(gameState?.phase === GamePhase.FINISHED.phase && playing && gameState.currentUser) {
+    useEffect(() => {
+        if (gameState?.phase === GamePhase.FINISHED.phase && playing && gameState.currentUser) {
             setShowGameEndDialog(true)
             console.log(gameState)
         }
@@ -157,7 +157,7 @@ export default function Game(props) {
 
                 </Col>
 
-                    <Col>
+                <Col>
 
                     <Chat messages={messageList}/>
 

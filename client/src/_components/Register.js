@@ -1,26 +1,23 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import ExamplesNavbar from "./NavigationBar";
-import { Button, Card, Col, Container, Form, Input, Row } from "reactstrap";
+import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import NavigationBar from "./NavigationBar.js";
+import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
+import userActions from "../_actions/user.actions.js";
 
-import { userActions } from '../_actions';
-
-
-function Register() {
-    /**
-     * This component is used to register an user. The user infos will be persisted to mongodb.
-     *
-     * @component
-     * @return Register component
-     */
+/**
+ * This component is used to register a user.
+ * @component
+ * @returns {JSX.Element}
+ */
+export default function Register() {
     const [user, setUser] = useState({
         name: '',
         email: '',
         password: '',
         password_confirmation: ''
     });
-    
+
     const [submitted, setSubmitted] = useState(false);
     const registering = useSelector(state => state.registration.registering);
     const dispatch = useDispatch();
@@ -31,8 +28,8 @@ function Register() {
     }, [dispatch]);
 
     function handleChange(e) {
-        const { name, value } = e.target;
-        setUser(user => ({ ...user, [name]: value }));
+        const {name, value} = e.target;
+        setUser(user => ({...user, [name]: value}));
     }
 
     function handleSubmit(e) {
@@ -46,7 +43,7 @@ function Register() {
 
     return (
         <>
-            <ExamplesNavbar />
+            <NavigationBar/>
             <div
                 className="page-header"
                 style={{
@@ -54,7 +51,7 @@ function Register() {
                         "url(/img/user.svg)",
                 }}
             >
-                <div className="filter" />
+                <div className="filter"/>
                 <div className="align-content-lg-center">
                     <Container>
                         <Row>
@@ -125,5 +122,3 @@ function Register() {
 
     );
 }
-
-export { Register }
