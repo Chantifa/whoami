@@ -204,7 +204,7 @@ mongoose.connect(
     process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true, //fixme Argument type {useUnifiedTopology: boolean, useNewUrlParser: boolean} is not assignable to parameter type ConnectOptions
+        useUnifiedTopology: true,
     },
     () => console.log('DB Connection successful!')
 );

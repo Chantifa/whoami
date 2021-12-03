@@ -173,10 +173,6 @@ export default class Game {
                 this._publishQuestion()
             }
         }
-
-        if (this._deadline < new Date()) {
-            //todo deadline hit
-        }
     }
 
     _publishQuestion() {
@@ -195,7 +191,7 @@ export default class Game {
 
         if(voteResultIsYes){
             if(this._currentIsResultQuestion()){
-                this._transitionToPhase(GamePhase.FINISHED) //TODO: maybe let the others finish the game
+                this._transitionToPhase(GamePhase.FINISHED)
                 this._statsCallbacks.gameFinished(this._players).catch(e => console.log(e.message))
                 this._statsCallbacks.gameWon(this.getCurrentUser()).catch(e => console.log(e.message))
                 return
@@ -252,7 +248,7 @@ export default class Game {
 
     _currentIsResultQuestion() {
         const persona = this._personaMap.get(this.getCurrentUser())
-        return this.getCurrentQuestion().toLowerCase().includes(persona.toLowerCase()) //fixme
+        return this.getCurrentQuestion().toLowerCase().includes(persona.toLowerCase())
     }
 
     _validateUser(user) {

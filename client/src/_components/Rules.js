@@ -1,4 +1,3 @@
-import ExamplesNavbar from "./NavigationBar";
 import {Button, Card, CardBody, CardTitle, Col, Container, Row} from "reactstrap";
 import {createRef} from "react";
 
@@ -14,7 +13,6 @@ export default function Rules() {
 
   return (
     <>
-      <ExamplesNavbar />
       <div
         style={{
           backgroundImage:
@@ -63,7 +61,7 @@ export default function Rules() {
                   group, the more fun the game becomes.
                 </p>
                 <br/>
-                <img src="/img/mobile.png" alt="logo" width="100" height="100"></img>
+                <img src="/img/mobile.png" alt="logo" width="100" height="100"/>
               </Col>
             </Row>
 
