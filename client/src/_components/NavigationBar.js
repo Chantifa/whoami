@@ -1,7 +1,20 @@
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import classnames from "classnames";
-import {Button, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
+import {
+    Button,
+    Collapse,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    Nav,
+    Navbar,
+    NavbarBrand,
+    NavbarToggler,
+    NavItem,
+    NavLink
+} from "reactstrap";
 import UserStatsBadge from "./UserStatsBadge";
 import {logout} from "../_actions/user.actions.js";
 import {useSelector} from "react-redux";
@@ -16,6 +29,8 @@ export default function NavigationBar() {
 
     const [navbarColor, setNavbarColor] = useState("navbar-transparent");
     const [navbarCollapse, setNavbarCollapse] = useState(false);
+    const [langDropdownOpen, setLangDropdownOpen] = useState(false)
+    const [langCollapseOpen, setLangCollapseOpen] = useState(false)
     const loggedIn = useSelector(state => state.authentication.loggedIn);
 
     //Calling t and i18n method from useTranslation hook
@@ -49,9 +64,12 @@ export default function NavigationBar() {
         };
     });
 
-    //Creating a method to change the language onClick
-    const changeLang = (lng) => {
-        i18n.changeLanguage(lng);
+    function changeLanguage(languageCode) {
+        setLangCollapseOpen(false)
+        setLangDropdownOpen(false)
+        i18n.changeLanguage(languageCode)
+            .then((r) => console.log(r))
+            .catch((e) => console.log(e))
     }
 
     return (
@@ -98,28 +116,32 @@ export default function NavigationBar() {
                             <p className="d-lg-none">GitLab</p>
                         </NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink
-                            onClick={() => changeLang('de')}
-                            href="#">
-                            <i className="nc-icon nc-globe"/> DE
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            onClick={() => changeLang('en')}
-                            href="#">
-                            <i className="nc-icon nc-globe"/> EN
-                        </NavLink>
-                    </NavItem>
+                    <Dropdown className="d-none d-lg-block" nav isOpen={langDropdownOpen}
+                              toggle={setLangDropdownOpen.bind(null, !langDropdownOpen)}>
+                        <DropdownToggle nav caret>
+                            <i className="nc-icon nc-globe"/>
+                        </DropdownToggle>
+                        <DropdownMenu>
+                            <DropdownItem onClick={changeLanguage.bind(null, 'de')}>DE</DropdownItem>
+                            <DropdownItem onClick={changeLanguage.bind(null, 'en')}>EN</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                    <li className="d-lg-none nav-item">
+                        <p className="a nav-link" onClick={setLangCollapseOpen.bind(null, !langCollapseOpen)}><i
+                            className="nc-icon nc-globe"/> Language</p>
+                        <Collapse isOpen={langCollapseOpen}>
+                            <Button color="link" onClick={changeLanguage.bind(null, 'de')}>DE</Button>
+                            <Button color="link" onClick={changeLanguage.bind(null, 'ene')}>EN</Button>
+                        </Collapse>
+                    </li>
                     {
                         loggedIn ?
                             <>
-                                <NavItem>
+                                <NavItem className="order-lg-last order-first">
                                     <UserStatsBadge color="dark"/>
                                 </NavItem>
                                 <Button
-                                    className="btn-round me-xxl-5 ms-xl-5"
+                                    className="btn-round me-xxl-5 ms-xl-5 order-lg-last order-first"
                                     color="danger"
                                     onClick={logout}
                                     href="/">
