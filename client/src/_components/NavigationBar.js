@@ -97,6 +97,14 @@ export default function NavigationBar() {
                 navbar
                 isOpen={navbarCollapse}>
                 <Nav navbar>
+                    <NavItem hidden={!loggedIn}>
+                        <NavLink
+                            data-placement="bottom"
+                            href="/game">
+                            <i className="fa fa-play"/>
+                            <p>Play</p>
+                        </NavLink>
+                    </NavItem>
                     <NavItem>
                         <NavLink to="/highscore" tag={Link}>
                             <i className="nc-icon nc-controller-modern"/> Highscore
