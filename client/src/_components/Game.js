@@ -1,9 +1,9 @@
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import useServer from "../serverConnection";
 import Chat from "./Chat";
 import GameInfo from "./GameInfo";
-import {ReactReduxContext} from 'react-redux';
+import {useSelector} from 'react-redux';
 import GamePhase from "../common/GamePhase.mjs";
 import {
     Button,
@@ -31,13 +31,12 @@ export default function Game(props) {
      * @return Game component
      */
 
-    const {id} = useParams();
-    const [chatText, setChatChatText] = useState("Hello");
+    const {id} = useParams()
+    const [chatText, setChatChatText] = useState("Hello")
     const [question, setQuestion] = useState("Who am I?")
     const [thrownError, setThrownError] = useState(null)
     const [showGameEndDialog, setShowGameEndDialog] = useState(false)
-    const {store} = useContext(ReactReduxContext);
-
+    const ownUserId = useSelector(state => state.authentication.user.message._id)
 
     const handleChatTextChange = (event) => setChatChatText(event.target.value);
     const handleQuestionChange = (event) => setQuestion(event.target.value);
@@ -64,7 +63,6 @@ export default function Game(props) {
         setQuestion("")
     }
 
-    const ownUserId = store.getState().authentication.user.message._id //fixme
     const players = Array.from(gameInfo?.personaMapInPlayOrder?.keys() || [])
     const playing = players.some(player => player.userId === ownUserId)
     const isOnTurn = gameState?.currentUser?.userId === ownUserId

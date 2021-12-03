@@ -1,10 +1,10 @@
-import {useContext, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {io} from "socket.io-client";
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./common/Requests.mjs";
 import {CHAT_ANNOUNCEMENT, CHAT_MESSAGE, ERROR} from "./common/Responses.mjs";
 import GameStateMessage from "./common/GameStateMessage.mjs";
 import GameSetupMessage from "./common/GameSetupMessage.mjs";
-import {ReactReduxContext} from "react-redux";
+import {useSelector} from "react-redux";
 
 export default function useServer(userName, roomName, messageHandler) {
     const socketRef = useRef(null)
@@ -12,17 +12,15 @@ export default function useServer(userName, roomName, messageHandler) {
     const [messageList, setMessageList] = useState([])
     const [gameInfo, setGameInfo] = useState({})
     const [gameState, setGameState] = useState(null)
-    const {store} = useContext(ReactReduxContext);
+    const token = useSelector(state => state.authentication.user.token);
 
 
     useEffect(() => {
         let messageHandler;
 
-            const jwt = store.getState().authentication.user.token
-
+            const jwt = token
 
             //setup
-
             if (userName === "") {
                 console.log("user empty")
                 return
@@ -38,9 +36,8 @@ export default function useServer(userName, roomName, messageHandler) {
                 socket.emit(JOIN_ROOM.id, {...JOIN_ROOM.getDto(), userName, roomName, jwt})
 
                 //event handlers
-
                 socket.on(ERROR.id, (message) => {
-                    message.name="Server Error"
+                    message.name = "Server Error"
                     console.error(message.name)
                     console.error(message)
                     messageHandler(message)
@@ -82,7 +79,7 @@ export default function useServer(userName, roomName, messageHandler) {
 
             }
         }
-        , [userName, roomName, store])
+        , [userName, roomName, token])
 
     //Request methods
     function sendMessage(message) {
