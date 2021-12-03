@@ -74,9 +74,6 @@ export default function Game(props) {
         && isOnTurn
 
     useEffect(()=> {
-        let gameState;
-        let playing;
-
         if(gameState?.phase === GamePhase.FINISHED.phase && playing && gameState.currentUser) {
             setShowGameEndDialog(true)
             console.log(gameState)
