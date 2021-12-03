@@ -4,20 +4,21 @@
 export default class GameSetupMessage {
     static id = "GAME_SETUP"
     mPersonaMapInPlayOrder = new Map()
+
     constructor(personaMapInPlayOrder) {
-        if (Array.isArray(personaMapInPlayOrder)){
+        if (Array.isArray(personaMapInPlayOrder)) {
             this.mPersonaMapInPlayOrder = new Map(personaMapInPlayOrder)
-        } else if(personaMapInPlayOrder instanceof Map){
+        } else if (personaMapInPlayOrder instanceof Map) {
             this.mPersonaMapInPlayOrder = personaMapInPlayOrder
         } else {
             throw new Error(`${personaMapInPlayOrder} should be a map or an array of arrays`)
         }
     }
-    
-    getDtoFor(user){
+
+    getDtoFor(user) {
         const copy = new Map(this.mPersonaMapInPlayOrder)
         for (const key of this.mPersonaMapInPlayOrder.keys()) {
-            if(key === user){
+            if (key === user) {
                 copy.set(key, false)
                 return {
                     personaMapInPlayOrder: [...copy]
@@ -25,13 +26,13 @@ export default class GameSetupMessage {
             }
         }
         console.log(`user ${user} not in personaMap`)
-        
+
         return {
             personaMapInPlayOrder: [...copy]
         }
     }
 
-    getDto(){
+    getDto() {
         return {
             personaMapInPlayOrder: [...this.mPersonaMapInPlayOrder]
         }

@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Card, Col, Container, Form, Input, Row } from "reactstrap";
+import {useEffect, useState} from 'react';
+import {Link, useLocation} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {Button, Card, Col, Container, Form, Input, Row} from "reactstrap";
 import ExamplesNavbar from "./NavigationBar";
+import userActions from "../_actions/user.actions";
 
-import { userActions } from '../_actions';
 
-function Login() {
-    /**
-     * This component returns the login page so that the user can log in
-     *
-     * @component
-     * @return Login component
-     */
+
+/**
+ * The Login page so that the user can log in
+ * @returns {JSX.Element}
+ * @component
+ */
+export default function Login() {
     const [inputs, setInputs] = useState({
         email: '',
         password: ''
     });
     const [submitted, setSubmitted] = useState(false);
-    const { email, password } = inputs;
+    const {email, password} = inputs;
     const loggingIn = useSelector(state => state.authentication.loggingIn);
     const dispatch = useDispatch();
     const location = useLocation();
@@ -29,8 +29,8 @@ function Login() {
     }, [dispatch]);
 
     function handleChange(e) {
-        const { name, value } = e.target;
-        setInputs(inputs => ({ ...inputs, [name]: value }));
+        const {name, value} = e.target;
+        setInputs(inputs => ({...inputs, [name]: value}));
     }
 
     function handleSubmit(e) {
@@ -39,14 +39,14 @@ function Login() {
         setSubmitted(true);
         if (email && password) {
             // get return url from location state or default to home page
-            const { from } = location.state || { from: { pathname: "/" } };
+            const {from} = location.state || {from: {pathname: "/"}};
             dispatch(userActions.login(email, password, from));
         }
     }
 
     return (
         <>
-            <ExamplesNavbar />
+            <ExamplesNavbar/>
             <div
                 className="page-header"
                 style={{
@@ -54,7 +54,7 @@ function Login() {
                         "url(/img/user.svg)",
                 }}
             >
-                <div className="filter" />
+                <div className="filter"/>
                 <div className="align-content-lg-center">
                     <Container>
                         <Row>
@@ -104,5 +104,3 @@ function Login() {
 
     );
 }
-
-export { Login };

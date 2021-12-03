@@ -1,19 +1,19 @@
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import classnames from "classnames";
 import {Button, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
 import UserStatsBadge from "./UserStatsBadge";
-import {logout} from '../_actions/index'
+import {logout} from "../_actions/user.actions.js";
 import {useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 
+/**
+ * the navigation bar so that the user can navigate through the header
+ * @component
+ * @returns {JSX.Element}
+ */
 export default function NavigationBar() {
-    /**
-     * This component returns the navigation bar so that the user can navigate trough the header
-     *
-     * @component
-     * @return NavigationBar component
-     */
+
     const [navbarColor, setNavbarColor] = useState("navbar-transparent");
     const [navbarCollapse, setNavbarCollapse] = useState(false);
     const loggedIn = useSelector(state => state.authentication.loggedIn);

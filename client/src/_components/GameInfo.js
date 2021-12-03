@@ -1,15 +1,15 @@
 import GamePhase from "../common/GamePhase.mjs";
-import {Container, Col, Card} from "reactstrap";
+import {Card, Col, Container} from "reactstrap";
 
 
+/**
+ * This component maps personas to player and displays them as post-it.
+ *
+ * @component
+ * @param props - React element describing what should appear on the screen
+ * @returns {JSX.Element}
+ */
 export default function GameInfo(props) {
-    /**
-     * This component maps personas to player and displays them as post-it.
-     *
-     * @component
-     * @param props - React element describing what should appear on the screen
-     * @return GameInfo component
-     */
 
     if (!props.info || !props.info.personaMapInPlayOrder || !props.state) {
         return null

@@ -1,16 +1,15 @@
 import {Button, Container} from "reactstrap";
-import {useEffect, createRef} from "react";
+import {createRef, useEffect} from "react";
 
 import {useTranslation} from "react-i18next";
 
-
+/**
+ * This component returns the banner of landing page and swipes the header color
+ *
+ * @returns {JSX.Element}
+ * @component
+ */
 function LandingPage() {
-    /**
-     * This component returns the banner of landing page and swipes the header color
-     *
-     * @component
-     * @return LandingPage component
-     */
     const {t} = useTranslation();
 
     let pageHeader = createRef();

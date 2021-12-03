@@ -1,19 +1,18 @@
 import {Button, Col, Container, Row,} from "reactstrap";
-import ExamplesNavbar from "./NavigationBar";
+import NavigationBar from "./NavigationBar";
 import LandingPage from "./LandingPage";
 
-function Home() {
-    /**
-     * This component returns the landing page
-     *
-     * @component
-     * @return Home component
-     */
+/**
+ * The Home Page
+ * @returns {JSX.Element}
+ * @component
+ */
+export default function Home() {
     document.documentElement.classList.remove("nav-open");
     return (
         <>
-            <ExamplesNavbar />
-            <LandingPage />
+            <NavigationBar/>
+            <LandingPage/>
             <div className="main">
                 <div className="section text-center">
                     <Container>
@@ -46,14 +45,15 @@ function Home() {
                             <Col md="4">
                                 <div className="info">
                                     <div className="icon icon-success">
-                                        <i className="nc-icon nc-align-center" />
+                                        <i className="nc-icon nc-align-center"/>
                                     </div>
                                     <div className="description">
                                         <h3 className=" h4 info-title">About the Project</h3>
                                         <p className="description">
                                             Read the docs about the project. Everything is on readme on git.ffhs.
                                         </p>
-                                        <Button className="btn-link" color="success" href="https://git.ffhs.ch/ramona.koksa/whoami/-/blob/dev/README.md">
+                                        <Button className="btn-link" color="success"
+                                                href="https://git.ffhs.ch/ramona.koksa/whoami/-/blob/dev/README.md">
                                             See more
                                         </Button>
                                     </div>
@@ -62,14 +62,15 @@ function Home() {
                             <Col md="4">
                                 <div className="info">
                                     <div className="icon icon-success">
-                                        <i className="nc-icon nc-bulb-63" />
+                                        <i className="nc-icon nc-bulb-63"/>
                                     </div>
                                     <div className="description">
                                         <h3 className="h4 info-title">Improvements</h3>
                                         <p>
                                             Give us your feedback. We will be happy to check and improve them.
                                         </p>
-                                        <Button className="btn-link" color="success" href="https://git.ffhs.ch/ramona.koksa/whoami/-/issues">
+                                        <Button className="btn-link" color="success"
+                                                href="https://git.ffhs.ch/ramona.koksa/whoami/-/issues">
                                             See more
                                         </Button>
                                     </div>
@@ -78,14 +79,15 @@ function Home() {
                             <Col md="4">
                                 <div className="info">
                                     <div className="icon icon-success">
-                                        <i className="nc-icon nc-chart-bar-32" />
+                                        <i className="nc-icon nc-chart-bar-32"/>
                                     </div>
                                     <div className="description">
                                         <h3 className="h4 info-title">Impediments</h3>
                                         <p>
                                             Report your impediments to us. We will fix them as soon as possible.
                                         </p>
-                                        <Button className="btn-link" color="success" href="https://git.ffhs.ch/ramona.koksa/whoami/-/issues">
+                                        <Button className="btn-link" color="success"
+                                                href="https://git.ffhs.ch/ramona.koksa/whoami/-/issues">
                                             See more
                                         </Button>
                                     </div>
@@ -98,5 +100,3 @@ function Home() {
         </>
     )
 }
-
-export { Home };

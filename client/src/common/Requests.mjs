@@ -71,5 +71,6 @@ export const GAME_VOTE = {
 
 export const GAME_START = {
     id: "GAME_START",
-    getDto(){}
+    getDto() {
+    }
 }
