@@ -24,6 +24,8 @@ sind. Es dürfen nur Fragen, die mit «Ja» oder «Nein» beantwortet werden kö
 Werden die Fragen mit «Ja» beantwortet, dürfen weitere Fragen gestellt werden. Wenn nicht, dann ist der nächste Spieler
 dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
 
+Das Benutzerhandbuch befindet sich unter: [doc](doc/benutzerhandbuch.md)
+
 ## Projektziele
 
 | ID | Systemziele                                                                              | *M*uss / *K*ann |Erreicht
@@ -32,6 +34,7 @@ dran. Ziel ist es möglichst schnell zu erraten, wen man verkörpert.
 | 2  | Die Kommunikation des Spiels muss über einen Chat stattfinden.                           | M           |:white_check_mark:|
 | 3  | Es müssen mind. drei Levels mit unterschiedlichen Schwierigkeitsstufen sein.             | M           |:white_check_mark:|
 | 4  | Das System soll auf Deutsch und Englisch zur Verfügung stehen. Standardsprache: Englisch | M           |:white_check_mark:|
+| 5  | Die Kommunikation kann via Voice stattfinden                                             | K           |:red_circle:|
 
 | ID | Vorgehensziele                                                               | *M*uss / *K*ann |Erreicht
 |----|------------------------------------------------------------------------------|:-------------:|:-------:|
@@ -80,16 +83,26 @@ Einen ersten Überblick verschaffen die nachfolgenden Wireframes.
 
 ## Getting started
 
-1. (node.js)[https://nodejs.org/] installieren, Version >= 16.6.0 (Auf Linux via `apt install node`)
+1. [node.js](https://nodejs.org/) installieren, Version >= 16.6.0 (Auf Linux via `apt install node`)
 2. Repository klonen
 3. Dependencies des Servers installieren
-4. Zum Client wechseln
-5. Dependencies des Clients installieren
-6. Zurück ins project root wechseln
-7. das ganze starten mit `npm run start-all`
+4. Via `npm start` den Server starten
+5. Zweites Terminal öffnen
+6. Zum Client wechseln
+7. Dependencies des Clients installieren
+8. Via `npm start` den Client starten
 
-Alternativ können mit zwei Prozessen der Client und der Server separat mit `npm start` in Ihrem entsprechenden Ordner gestartet werden.
+```bash
+git clone
+npm ci
+npm start
 
+cd /client
+npm ci
+npm start
+```
+
+Auf Linux würde es wie folgt funktionieren:
 ```bash
 git clone
 npm ci
@@ -125,7 +138,7 @@ Das Frontend ist React basiert und befindet sich under [client/](client/). Bei d
 development server, welcher jeweils einen build erstellt und diesen an den Client sendet. Für den Kunden kann dann ein
 produktiv build erstellt und deployed werden.
 
-#### Frontend structure
+#### Frontend Struktur
 
 ```
 ├───assets
@@ -279,7 +292,7 @@ Für die Registrierung eines Users und das LoginBody wurden zwei API's bereitges
 3. Der jwt-Token wird für eine Stunde aktiviert.
 4. Wenn alles funktioniert hat, wird eine Response mit Status `<200 OK>` zurückgegeben.
 
-## Testkonzept
+# Testkonzept
 Im Rahmen des Projektes wurde entschieden, dass nur die Teststufe Unit abgedeckt wird. Die Teststufen Integration und System werden entsprechend nur bei Bedarf abgedeckt. 
 Das Frontend wird manuell getestet. Allfällige Bugs sind im Gitlab unter issues zu erfassen. Bei den Bugs wird zwischen den folgenden Kritikalitäten unterschieden:
 * Blocker: Die Applikation funktioniert als Ganzes nicht, z.B. Spiel kann nicht gestartet werden.
