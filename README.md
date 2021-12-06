@@ -58,7 +58,7 @@ Das Benutzerhandbuch befindet sich unter: [doc](doc/benutzerhandbuch.md)
 7. Die andere Person reviewt die Arbeit, gibt Feedback und fordert die Definition of Done ein. Ist sie glücklich, merget
    sie nach dev.
 
-Das Projekttagebuch kann unter [doc](doc/journal.md) eingesehen werden.
+Das Projekttagebuch kann unter [doc](doc/journal.md) eingesehen werden. Unsere lessons learned finden Sie ebenfalls unter [hier](doc/projektrückblick.md).
 
 ### Definition of Done
 
