@@ -14,9 +14,12 @@ viel über uns selbst sowie Methoden- und Vorgehenskompetenzen erlangt.
 * Redux war ein grosser Overhead für dieses Projekt. Eher ab Mittelgrosse Anwendungen verwenden. Grundsätzlich ein sehr praktischer 
 Ansatz (weniger Code), dadurch ist es aber nicht sehr intuitiv verständlich.
 * Erste positive Erfahrungen mit MongoDB
+* Das Zusammenspiel verschiederer Frameworks kann zu massivem Mehraufwand führen
+* Manche Dinge müssen doppelt implementiert werden - in unserem Fall das Language Drop-Down für Mobile und Desktop
+* Communication is key
 
 ## Methoden- und Vorgehenskompetenzen
-* Code & Fix bei Schulprojekten vorteilhaft, da beide noch keine Erfahrung im Bereich Web Engineering.
+* Code & Fix kann bei Schulprojekten vorteilhaft sein, da beide noch keine Erfahrung im Bereich Web Engineering.
 * Regelmässige Abstimmung ist wichtig und sollte auch für künftige Schulprojekte gemacht werden.
 * Git als Werkzeug nutzen: Issues erstellen, Kommentar direkt auf der Codezeile, Review Prozess via Git sehr geeignet.
 * Projekttagebuch wurde geführt, hat aber keinen grossen Mehrwert geliefert, da für alles Tasks und Stories eröffnet wurden.
