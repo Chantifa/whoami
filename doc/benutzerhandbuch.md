@@ -44,7 +44,7 @@ Hinweis: Im Textfeld kann ein beliebiger Spielname eingegeben werden:
 
 ![webe.JPG](img/webe.JPG)
 
-Gelangt man auf die Spielseite so sieht man einen Links- und einen Rechtsplanel:
+Gelangt man auf die Spielseite so sieht man einen Links- und einen Rechtspanel:
 
 ![game.JPG](img/game.JPG)
 
