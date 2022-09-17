@@ -21,22 +21,22 @@ cache:
     - node_modules/
     - client/node_modules
 
-build-server:
+.build-server:
     stage: build
     script:
         - npm ci
-build-client:
+.build-client:
     stage: build
     script:
         - cd client/
         - npm ci
         - cd ..
 
-test_server:
+.test_server:
   stage: test
   script:
       - npm run test 
-test_client:
+.test_client:
     stage: test
     script:
         - cd client/
