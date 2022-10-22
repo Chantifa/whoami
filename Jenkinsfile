@@ -14,12 +14,11 @@ stages {
        script {
        def scannerHome = tool 'sonarqube';
            withSonarQubeEnv("sonarqube-container") {
-           sh "${tool("sonarqube")}/bin/sonar-scanner \
-           -Dsonar.projectKey=whoami \
-           -Dsonar.sources=. \
-           -Dsonar.css.node=. \
-           -Dsonar.host.url=http://your-ip-here:9000 \
-           -Dsonar.login=your-generated-token-from-sonarqube-container"
+           sh "${tool("sonarqube")}/bin/sonar-scanner.bat\
+            -D"sonar.projectKey=whomai"
+            -D"sonar.sources=."
+            -D"sonar.host.url=http://127.0.0.1:9000"
+            -D"sonar.login=sqp_55dfd657e6101d2c82cdd3da1dd0ba0c89020a3c"
                }
            }
        }
