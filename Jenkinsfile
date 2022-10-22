@@ -1,4 +1,3 @@
-#!groovy
 pipeline {
    node {
            sshagent(['ubuntu-host-root-keys']) {
