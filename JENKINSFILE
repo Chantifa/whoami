@@ -1,7 +1,9 @@
 #!groovy
-
 pipeline {
-   agent any
+   node {
+           sshagent(['ubuntu-host-root-keys']) {
+           sh 'ssh -o StrictHostKeyChecking=no -l chanti 172.31.199.84 uname -a'
+           }
    parameters {
         string(name: 'email', description: 'E-Mail address for result')
     }
@@ -10,8 +12,9 @@ pipeline {
 
          steps {
             sh "npm ci"
-                sh "cd client"
+                sh "cd client/"
                 sh "npm ci"
+                sh "cd .."
          }
          post {
             always {
@@ -31,12 +34,12 @@ pipeline {
           checkout scm
         }
         stage('SonarQube Analysis') {
-          def scannerHome = tool 'SonarScanner';
+          def scannerHome = tool 'sonar-whoami';
           withSonarQubeEnv() {
-            sh "whoami/bin/sonar-scanner"
+            sh "${scannerHome}/bin/sonar-scanner"
           }
         }
-      }
+
 
       stage("Quality Gate") {
          options {
@@ -53,19 +56,11 @@ pipeline {
             }
          }
       }
-                            
+
         stage("Test") {
-            sh "cd client"
+            sh "cd client/"
             sh "npm test"
+            sh "cd .."
         }
 }
 
-
-def notify(result, email) {
-   emailext (
-      subject: "Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-      body: "Result: ${result}",
-      recipientProviders: [[$class: 'DevelopersRecipientProvider']],
-      to: email
-   )
-}
