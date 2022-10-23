@@ -1,0 +1,6 @@
+projectKey=whomai
+serverUrl=http://127.0.0.1:9000
+serverVersion=9.6.1.59531
+dashboardUrl=http://127.0.0.1:9000/dashboard?id=whomai
+ceTaskId=AYP_mA3ZLw55W52DXwdh
+ceTaskUrl=http://127.0.0.1:9000/api/ce/task?id=AYP_mA3ZLw55W52DXwdh

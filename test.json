@@ -1,0 +1,124 @@
+{
+  "required_header": {
+    "download_date": "ClinicalTrials.gov processed this data on September 16, 2022",
+    "link_text": "Link to the current ClinicalTrials.gov record.",
+    "url": "https://clinicaltrials.gov/show/NCT00020046"
+  },
+  "id_info": {
+    "org_study_id": "000033",
+    "secondary_id": [
+      "00-C-0033",
+      "CDR0000067602"
+    ],
+    "nct_id": "NCT00020046",
+    "nct_alias": "NCT00001942"
+  },
+  "brief_title": "Docetaxel With or Without Thalidomide in Treating Patients With Metastatic Prostate Cancer",
+  "official_title": "Phase II Randomized Study of Docetaxel With or Without Thalidomide in Patients With Androgen-Independent Metastatic Prostate Cancer",
+  "sponsors": {
+    "lead_sponsor": {
+      "agency": "National Institutes of Health Clinical Center (CC)",
+      "agency_class": "NIH"
+    }
+  },
+  "source": "National Institutes of Health Clinical Center (CC)",
+  "brief_summary": {
+    "textblock": "RATIONALE: Drugs used in chemotherapy use different ways to stop tumor cells from dividing so\r\n      they stop growing or die. Thalidomide may stop the growth of prostate cancer by stopping\r\n      blood flow to the tumor.\r\n\r\n      PURPOSE: Randomized phase II trial to compare the effectiveness of docetaxel with or without\r\n      thalidomide in treating patients who have metastatic prostate cancer."
+  },
+  "detailed_description": {
+    "textblock": "OBJECTIVES: I. Determine the efficacy of thalidomide with docetaxel in terms of clinical\r\n      response in patients with androgen-independent metastatic prostate cancer.\r\n\r\n      II. Compare the pharmacokinetics of docetaxel with or without thalidomide in these patients\r\n      III. Determine whether any pharmacodynamic relationships exist between plasma concentrations\r\n      and clinical activity or toxicity of these regimens in this patient population.\r\n\r\n      IV. Compare changes in molecular markers of angiogenesis and markers of apoptosis after\r\n      treatment with these regimens in these patients.\r\n\r\n      PROTOCOL OUTLINE: This is a randomized study. Patients are randomized to one of two treatment\r\n      arms.\r\n\r\n      Arm I: Patients receive docetaxel IV over 30 minutes once weekly for 3 weeks. Arm II:\r\n      Patients receive oral thalidomide daily beginning on day 2 and docetaxel IV over 30 minutes\r\n      on days 2, 9, and 16.\r\n\r\n      Treatment continues every 28 days in both arms in the absence of unacceptable toxicity or\r\n      disease progression.\r\n\r\n      Patients are followed every 2 months.\r\n\r\n      PROJECTED ACCRUAL:\r\n\r\n      A total of 75 patients (25 to arm I and 50 to arm II) will be accrued for this study within\r\n      18 months."
+  },
+  "overall_status": "Completed",
+  "start_date": "December 1999",
+  "completion_date": {
+    "_type": "Actual",
+    "__text": "September 2003"
+  },
+  "phase": "Phase 2",
+  "study_type": "Interventional",
+  "has_expanded_access": "No",
+  "study_design_info": {
+    "primary_purpose": "Treatment"
+  },
+  "condition": [
+    "Stage IV Prostate Cancer",
+    "Adenocarcinoma of the Prostate",
+    "Recurrent Prostate Cancer"
+  ],
+  "intervention": [
+    {
+      "intervention_type": "Drug",
+      "intervention_name": "docetaxel"
+    },
+    {
+      "intervention_type": "Drug",
+      "intervention_name": "thalidomide"
+    }
+  ],
+  "eligibility": {
+    "criteria": {
+      "textblock": "PROTOCOL ENTRY CRITERIA:\r\n\r\n        --Disease Characteristics-- Histologically confirmed androgen-independent metastatic\r\n        adenocarcinoma of the prostate Clinically progressive disease documented by at least 1 of\r\n        the following: Two consecutively rising PSA levels (PSA at least 5.0) At least 1 new lesion\r\n        on bone scan Progressive measurable disease If no prior surgical castration, serum\r\n        testosterone must be less than 50 ng/mL and continue on gonadotropin-releasing hormone If\r\n        receiving an antiandrogen and PSA level rising, must demonstrate a continued rise in PSA 4\r\n        weeks after stopping flutamide and 6 weeks after stopping bicalutamide or nilutamide No\r\n        brain metastases --Prior/Concurrent Therapy-- Biologic therapy: No prior thalidomide\r\n        Chemotherapy: No prior chemotherapy for metastatic prostate cancer No prior docetaxel\r\n        Endocrine therapy: See Disease Characteristics Radiotherapy: Recovered from prior\r\n        radiotherapy Surgery: See Disease Characteristics Recovered from prior surgery --Patient\r\n        Characteristics-- Age: 18 and over Performance status: ECOG 0-1 Life expectancy: Not\r\n        specified Hematopoietic: Absolute neutrophil count greater than 1,500/mm3 Platelet count at\r\n        least 100,000/mm3 Hepatic: Bilirubin less than 1.0 mg/dL AST/ALT less than 2.5 times upper\r\n        limit of normal (ULN) Alkaline phosphatase less than 2.5 times ULN Renal: Creatinine no\r\n        greater than 1.5 mg/dL OR Creatinine clearance at least 40 mL/min Cardiovascular: No\r\n        history of myocardial infarction within past 6 months No uncontrolled congestive heart\r\n        failure or angina pectoris Other: No other prior active malignancy within the past 2 years\r\n        except nonmelanoma skin cancer or carcinoma in situ of the bladder Fertile patients must\r\n        use effective contraception at least 1 month prior to, during, and for 1 month after study"
+    },
+    "gender": "All",
+    "minimum_age": "18 Years",
+    "maximum_age": "N/A"
+  },
+  "overall_official": {
+    "last_name": "William Dahut",
+    "role": "Study Chair",
+    "affiliation": "National Cancer Institute (NCI)"
+  },
+  "location": {
+    "facility": {
+      "name": "Medicine Branch",
+      "address": {
+        "city": "Bethesda",
+        "state": "Maryland",
+        "zip": "20892",
+        "country": "United States"
+      }
+    }
+  },
+  "location_countries": {
+    "country": "United States"
+  },
+  "verification_date": "March 2012",
+  "study_first_submitted": "March 2, 2007",
+  "study_first_submitted_qc": "March 2, 2007",
+  "study_first_posted": {
+    "_type": "Estimate",
+    "__text": "March 5, 2007"
+  },
+  "last_update_submitted": "March 14, 2012",
+  "last_update_submitted_qc": "March 14, 2012",
+  "last_update_posted": {
+    "_type": "Estimate",
+    "__text": "March 15, 2012"
+  },
+  "keyword": [
+    "adenocarcinoma of the prostate",
+    "adult solid tumor",
+    "body system/site cancer",
+    "cancer",
+    "cellular diagnosis, prostate cancer",
+    "genetic condition",
+    "male reproductive cancer",
+    "prostate cancer",
+    "recurrent prostate cancer",
+    "solid tumor",
+    "stage IV prostate cancer",
+    "stage, prostate cancer"
+  ],
+  "condition_browse": {
+    "mesh_term": [
+      "Prostatic Neoplasms",
+      "Adenocarcinoma"
+    ]
+  },
+  "intervention_browse": {
+    "mesh_term": [
+      "Thalidomide",
+      "Docetaxel"
+    ]
+  }
+}
