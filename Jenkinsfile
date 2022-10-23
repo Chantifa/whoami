@@ -1,14 +1,20 @@
 node {
-  stages {
-   stage("SCM") {
-    steps {
-     git branch: 'develop', credentialsId: 'glpat-B5KLjMS27SnQhjyaGHyz', url: 'https://git.ffhs.ch/ramona.koksa/whoami.git'
-    }
-    stage('SonarQube Analysis') {
-    def scannerHome = tool 'sonar-scanner';
-    withSonarQubeEnv(credentialsId: 'sonarQubetoken') { // If you have configured more than one global server connection, you can specify its name
-          bash "${scannerHome}/bin/sonar-scanner"
-    }
+  stage('SCM') {
+    git 'https://git.ffhs.ch/ramona.koksa/whoami.git'
+  }
+  stage('SonarQube analysis') {
+    withSonarQubeEnv('My SonarQube Server') {
+      sh 'mvn clean package sonar:sonar'
+    } // submitted SonarQube taskId is automatically attached to the pipeline context
   }
 }
+
+// No need to occupy a node
+stage("Quality Gate"){
+  timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+    if (qg.status != 'OK') {
+      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    }
+  }
 }
