@@ -1,8 +1,10 @@
 #!groovy
 
 pipeline {
-	   agent any
-       tools {nodejs "node"}
+	   agent {
+	            image 'node:16.17.1-alpine'
+	             args '-p 3000:3000'
+	         }
 	parameters {
         string(name: 'email', description: 'E-Mail address for result')
     }
