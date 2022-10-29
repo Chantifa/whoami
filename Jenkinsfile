@@ -1,7 +1,7 @@
 #!groovy
 
 pipeline {
-	agent { docker { image 'node:16.17.1-alpine' } }
+	agent any
 	parameters {
         string(name: 'email', description: 'E-Mail address for result')
     }
