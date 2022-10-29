@@ -1,7 +1,12 @@
 #!groovy
 
 pipeline {
-	agent any
+	 agent {
+            docker {
+                image 'node:lts-buster-slim'
+                args '-p 3000:3000'
+            }
+        }
 	parameters {
         string(name: 'email', description: 'E-Mail address for result')
     }
