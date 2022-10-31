@@ -11,6 +11,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
+    "jest-junit": "^14.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "socket.io": "^4.2.0",
@@ -20,7 +21,10 @@
     "start": "nodemon server.js",
     "start-client": "npm --prefix ./client start",
     "start-all": "npm start & npm run start-client && fg",
-    "test": "jest"
+    "test": "jest",
+  "testResultsProcessor": "jest-junit"
+}
+
   },
   "repository": {
     "type": "git",
@@ -64,4 +68,7 @@
       "\\.pnp\\.[^\\/]+$"
     ]
   }
+{
+"testResultsProcessor": "jest-junit"
+}
 }
