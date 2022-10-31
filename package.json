@@ -20,7 +20,7 @@
     "start": "nodemon server.js",
     "start-client": "npm --prefix ./client start",
     "start-all": "npm start & npm run start-client && fg",
-    "test": "jest",
+    "test": "jest --detectOpenHandles --forceExit ",
     "testResultsProcessor": "jest-junit"
   },
   "repository": {
