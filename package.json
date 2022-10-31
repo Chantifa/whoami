@@ -22,9 +22,7 @@
     "start-client": "npm --prefix ./client start",
     "start-all": "npm start & npm run start-client && fg",
     "test": "jest",
-  "testResultsProcessor": "jest-junit"
-}
-
+   "testResultsProcessor": "jest-junit"
   },
   "repository": {
     "type": "git",
@@ -68,7 +66,4 @@
       "\\.pnp\\.[^\\/]+$"
     ]
   }
-{
-"testResultsProcessor": "jest-junit"
-}
 }
