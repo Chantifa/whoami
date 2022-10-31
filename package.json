@@ -21,10 +21,7 @@
     "start-client": "npm --prefix ./client start",
     "start-all": "npm start & npm run start-client && fg",
     "test": "jest",
-    "testResultsProcessor": "jest-junit",
-    "testjest": "react-scripts-ts test --env=jsdom",
-    "test:ci": "react-scripts-ts test --env=jsdom --testResultsProcessor ./node_modules/jest-junit --coverage --coverageDirectory=coverage",
-    "coverage": "react-scripts-ts test --env=jsdom --coverage"
+    "testResultsProcessor": "jest-junit"
   },
   "repository": {
     "type": "git",
@@ -67,8 +64,6 @@
     },
     "transformIgnorePatterns": [
       "\\.pnp\\.[^\\/]+$"
-    ],
-    "collectCoverageFrom": [ "**/*.{ts,tsx}", "!**/node_modules/**", "!**/build/**", "!**/definitionfiles/**", "!**/WebWrokers/**", "!**/*.mock.ts", "!src/setupTests.ts" ],
-    "coverageReporters": [ "lcov", "text" ] },
-  "jest-junit": { "suiteName": "jest tests", "output": "coverage/junit.xml", "classNameTemplate": "{classname} - {title}", "titleTemplate": "{classname} - {title}", "ancestorSeparator": " > ", "usePathForSuiteName": "true" }
+    ]
+    }
 }
