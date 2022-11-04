@@ -7,18 +7,18 @@ pipeline {
     stages {
                 stage("Code Checkout from GitLab") {
         steps {
-           git branch: 'develop', credentialsId: 'c1557bd4-d8ec-47a9-8d4a-cd76f4e6a8d3', url: 'https://git.ffhs.ch/ramona.koksa/whoami.git'
-         }
+         git branch: 'develop', credentialsId: 'gitLablogin', url: 'https://git.ffhs.ch/ramona.koksa/whoami.git' }
     }
     stage('npm-build') {
     steps {
         nodejs(nodeJSInstallationName: 'nodejs'){
             sh "npm ci"
             sh "npm start&"
-				sh "cd client/"
-				sh "npm ci"
-				sh "npm start&"
-        }}
+	        sh "cd client/"
+	        sh "npm ci"
+	        sh "npm start&"
+        }
+        }
          post {
             success {
                notify("Successful", params.email)
@@ -33,17 +33,16 @@ pipeline {
            sh "npm test"
    }
 }
-
  stage('SonarQube analysis') {
              steps {
                       script {
-    def scannerHome = tool 'sonar-scanner';
-   withSonarQubeEnv(installationName: 'sonar-whoami', credentialsId: 'sonarQube') { // If you have configured more than one global server connection, you can specify its name
-      sh "${scannerHome}/bin/sonar-scanner"
+                        def scannerHome = tool 'sonar-scanner';
+                            withSonarQubeEnv(installationName: 'sonar-whoami', credentialsId: 'sonarQubetoken') { // If you have configured more than one global server connection, you can specify its name
+                            sh "${scannerHome}/bin/sonar-scanner"
+                        }
+                      }
+             }
    }
-    }
-  }
-       }
         stage("Quality gate") {
             steps {
                 waitForQualityGate abortPipeline: true

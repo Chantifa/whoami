@@ -1,0 +1,24 @@
+version: "3"
+services:
+  sonarqube:
+    image: sonarqube:lts
+    ports:
+      - 9000:9000
+    networks:
+      - mynetwork
+    environment:
+      - SONAR_FORCEAUTHENTICATION=false
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true #Required for running docker inside container
+    user: root #Required for running various scripts
+    ports:
+      - 8080:8080
+    networks:
+      - mynetwork
+    volumes:
+      - jenkins-data:/var/jenkins_home
+networks:
+  mynetwork:
+volumes:
+  jenkins-data:
