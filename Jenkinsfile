@@ -51,11 +51,7 @@ pipeline {
 					scannerHome = tool 'SonarQube Scanner';
 				}
 				withSonarQubeEnv('sonarQube') {
-					bat "${scannerHome}/bin/sonar-scanner.bat
-					-Dsonar.projectKey=whoami
-					-Dsonar.sources=src
-					-Dsonar.java.source=1.8
-					-Dsonar.java.binaries=build/classes"
+					bat "${scannerHome}/bin/sonar-scanner.bat -Dsonar.projectKey=whoami -Dsonar.sources=src -Dsonar.java.source=1.8 -Dsonar.java.binaries=build/classes"
 				}
 			}
 		}
