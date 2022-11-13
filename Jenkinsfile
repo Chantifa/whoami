@@ -10,8 +10,11 @@ pipeline {
         }
 
 	parameters {
-        string(name: 'email', description: 'E-Mail address for result')
+        string(name: 'email',
+        defaultValue:'ramona.koksa@students.ffhs.ch',
+        description: 'E-Mail address for result')
     }
+
 	stages {
 		stage("Build") {
 
