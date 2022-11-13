@@ -2,6 +2,10 @@
 
 pipeline {
 
+    dir("C://ProgramData//Jenkins//.jenkins//workspace//whoami//") {
+        sh "pwd"
+    }
+
     agent {
             docker {
                 image 'node:lts-bullseye-slim'
