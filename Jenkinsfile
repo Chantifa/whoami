@@ -1,13 +1,19 @@
 #!groovy
 
-pipeline {
+def AGENT_LABEL = null
 
-    agent {
-            docker {
-                image 'node:lts-bullseye-slim'
-                args '-p 3000:3000'
-            }
-        }
+node('whoami') {
+  stage('Checkout and set agent'){
+     checkout scm
+     if (env.BRANCH_NAME == 'develop_ramona') {
+        AGENT_LABEL = "whoami"
+     } else {
+        AGENT_LABEL = any
+     }
+   }
+}
+
+pipeline {
 
 	parameters {
         string(name: 'email',
