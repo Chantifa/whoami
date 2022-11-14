@@ -15,6 +15,10 @@ node('whoami') {
 
 pipeline {
 
+    agent {
+           label "${AGENT_LABEL}"
+        }
+
 	parameters {
         string(name: 'email',
         defaultValue:'ramona.koksa@students.ffhs.ch',
