@@ -18,9 +18,7 @@ pipeline {
 		stage("Build") {
 
 			steps {
-			    sh 'npm i tar'
-			    sh "npm -g install create-react-app"
-                sh "npm run start-all"
+			    sh "npm ci"
 			    }
 		    }
 
