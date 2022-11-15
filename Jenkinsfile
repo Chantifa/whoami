@@ -18,12 +18,7 @@ pipeline {
 		stage("Build") {
 
 			steps {
-			    sh 'npm version'
-                sh "npm ci"
-                sh "npm start&"
-                sh "cd /client"
-                sh "npm ci"
-                sh "npm start&"
+                sh "npm run start-all"
 			    }
 		    }
 
