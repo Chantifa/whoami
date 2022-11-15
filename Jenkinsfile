@@ -1,7 +1,5 @@
 #!groovy
 
-def AGENT_LABEL = null
-
 pipeline {
 
     agent any
