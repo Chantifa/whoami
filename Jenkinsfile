@@ -18,7 +18,6 @@ pipeline {
 		stage("Build") {
 
 			steps {
-			nodejs(nodeJSInstallationName: 'nodejs'){
 			    sh 'npm version'
                 sh "npm ci"
                 sh "npm start"
@@ -26,8 +25,7 @@ pipeline {
                 sh "npm ci"
                 sh "npm start"
 			    }
-			}
-		}
+		    }
 
 		stage("Test") {
 
