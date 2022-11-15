@@ -2,22 +2,9 @@
 
 def AGENT_LABEL = null
 
-node('whoami') {
-  stage('Checkout and set agent'){
-     checkout scm
-     if (env.BRANCH_NAME == 'develop_ramona') {
-        AGENT_LABEL = "whoami"
-     } else {
-        AGENT_LABEL = any
-     }
-   }
-}
-
 pipeline {
 
-    agent {
-           label "${AGENT_LABEL}"
-        }
+    agent any
 
 	parameters {
         string(name: 'email',
