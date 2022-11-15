@@ -18,6 +18,7 @@ pipeline {
 		stage("Build") {
 
 			steps {
+			    sh "npm -g install create-react-app"
                 sh "npm run start-all"
 			    }
 		    }
