@@ -10,12 +10,16 @@ pipeline {
         description: 'E-Mail address for result')
     }
 
+    tools {
+        nodejs '19.0.1'
+    }
+
 	stages {
 		stage("Build") {
 
 			steps {
 			nodejs(nodeJSInstallationName: 'nodejs'){
-			    sh 'npm install'
+			    sh 'npm version'
                 sh "npm ci"
                 sh "npm start"
                 sh "cd /client"
