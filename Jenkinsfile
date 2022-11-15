@@ -2,7 +2,12 @@
 
 pipeline {
 
-    agent any
+    agent {
+            docker {
+                image 'node:lts-bullseye-slim'
+                args '-p 3000:3000'
+            }
+        }
 
 	parameters {
         string(name: 'email',
@@ -14,7 +19,7 @@ pipeline {
 		stage("Build") {
 
 			steps {
-			    sh 'apt-get install -y npm'
+			    sh 'npm install'
 				sh "npm ci"
 				sh "npm start"
 				sh "cd /client"
