@@ -10,20 +10,32 @@ pipeline {
         description: 'E-Mail address for result')
     }
 
-    tools {nodejs "nodejs"}
+   tools {nodejs "nodejs"}
+       stages {
+           stage("Code Checkout from GitLab") {
+           steps {
+            git branch: 'develop_ramona', credentialsId: 'gitLablogin', url: 'https://git.ffhs.ch/ramona.koksa/whoami.git' }
+            }
+       stage('npm-build') {
+       steps {
+           nodejs(nodeJSInstallationName: 'nodejs'){
+               sh "npm ci"
+               sh "npm start&"
+   	        sh "cd client/"
+   	        sh "npm ci"
+   	        sh "npm start&"
+           }
+           }
+            post {
+               success {
+                  notify("Successful", params.email)
+               }
+               failure {
+                  notify("Failure", params.email)
+               }
+            }
+       }
 
-	stages {
-		stage("Build") {
-
-			steps {
-			    sh 'npm install'
-				sh "npm ci"
-				sh "npm start"
-				sh "cd /client"
-				sh "npm ci"
-				sh "npm start"
-			}
-		}
 
 		stage("Test") {
 
