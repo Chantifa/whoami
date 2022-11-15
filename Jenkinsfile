@@ -14,7 +14,7 @@ pipeline {
 		stage("Build") {
 
 			steps {
-			    sh 'npm install'
+			    sh 'apt-get install -y npm'
 				sh "npm ci"
 				sh "npm start"
 				sh "cd /client"
