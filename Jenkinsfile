@@ -10,12 +10,11 @@ pipeline {
         description: 'E-Mail address for result')
     }
 
-     tools {nodejs "nodejs"}
-
 	stages {
 		stage("Build") {
 
 			steps {
+			    sh 'npm install'
 				sh "npm ci"
 				sh "npm start"
 				sh "cd /client"
