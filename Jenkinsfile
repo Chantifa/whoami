@@ -10,6 +10,8 @@ pipeline {
         description: 'E-Mail address for result')
     }
 
+     tools {nodejs "nodejs"}
+
 	stages {
 		stage("Build") {
 
