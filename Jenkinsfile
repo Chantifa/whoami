@@ -25,14 +25,12 @@ pipeline {
 		stage("Test") {
 
         			steps {
-        			    script {
-        			        sh "ls -la"
+        			        sh "cd test"
         			        sh "npm test"
-        			    }
         			}
         			post {
         				always {
-        					junit "./build/test-results/test/*.xml"
+        					junit "./*.xml"
         				}
         				success {
         					notify("Successful", params.email)
