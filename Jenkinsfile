@@ -25,8 +25,7 @@ pipeline {
 		stage("Test") {
 
         			steps {
-        			        sh "cd ./serverTests"
-        			        sh "ls -la"
+        			        sh "ls -la ./serverTests/"
         			        sh "npm test"
         			}
         			post {
