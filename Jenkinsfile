@@ -26,6 +26,7 @@ pipeline {
 
         			steps {
         			    script {
+        			        sh "ls -la"
         			        sh "npm test"
         			    }
         			}
