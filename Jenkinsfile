@@ -6,7 +6,7 @@ pipeline {
 
 	parameters {
         string(name: 'email',
-        defaultValue:'ramona.koksa@students.ffhs.ch',
+        defaultValue:'koksaramona@gmail.com',
         description: 'E-Mail address for result')
     }
 
