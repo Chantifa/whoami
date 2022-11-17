@@ -40,9 +40,9 @@ pipeline {
 		stage('SonarQube analysis') {
 			steps {
 				script {
-					scannerHome = tool 'SonarQube Scanner';
+					scannerHome = tool 'SonarQube Scanner 4.6.2.2472';
 				}
-				withSonarQubeEnv('SonarQube Scanner 4.7.0.2747') {
+				withSonarQubeEnv('SonarQube Scanner 4.6.2.2472') {
 					bat "${scannerHome}/bin/sonar-scanner.bat -Dsonar.projectKey=whoami -Dsonar.sources=src -Dsonar.java.source=1.8 -Dsonar.java.binaries=build/classes"
 				}
 			}
