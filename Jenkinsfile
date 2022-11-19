@@ -42,7 +42,7 @@ pipeline {
 				script {
 					scannerHome = tool 'sonar-scanner';
 				}
-				withSonarQubeEnv(installationName: 'sonar-whoami', credentialsId: 'sonarQubetoken') {
+				withSonarQubeEnv(installationName: 'sonar-whoami', credentialsId: 'Sonar') {
                                             sh "${scannerHome}/bin/sonar-scanner"
 
 				}
