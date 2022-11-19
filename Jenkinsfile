@@ -42,8 +42,11 @@ pipeline {
 				script {
 					scannerHome = tool 'sonar-scanner';
 				}
-				withSonarQubeEnv(installationName: 'sonar-whoami', credentialsId: 'Sonar') {
-                                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=whoami"
+				withSonarQubeEnv(
+				        installationName: 'sonar-whoami',
+				        credentialsId: 'Sonar') {
+                      sh "${scannerHome}/bin/sonar-scanner
+                            -Dsonar.projectKey=whoami"
 
 				}
 			}
@@ -51,9 +54,9 @@ pipeline {
 
 		stage("Quality Gate") {
 			steps {
-			              timeout(time: 1, unit: 'HOURS') {
-                            waitForQualityGate abortPipeline: true
-                          }
+			     timeout(time: 1, unit: 'HOURS') {
+                 waitForQualityGate abortPipeline: true
+                   }
 				}
 			}
 		}
