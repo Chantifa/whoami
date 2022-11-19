@@ -40,10 +40,11 @@ pipeline {
 		stage('SonarQube analysis') {
 			steps {
 				script {
-					scannerHome = tool 'SonarQube Scanner 4.6.2.2472';
+					scannerHome = tool 'sonar-scanner';
 				}
-				withSonarQubeEnv('SonarQube Scanner 4.6.2.2472') {
-					bat "./mvnw verify sonar:sonar"
+				withSonarQubeEnv(installationName: 'sonar-whoami', credentialsId: 'sonarQubetoken') {
+                                            sh "${scannerHome}/bin/sonar-scanner"
+
 				}
 			}
 		}
