@@ -26,8 +26,18 @@ pipeline {
 
         			steps {
         			        sh "npm test"
-        			        junit allowEmptyResults: true, testResults: 'build/reports/jacoco/test/jacocoTestReport.xml'
         			}
+        			    jacocoTestReport {
+                            group = "Reporting"
+                            reports {
+                                xml.enabled true
+                                csv.enabled false
+                                //to create coverage report in html
+                                html.destination file("${buildDir}/reports/coverage")
+                                //for XML
+                                xml.destination file("${buildDir}/reports/jacoco.xml")
+                            }
+                        }
         			post {
         				success {
         					notify("Successful", params.email)
