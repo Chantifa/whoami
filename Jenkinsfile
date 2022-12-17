@@ -26,6 +26,7 @@ pipeline {
 
         			steps {
         			        sh "npm test"
+        			        junit allowEmptyResults: true,
         			        junit '*/build/test-results/*.xml'
         			        step( [ $class: 'JacocoPublisher' ] )
         			}
