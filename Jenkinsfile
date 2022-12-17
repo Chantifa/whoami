@@ -26,7 +26,7 @@ pipeline {
 
         			steps {
         			        sh "npm test"
-        			        junit allowEmptyResults: true, testResults: '**/test-results/*.xml'
+        			        junit allowEmptyResults: true, testResults: 'build/reports/jacoco/test/jacocoTestReport.xml'
         			}
         			post {
         				success {
