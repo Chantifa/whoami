@@ -50,10 +50,10 @@ pipeline {
 				jacocoTestReport {
                         group = "Reporting"
                         reports {
-                            xml.enabled true
-                            csv.enabled false
+                            xml.enabled true,
+                            csv.enabled false,
                             //to create coverage report in html
-                            html.destination file("${buildDir}/reports/coverage")
+                            html.destination file("${buildDir}/reports/coverage"),
                             //for XML
                             xml.destination file("${buildDir}/reports/jacoco.xml")
                         }
