@@ -45,8 +45,7 @@ pipeline {
 				withSonarQubeEnv(
 				        installationName: 'sonar-whoami',
 				        credentialsId: 'Sonar') {
-                      sh "${scannerHome}/bin/sonar-scanner
-                            -Dsonar.projectKey=whoami"
+                      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=whoami"
 
 				}
 			}
