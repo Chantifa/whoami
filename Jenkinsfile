@@ -50,6 +50,14 @@ pipeline {
 			}
 		}
 
+		stage("Quality Gate") {
+			steps {
+                 waitForQualityGate abortPipeline: true
+                   }
+			}
+		}
+	}
+
 
 def notify(result, email) {
 	emailext (
