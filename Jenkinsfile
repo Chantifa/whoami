@@ -58,6 +58,10 @@ pipeline {
 			}
 		}
 
+		}
+	}
+
+
 def notify(result, email) {
 	emailext (
 		subject: "Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
