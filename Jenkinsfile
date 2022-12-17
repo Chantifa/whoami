@@ -58,15 +58,6 @@ pipeline {
 			}
 		}
 
-		stage("Quality Gate") {
-			steps {
-                 waitForQualityGate abortPipeline: true
-                   }
-			}
-		}
-	}
-
-
 def notify(result, email) {
 	emailext (
 		subject: "Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
