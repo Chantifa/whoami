@@ -60,7 +60,6 @@ pipeline {
 			}
 		}
 	}
-}
 
 
 def notify(result, email) {
