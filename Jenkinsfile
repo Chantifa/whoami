@@ -46,8 +46,18 @@ pipeline {
 				        installationName: 'sonar-whoami',
 				        credentialsId: 'Sonar') {
                       sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=whoami"
-
 				}
+				jacocoTestReport {
+                        group = "Reporting"
+                        reports {
+                            xml.enabled true
+                            csv.enabled false
+                            //to create coverage report in html
+                            html.destination file("${buildDir}/reports/coverage")
+                            //for XML
+                            xml.destination file("${buildDir}/reports/jacoco.xml")
+                        }
+                    }
 			}
 		}
 
