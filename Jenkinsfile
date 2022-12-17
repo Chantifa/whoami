@@ -51,7 +51,8 @@ pipeline {
                         group = "Reporting"
                         reports {
                             xml.enabled true,
-                            csv.enabled false,
+                            csv.enabled false
+                        }
                             //to create coverage report in html
                             html.destination file("${buildDir}/reports/coverage"),
                             //for XML
@@ -69,7 +70,7 @@ pipeline {
 				}
 			}
 		}
-	}
+
 
 
 def notify(result, email) {
