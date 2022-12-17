@@ -26,6 +26,8 @@ pipeline {
 
         			steps {
         			        sh "npm test"
+        			        junit '*/build/test-results/*.xml'
+        			        step( [ $class: 'JacocoPublisher' ] )
         			}
         			post {
         				success {
@@ -47,18 +49,6 @@ pipeline {
 				        credentialsId: 'Sonar') {
                       sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=whoami"
 				}
-				jacocoTestReport {
-                        group = "Reporting"
-                        reports {
-                            xml.enabled true,
-                            csv.enabled false
-                        }
-                            //to create coverage report in html
-                            html.destination file("${buildDir}/reports/coverage"),
-                            //for XML
-                            xml.destination file("${buildDir}/reports/jacoco.xml")
-                        }
-                    }
 			}
 		}
 
@@ -70,7 +60,7 @@ pipeline {
 				}
 			}
 		}
-
+	}
 
 
 def notify(result, email) {
