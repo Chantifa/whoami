@@ -41,6 +41,7 @@ pipeline {
             steps {
                 echo 'Code Coverage'
                 jacoco()
+                sh "ls -la"
             }
         }
 
