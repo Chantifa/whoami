@@ -6,8 +6,14 @@ pipeline {
 		stages {
     		stage("JMeter") {
     			steps {
-    			    sh "/usr/bin/jmeter -n -t /var/jenkins_home/workspace/whoami/whoami.jmx -l test.jtl"
+    			    sh "/home/koksaramona/apache-jmeter-5.5/bin/jmeter.sh -n -t whoami.jmx -l test.jtl"
     			}
+    			post {
+                 always {
+                 junit "target/surefire-reports/*.xml"
+                 junit "target/jmeter/results/*.csv"
+                 perfReport 'target/jmeter/results/*.csv'
+                 }
 
     	    }
 
