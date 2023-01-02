@@ -16,19 +16,6 @@ pipeline {
 
                 }
             }
-
         }
-
-        stage("ZAP") {
-        			parallel {
-        				stage("ZAP Attack") {
-
-        					steps {
-        						bat label: '', script: 'cd C:\\Program Files\\OWASP\\Zed Attack Proxy & java -jar zap-2.7.0.jar -cmd -quickurl http://localhost:3002/songs -quickout C:\\temp\\zaptestresults.xml'
-        					}
-        				}
-        			}
-        		}
-
     }
 }
