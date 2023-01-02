@@ -6,7 +6,8 @@ pipeline {
 		stages {
     		stage("JMeter") {
     			steps {
-    			    sh "/usr/bin/jmeter -n -t /var/jenkins_home/workspace/whoami/whoami.jmx -l test.jtl"
+    			    sh "cd /usr/bin/"
+    			    sh "ls"
     			}
 
     	    }
