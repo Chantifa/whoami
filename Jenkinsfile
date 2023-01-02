@@ -6,9 +6,14 @@ pipeline {
 		stages {
     		stage("JMeter") {
     			steps {
-    			    sh "/home/koksaramona/apache-jmeter-5.5/bin/jmeter.sh -n -t whoami.jmx -l test.jtl"
+    			    sh "/home/koksaramona/apache-jmeter-5.5/bin/jmeter.sh -Jjmeter.save.saveservice.output_format=xml -n -t whoami.jmx -l test.jtl"
     			}
-    			
+    			post {
+    			always {
+
+    			}
+    			}
+
         }
     }
 }
