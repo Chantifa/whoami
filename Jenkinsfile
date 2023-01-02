@@ -6,11 +6,10 @@ pipeline {
 		stages {
     		stage("JMeter") {
     			steps {
-    			    sh "pwd"
-    			    sh "ls"
+    			    sh "/usr/bin/jmeter -n -t /var/jenkins_home/workspace/whoami/whoami.jmx -l test.jtl"
     			}
 
-    	}
+    	    }
 
-}
+    }
 }
