@@ -6,7 +6,9 @@ pipeline {
 		stages {
     		stage("JMeter") {
     			steps {
-    			    sh "ls /usr/bin/"
+    			    sh "curl -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz"
+    			    sh "tar -xvf apache-jmeter-5.5.tgz"
+    			    sh "ls"
     			}
 
     	    }
