@@ -8,7 +8,7 @@ pipeline {
     			steps {
     			    sh "curl -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz"
     			    sh "tar -xvf apache-jmeter-5.5.tgz"
-    			    sh "cp -r apache-jmeter-5.5 /usr/bin/jmeter"
+    			    sh "sudo cp -r apache-jmeter-5.5 /usr/bin/jmeter"
     			}
 
     	    }
