@@ -10,6 +10,7 @@ pipeline {
     			}
     			post {
     			always {
+    			    perfReport 'test.jtl'
 
     			}
     			}
