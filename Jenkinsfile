@@ -6,8 +6,7 @@ pipeline {
 		stages {
     		stage("JMeter") {
     			steps {
-    			    sh "cd /usr/bin/"
-    			    sh "ls"
+    			    sh "ls /usr/bin/"
     			}
 
     	    }
