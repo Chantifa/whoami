@@ -1,0 +1,201 @@
+WARNING!  Partially defined environment, please ensure to provide both SNYK_INTEGRATION_NAME and SNYK_INTEGRATION_VERSION together!
+
+Testing whoami:latest...
+
+Organization:      rkoksa
+Package manager:   apk
+Project name:      docker-image|whoami
+Docker image:      whoami:latest
+Platform:          linux/amd64
+Base image:        node:19.3.0-alpine3.17
+Licenses:          enabled
+
+✔ Tested 17 dependencies for known issues, no vulnerable paths found.
+
+According to our scan, you are currently using the most secure version of the selected base image
+
+-------------------------------------------------------
+
+Testing whoami:latest...
+
+Organization:      rkoksa
+Package manager:   npm
+Target file:       \app\package.json
+Project name:      whoami
+Docker image:      whoami:latest
+Licenses:          enabled
+
+✔ Tested 10 dependencies for known issues, no vulnerable paths found.
+
+-------------------------------------------------------
+
+Testing whoami:latest...
+
+Tested 1610 dependencies for known issues, found 51 issues.
+
+
+Issues to fix by upgrading:
+
+  Upgrade i18next-http-backend@1.3.1 to i18next-http-backend@1.3.2 to fix
+  ✗ Information Exposure [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODEFETCH-2342118] in node-fetch@2.6.1
+    introduced by i18next-http-backend@1.3.1 > cross-fetch@3.1.4 > node-fetch@2.6.1
+
+  Upgrade node-sass@6.0.1 to node-sass@7.0.2 to fix
+  ✗ Regular Expression Denial of Service (ReDoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-SCSSTOKENIZER-2339884] in scss-tokenizer@0.2.3
+    introduced by node-sass@6.0.1 > sass-graph@2.2.5 > scss-tokenizer@0.2.3
+  ✗ Improper Certificate Validation [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-1059081] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  ✗ Regular Expression Denial of Service (ReDoS) [High Severity][https://security.snyk.io/vuln/SNYK-JS-ANSIREGEX-1583908] in ansi-regex@2.1.1
+    introduced by node-sass@6.0.1 > chalk@1.1.3 > has-ansi@2.0.0 > ansi-regex@2.1.1 and 19 other path(s)
+
+  Upgrade react-scripts@4.0.3 to react-scripts@5.0.0 to fix
+  ✗ Regular Expression Denial of Service (ReDoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-BROWSERSLIST-1090194] in browserslist@4.14.2
+    introduced by react-scripts@4.0.3 > react-dev-utils@11.0.4 > browserslist@4.14.2
+  ✗ Arbitrary Code Injection [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-EJS-1049328] in ejs@2.7.4
+    introduced by react-scripts@4.0.3 > workbox-webpack-plugin@5.1.4 > workbox-build@5.1.4 > @surma/rollup-plugin-off-main-thread@1.4.2 > ejs@2.7.4
+  ✗ Regular Expression Denial of Service (ReDoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-GLOBPARENT-1016905] in glob-parent@3.1.0
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > chokidar@2.1.8 > glob-parent@3.1.0 and 1 other path(s)
+  ✗ Prototype Pollution [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-IMMER-1540542] in immer@8.0.1
+    introduced by react-scripts@4.0.3 > react-dev-utils@11.0.4 > immer@8.0.1
+  ✗ Regular Expression Denial of Service (ReDoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-LOADERUTILS-3042992] in loader-utils@2.0.1
+    introduced by react-scripts@4.0.3 > @svgr/webpack@5.5.0 > loader-utils@2.0.1 and 13 other path(s)
+  ✗ Regular Expression Denial of Service (ReDoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-LOADERUTILS-3105943] in loader-utils@2.0.1
+    introduced by react-scripts@4.0.3 > @svgr/webpack@5.5.0 > loader-utils@2.0.1 and 13 other path(s)
+  ✗ Regular Expression Denial of Service (ReDoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-MINIMATCH-3050818] in minimatch@3.0.4
+    introduced by node-sass@6.0.1 > glob@7.2.0 > minimatch@3.0.4 and 164 other path(s)
+  ✗ Regular Expression Denial of Service (ReDoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-PROMPTS-1729737] in prompts@2.4.0
+    introduced by react-scripts@4.0.3 > prompts@2.4.0 and 2 other path(s)
+  ✗ Regular Expression Denial of Service (ReDoS) [High Severity][https://security.snyk.io/vuln/SNYK-JS-ANSIREGEX-1583908] in ansi-regex@2.1.1
+    introduced by node-sass@6.0.1 > chalk@1.1.3 > has-ansi@2.0.0 > ansi-regex@2.1.1 and 19 other path(s)
+  ✗ Remote Code Execution (RCE) [High Severity][https://security.snyk.io/vuln/SNYK-JS-EJS-2803307] in ejs@2.7.4
+    introduced by react-scripts@4.0.3 > workbox-webpack-plugin@5.1.4 > workbox-build@5.1.4 > @surma/rollup-plugin-off-main-thread@1.4.2 > ejs@2.7.4
+  ✗ Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-LOADERUTILS-3043105] in loader-utils@2.0.1
+    introduced by react-scripts@4.0.3 > @svgr/webpack@5.5.0 > loader-utils@2.0.1 and 13 other path(s)
+  ✗ Regular Expression Denial of Service (ReDoS) [High Severity][https://security.snyk.io/vuln/SNYK-JS-NTHCHECK-1586032] in nth-check@1.0.2
+    introduced by react-scripts@4.0.3 > @svgr/webpack@5.5.0 > @svgr/plugin-svgo@5.5.0 > svgo@1.3.2 > css-select@2.1.0 > nth-check@1.0.2 and 1 other path(s)
+  ✗ Remote Code Execution (RCE) [High Severity][https://security.snyk.io/vuln/SNYK-JS-SHELLQUOTE-1766506] in shell-quote@1.7.2
+    introduced by react-scripts@4.0.3 > react-dev-utils@11.0.4 > shell-quote@1.7.2
+
+  Upgrade socket.io-client@4.3.2 to socket.io-client@4.5.0 to fix
+  ✗ Improper Input Validation [Critical Severity][https://security.snyk.io/vuln/SNYK-JS-SOCKETIOPARSER-3091012] in socket.io-parser@4.1.1
+    introduced by socket.io-client@4.3.2 > socket.io-parser@4.1.1
+
+
+Issues with no direct upgrade or patch:
+  ✗ Regular Expression Denial of Service (ReDoS) [High Severity][https://security.snyk.io/vuln/SNYK-JS-ANSIHTML-1296849] in ansi-html@0.0.7
+    introduced by react-scripts@4.0.3 > @pmmmwh/react-refresh-webpack-plugin@0.4.3 > ansi-html@0.0.7 and 1 other path(s)
+  This issue was fixed in versions: 0.0.9
+  ✗ Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-ASYNC-2441827] in async@2.6.3
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > portfinder@1.0.28 > async@2.6.3
+  This issue was fixed in versions: 2.6.4, 3.2.2
+  ✗ Denial of Service (DoS) [High Severity][https://security.snyk.io/vuln/SNYK-JS-DECODEURICOMPONENT-3149970] in decode-uri-component@0.2.0
+    introduced by @testing-library/jest-dom@5.14.1 > css@3.0.0 > source-map-resolve@0.6.0 > decode-uri-component@0.2.0 and 1258 other path(s)
+  This issue was fixed in versions: 0.2.2
+  ✗ Information Exposure [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-EVENTSOURCE-2823375] in eventsource@1.1.0
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > sockjs-client@1.5.2 > eventsource@1.1.0
+  This issue was fixed in versions: 1.1.1, 2.0.2
+  ✗ Information Exposure [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-FOLLOWREDIRECTS-2332181] in follow-redirects@1.14.5
+    introduced by axios@0.24.0 > follow-redirects@1.14.5 and 1 other path(s)
+  This issue was fixed in versions: 1.14.7
+  ✗ Information Exposure [Low Severity][https://security.snyk.io/vuln/SNYK-JS-FOLLOWREDIRECTS-2396346] in follow-redirects@1.14.5
+    introduced by axios@0.24.0 > follow-redirects@1.14.5 and 1 other path(s)
+  This issue was fixed in versions: 1.14.8
+  ✗ Reverse Tabnabbing [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-ISTANBULREPORTS-2328088] in istanbul-reports@3.0.5
+    introduced by react-scripts@4.0.3 > jest@26.6.0 > @jest/core@26.6.3 > @jest/reporters@26.6.2 > istanbul-reports@3.0.5 and 1 other path(s)
+  This issue was fixed in versions: 3.1.3
+  ✗ Prototype Pollution [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-JSON5-3182856] in json5@1.0.1
+    introduced by react-scripts@4.0.3 > @babel/core@7.12.3 > json5@2.2.0 and 123 other path(s)
+  This issue was fixed in versions: 1.0.2, 2.2.2
+  ✗ Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-JSONSCHEMA-1920922] in json-schema@0.2.3
+    introduced by node-sass@6.0.1 > request@2.88.2 > http-signature@1.2.0 > jsprim@1.4.1 > json-schema@0.2.3 and 1 other path(s)
+  This issue was fixed in versions: 0.4.0
+  ✗ Command Injection [High Severity][https://security.snyk.io/vuln/SNYK-JS-LODASHTEMPLATE-1088054] in lodash.template@4.5.0
+    introduced by react-scripts@4.0.3 > workbox-webpack-plugin@5.1.4 > workbox-build@5.1.4 > lodash.template@4.5.0
+  No upgrade or patch available
+  ✗ Prototype Pollution [Low Severity][https://security.snyk.io/vuln/SNYK-JS-MINIMIST-2429795] in minimist@1.2.5
+    introduced by react-scripts@4.0.3 > @babel/core@7.12.3 > json5@2.2.0 > minimist@1.2.5 and 377 other path(s)
+  This issue was fixed in versions: 1.2.6
+  ✗ Information Exposure [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NANOID-2332193] in nanoid@3.1.30
+    introduced by react-scripts@4.0.3 > postcss-safe-parser@5.0.2 > postcss@8.3.11 > nanoid@3.1.30
+  This issue was fixed in versions: 3.1.31
+  ✗ Open Redirect [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODEFORGE-2330875] in node-forge@0.10.0
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > selfsigned@1.10.11 > node-forge@0.10.0
+  This issue was fixed in versions: 1.0.0
+  ✗ Prototype Pollution [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODEFORGE-2331908] in node-forge@0.10.0
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > selfsigned@1.10.11 > node-forge@0.10.0
+  This issue was fixed in versions: 1.0.0
+  ✗ Improper Verification of Cryptographic Signature [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODEFORGE-2430337] in node-forge@0.10.0
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > selfsigned@1.10.11 > node-forge@0.10.0
+  This issue was fixed in versions: 1.3.0
+  ✗ Improper Verification of Cryptographic Signature [High Severity][https://security.snyk.io/vuln/SNYK-JS-NODEFORGE-2430339] in node-forge@0.10.0
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > selfsigned@1.10.11 > node-forge@0.10.0
+  This issue was fixed in versions: 1.3.0
+  ✗ Improper Verification of Cryptographic Signature [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODEFORGE-2430341] in node-forge@0.10.0
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > selfsigned@1.10.11 > node-forge@0.10.0
+  This issue was fixed in versions: 1.3.0
+  ✗ Out-of-Bounds [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-535498] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ NULL Pointer Dereference [High Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-535500] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ Out-of-bounds Read [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-540958] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ Uncontrolled Recursion [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-540964] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ Denial of Service (DoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-540978] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ NULL Pointer Dereference [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-540992] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ Out-of-Bounds [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-540998] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ Use After Free [High Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-541000] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ Out-of-bounds Read [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NODESASS-541002] in node-sass@6.0.1
+    introduced by node-sass@6.0.1
+  No upgrade or patch available
+  ✗ Denial of Service (DoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-NWSAPI-2841516] in nwsapi@2.2.0
+    introduced by react-scripts@4.0.3 > jest@26.6.0 > @jest/core@26.6.3 > jest-config@26.6.3 > jest-environment-jsdom@26.6.2 > jsdom@16.7.0 > nwsapi@2.2.0 and 11 other path(s)
+  This issue was fixed in versions: 2.2.1
+  ✗ Prototype Poisoning [High Severity][https://security.snyk.io/vuln/SNYK-JS-QS-3153490] in qs@6.7.0
+    introduced by node-sass@6.0.1 > request@2.88.2 > qs@6.5.2 and 3 other path(s)
+  This issue was fixed in versions: 6.2.4, 6.3.3, 6.4.1, 6.5.3, 6.6.1, 6.7.3, 6.8.3, 6.9.7, 6.10.3
+  ✗ Regular Expression Denial of Service (ReDoS) [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-TERSER-2806366] in terser@5.9.0
+    introduced by react-scripts@4.0.3 > html-webpack-plugin@4.5.0 > html-minifier-terser@5.1.1 > terser@4.8.0 and 3 other path(s)
+  This issue was fixed in versions: 4.8.1, 5.14.2
+  ✗ Prototype Pollution [High Severity][https://security.snyk.io/vuln/SNYK-JS-UNSETVALUE-2400660] in unset-value@1.0.0
+    introduced by react-scripts@4.0.3 > webpack@4.44.2 > micromatch@3.1.10 > snapdragon@0.8.2 > base@0.11.2 > cache-base@1.0.1 > unset-value@1.0.0 and 1256 other path(s)
+  This issue was fixed in versions: 2.0.1
+  ✗ Access Restriction Bypass [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-URLPARSE-2401205] in url-parse@1.5.3
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > sockjs-client@1.5.2 > url-parse@1.5.3 and 1 other path(s)
+  This issue was fixed in versions: 1.5.6
+  ✗ Authorization Bypass [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-URLPARSE-2407759] in url-parse@1.5.3
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > sockjs-client@1.5.2 > url-parse@1.5.3 and 1 other path(s)
+  This issue was fixed in versions: 1.5.8
+  ✗ Improper Input Validation [High Severity][https://security.snyk.io/vuln/SNYK-JS-URLPARSE-2407770] in url-parse@1.5.3
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > sockjs-client@1.5.2 > url-parse@1.5.3 and 1 other path(s)
+  This issue was fixed in versions: 1.5.9
+  ✗ Authorization Bypass Through User-Controlled Key [Medium Severity][https://security.snyk.io/vuln/SNYK-JS-URLPARSE-2412697] in url-parse@1.5.3
+    introduced by react-scripts@4.0.3 > webpack-dev-server@3.11.1 > sockjs-client@1.5.2 > url-parse@1.5.3 and 1 other path(s)
+  This issue was fixed in versions: 1.5.7
+
+
+
+Organization:      rkoksa
+Package manager:   npm
+Target file:       \app\client\package.json
+Project name:      client
+Docker image:      whoami:latest
+Licenses:          enabled
+
+
+Tested 3 projects, 1 contained vulnerable paths.
+
+
+
