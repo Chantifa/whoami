@@ -1,5 +1,33 @@
 version: "3"
 services:
+  server:
+    container_name: server
+    image: whoami-server
+    build: .
+    stdin_open: true
+    working_dir: /home/whoami/server/
+    volumes:
+      - .:/home/whoami/server/
+    ports:
+        - 5000:5000
+    restart: always
+    networks:
+      - mynetwork
+  client:
+    container_name: client
+    image: whoami-client
+    build: .\client
+    stdin_open: true
+    working_dir: /home/whoami/client/
+    volumes:
+      - ./client:/home/whoami/client/
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+    restart: always
+    networks:
+      - mynetwork
   sonarqube:
     image: sonarqube:lts
     ports:
@@ -17,8 +45,12 @@ services:
     networks:
       - mynetwork
     volumes:
-      - jenkins-data:/var/jenkins_home
+      - jenkins-data:/var/jenkins_home/
+      - C:\Users\chant\apache-jmeter-5.5\:/var/jenkins_home/jmeter/
+      - C:\Program Files\OWASP\Zed Attack Proxy\:/var/jenkins_home/zap/
+      - C:\Users\chant\OWASP ZAP\:/var/jenkins_home/zap/
 networks:
   mynetwork:
 volumes:
   jenkins-data:
+  whoami-volume:

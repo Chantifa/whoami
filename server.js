@@ -21,7 +21,6 @@ import jsonwebtoken from "jsonwebtoken";
 import statsCallback from "./model/userInfoRepo.js";
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
-
 /**
  * The server handles the sockets as well as the database connection, middleware and the swagger documentation
  */
@@ -33,6 +32,8 @@ const app = express();
 const EXPECTED_TYPES_VERSION = "0.1.0"
 
 const port = process.env.PORT || 5000;
+
+app.use(cors());
 
 // This displays message that the server running and listening to specified port
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));

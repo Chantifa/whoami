@@ -1,12 +1,14 @@
-FROM jenkins/jenkins:2.361.2-jdk11
-USER root
-RUN apt-get update && apt-get install -y lsb-release
-RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
-  https://download.docker.com/linux/debian/gpg
-RUN echo "deb [arch=$(dpkg --print-architecture) \
-  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
-  https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
-RUN apt-get update && apt-get install -y docker-ce-cli
-USER jenkins
-RUN jenkins-plugin-cli --plugins "blueocean:1.25.8 docker-workflow:521.v1a_a_dd2073b_2e"
+FROM node:14.17.6
+RUN npm cache clean -f
+WORKDIR /home/whoami/server/
+ENV PATH home/whoami/server/node_modules/.bin:$PATH
+COPY package*.json .
+RUN rm -rf npm-cache rm -rf npm
+RUN npm install -g nodemon
+RUN npm upgrade
+RUN npm ci
+COPY . .
+CMD ["nodemon", "server.js"]
+EXPOSE 5000
+
+
