@@ -1,11 +1,10 @@
 FROM node:14.17.6
-RUN npm cache clean -f
 WORKDIR /home/whoami/client
 ENV PATH /home/whoami/client/node_modules/.bin:$PATH
-COPY package.json .
-COPY package-lock.json .
-RUN npm install
-RUN npm i react-script
+RUN rm -rf npm-cache rm -rf npm
+RUN npm cache clean --force
+COPY package*.json .
+RUN npm install && npm cache clean --force
 RUN npm upgrade npm
 RUN npm ci
 COPY . .

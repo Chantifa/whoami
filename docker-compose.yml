@@ -7,6 +7,7 @@ services:
     stdin_open: true
     working_dir: /home/whoami/server/
     volumes:
+      -  whoami-volume:/home/whoami/client/
       - .:/home/whoami/server/
     ports:
         - 5000:5000
@@ -20,6 +21,7 @@ services:
     stdin_open: true
     working_dir: /home/whoami/client/
     volumes:
+      - whoami-volume:/home/whoami/client/
       - ./client:/home/whoami/client/
     ports:
       - 3000:3000
