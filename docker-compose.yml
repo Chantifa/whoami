@@ -10,7 +10,7 @@ services:
       -  whoami-volume:/home/whoami/client/
       - .:/home/whoami/server/
     ports:
-        - 5000:5000
+        - 5000:5001
     restart: always
     networks:
       - mynetwork
@@ -24,7 +24,7 @@ services:
       - whoami-volume:/home/whoami/client/
       - ./client:/home/whoami/client/
     ports:
-      - 3000:3000
+      - 3000:3001
     depends_on:
       - server
     restart: always

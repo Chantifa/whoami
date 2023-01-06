@@ -21,6 +21,8 @@ import jsonwebtoken from "jsonwebtoken";
 import statsCallback from "./model/userInfoRepo.js";
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
+import url from "url"
+import client from "prom-client"
 /**
  * The server handles the sockets as well as the database connection, middleware and the swagger documentation
  */
@@ -38,6 +40,27 @@ app.use(cors());
 // This displays message that the server running and listening to specified port
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 const io = new Server(server);
+
+// Create a Registry which registers the metrics
+const register = new client.Registry()
+// Create a histogram metric
+const httpRequestDurationMicroseconds = new client.Histogram({
+    name: 'http_request_duration_seconds',
+    help: 'Duration of HTTP requests in microseconds',
+    labelNames: ['method', 'route', 'code'],
+    buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10]
+})
+
+// Register the histogram
+register.registerMetric(httpRequestDurationMicroseconds)
+
+// Add a default label which is added to all metrics
+register.setDefaultLabels({
+    app: 'whoami'
+})
+
+// Enable the collection of default metrics
+client.collectDefaultMetrics({ register })
 
 function error(socket, message) {
     socket.emit(ERROR.id, ERROR.getDto(message))
@@ -57,6 +80,16 @@ function sendIndividualGameSetupMessage(game, roomMembers) {
 //initializing the socket io connection
 io.on("connection", (socket) => {
     console.info(`user ${socket.id} connected`)
+    const route = url.parse(io.url).pathname
+
+    if (route === '/metrics') {
+        // Return all metrics the Prometheus exposition format
+        io.setHeader('Content-Type', register.contentType)
+        io.end(register.metrics())
+    }
+    // End timer and add labels
+    end({route, code: res.statusCode, method: req.method})
+
     //now define callbacks for different events:
 
     //new user joining the room
@@ -222,3 +255,8 @@ app.use('/api', apiRoutes);
 // api documentation
 const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+
+
+
