@@ -225,28 +225,19 @@ app.use('/api', apiRoutes);
 const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Create a Registry which registers the metrics
-const register = new client.Registry()
+const collectDefaultMetrics = client.collectDefaultMetrics;
+const Registry = client.Registry;
+const register = new Registry();
+collectDefaultMetrics({ register });
 
-// Add a default label which is added to all metrics
-register.setDefaultLabels({
-  app: 'example-nodejs-app'
+app.get('/metrics', (req, res) => {
+  res.set('Content-Type', client.register.contentType)
+  register.metrics().then(data => res.send(data))
 })
 
-// Enable the collection of default metrics
-client.collectDefaultMetrics({ register })
-
-// Define the HTTP server
-const serverGrafana = http.createServer(async (req, res) => {
-  // Retrieve route from request object
-  const route = url.parse(req.url).pathname
-
-  if (route === '/metrics') {
-    // Return all metrics the Prometheus exposition format
-    res.setHeader('Content-Type', register.contentType)
-    res.end(register.metrics())
-  }
-})
-
-// Start the HTTP server which exposes the metrics on http://localhost:3002/metrics
-serverGrafana.listen(3002)
+const counter = new client.Counter({
+  name: 'metric_name',
+  help: 'metric_help',
+});
+counter.inc(); // Increment by 1
+counter.inc(10); // Increment by 10
