@@ -1,32 +1,17 @@
 version: "3"
 services:
-  server:
-    container_name: server
-    image: whoami-server
+  whoami-node:
+    container_name: whoami-node
+    image: whoami-node
     build: .
     stdin_open: true
-    working_dir: /home/whoami/server/
+    working_dir: /home/whoami/
     volumes:
-      -  whoami-volume:/home/whoami/server
-      - .:/home/whoami/server/
+      - whoami-volume:/home/whoami/
+      - .:/home/whoami/
     ports:
-        - 5000:5001
-    restart: always
-    networks:
-      - mynetwork
-  client:
-    container_name: c
-    image: whoami-c
-    build: .\client
-    stdin_open: true
-    working_dir: /home/whoami/c/
-    volumes:
-      - whoami-volume:/home/whoami/c/
-      - ./client:/home/whoami/c/
-    ports:
+      - 5000:5001
       - 3006:3006
-    depends_on:
-      - server
     restart: always
     networks:
       - mynetwork
@@ -57,7 +42,8 @@ services:
     # Required valid permission for /var/lib/grafana to create files and folders
     # Since I run from the root so both uid and gid are 0:0
     # but you can use the command i.e. (id) without brackets to find your user correct numbers
-    user: "0:0"
+    privileged: true #Required for running docker inside container
+    user: root #Required for running various scripts
     ports:
       - 3000:3000
     networks:
@@ -72,7 +58,7 @@ services:
     ports:
       - 9090:9090
     networks:
-      - mynetwork
+    - mynetwork
     volumes:
       - metrics-data:/etc/prometheus/
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
@@ -84,7 +70,8 @@ services:
     container_name: node-exporter
     ports:
       - 9100:9100
-
+    networks:
+      - mynetwork
 networks:
   mynetwork:
 volumes:
