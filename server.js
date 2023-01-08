@@ -4,6 +4,9 @@ import {
     getRoomMemberships,
     removeRoomMembership
 } from "./model/RoomMembershipRepo.js";
+import http from 'http';
+import url from 'url';
+import client from 'prom-client';
 import {CHAT_REQUEST, GAME_QUESTION, GAME_START, GAME_VOTE, JOIN_ROOM} from "./client/src/common/Requests.mjs";
 import {Server} from "socket.io";
 import express from "express";
@@ -221,3 +224,29 @@ app.use('/api', apiRoutes);
 // api documentation
 const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Create a Registry which registers the metrics
+const register = new client.Registry()
+
+// Add a default label which is added to all metrics
+register.setDefaultLabels({
+  app: 'example-nodejs-app'
+})
+
+// Enable the collection of default metrics
+client.collectDefaultMetrics({ register })
+
+// Define the HTTP server
+const serverGrafana = http.createServer(async (req, res) => {
+  // Retrieve route from request object
+  const route = url.parse(req.url).pathname
+
+  if (route === '/metrics') {
+    // Return all metrics the Prometheus exposition format
+    res.setHeader('Content-Type', register.contentType)
+    res.end(register.metrics())
+  }
+})
+
+// Start the HTTP server which exposes the metrics on http://localhost:3002/metrics
+serverGrafana.listen(3002)
